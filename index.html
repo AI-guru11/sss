@@ -9,6 +9,9 @@
     <meta name="description" content="Safi Group — Creative hub with bento glass UI, briefing wizard, masonry work gallery, and Idea Light Mode." />
     <meta name="theme-color" content="#0A0A0A" />
 
+    <link rel="icon" type="image/webp" href="assets/icons/icon-192.webp" />
+    <link rel="apple-touch-icon" href="assets/icons/icon-192.webp" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -35,9 +38,7 @@
     </script>
 
     <link rel="stylesheet" href="css/style.css" />
-
     <script src="js/app.js"></script>
-
     <script defer src="https://unpkg.com/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
@@ -55,7 +56,7 @@
         <div class="mx-auto max-w-7xl px-4 sm:px-6">
             <div class="header-row flex items-center justify-between">
                 <a href="#top" class="group inline-flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-fikra-orange to-fikra-violet flex items-center justify-center text-white font-bold text-lg">S</div>
+                    <img src="assets/logo.webp" alt="Safi Group Logo" class="w-10 h-10 rounded-xl object-contain bg-white/5 ring-1 ring-white/10 group-hover:scale-105 transition-transform duration-300">
                     <span class="leading-tight">
                         <span class="block text-lg font-extrabold tracking-tight" x-text="SITE_CONFIG.brand.name"></span>
                         <span class="block text-[11px] text-[color:var(--muted)] tracking-widest" x-text="SITE_CONFIG.brand.tagline"></span>
@@ -132,62 +133,151 @@
             </div>
         </section>
 
-        <section id="services" class="py-10">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="noise rounded-[2rem] bg-[color:var(--card)] border border-[color:var(--border)] p-8" data-reveal>
-                    <h3 class="text-xl font-black text-fikra-violet">Conferences</h3>
-                    <p class="mt-2 text-sm text-[color:var(--muted)]">تنظيم مؤتمرات من الألف للياء.</p>
+        <section id="services" class="py-10 sm:py-20">
+            <div class="flex items-end justify-between gap-4 mb-8">
+                <div data-reveal>
+                    <h2 class="text-3xl sm:text-4xl font-black tracking-tight">خدماتنا</h2>
+                    <p class="mt-2 text-[color:var(--muted)]">لماذا الصافي؟</p>
                 </div>
-                <div class="noise rounded-[2rem] bg-[color:var(--card)] border border-[color:var(--border)] p-8" data-reveal>
-                    <h3 class="text-xl font-black text-fikra-orange">Printing</h3>
-                    <p class="mt-2 text-sm text-[color:var(--muted)]">طباعة هوية بصرية متكاملة.</p>
-                </div>
-                <div class="noise rounded-[2rem] bg-[color:var(--card)] border border-[color:var(--border)] p-8" data-reveal>
-                    <h3 class="text-xl font-black text-white">Design</h3>
-                    <p class="mt-2 text-sm text-[color:var(--muted)]">تصميم يخدم أهدافك التسويقية.</p>
-                </div>
+                <a href="#brief" class="hidden sm:inline-flex rounded-2xl px-5 py-3 text-sm font-bold bg-white/5 ring-1 ring-white/10 hover:ring-white/20 transition hover:bg-white/10" data-reveal>
+                    جهّز البرف
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-5">
+                <article class="noise lg:col-span-8 rounded-[2rem] border border-[color:var(--border)] bg-[color:var(--card)] backdrop-blur-md shadow-glass p-8" data-reveal>
+                    <div class="flex flex-col sm:flex-row items-start justify-between gap-8">
+                        <div>
+                            <h3 class="text-2xl sm:text-3xl font-black tracking-tight">Why Safi</h3>
+                            <p class="mt-2 text-[color:var(--muted)]">ثلاث نقاط تقنع العميل سريعاً.</p>
+                            <ul class="mt-8 space-y-4 text-sm font-medium">
+                                <li class="flex gap-4">
+                                    <span class="mt-1 h-2.5 w-2.5 rounded-full bg-fikra-orange shadow-glow-orange flex-shrink-0"></span>
+                                    <span><span class="font-extrabold text-[color:var(--fg)]">Speed:</span> نشتغل بوضوح: Brief → Prototype → Delivery.</span>
+                                </li>
+                                <li class="flex gap-4">
+                                    <span class="mt-1 h-2.5 w-2.5 rounded-full bg-fikra-violet shadow-glow-violet flex-shrink-0"></span>
+                                    <span><span class="font-extrabold text-[color:var(--fg)]">Craft:</span> تفاصيل تنفيذية (Grid / Type / Motion) تفرق بالنتيجة.</span>
+                                </li>
+                                <li class="flex gap-4">
+                                    <span class="mt-1 h-2.5 w-2.5 rounded-full bg-white/70 flex-shrink-0"></span>
+                                    <span><span class="font-extrabold text-[color:var(--fg)]">Results:</span> تصميم يخدم التحويل، مش بس شكل.</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="w-full sm:w-[45%] rounded-3xl bg-gradient-to-l from-fikra-orange/10 via-fikra-violet/5 to-transparent ring-1 ring-white/10 p-6 self-stretch flex flex-col justify-between">
+                            <div>
+                                <div class="text-xs font-bold text-[color:var(--muted)] uppercase tracking-wider mb-2">Performance Note</div>
+                                <div class="text-sm text-[color:var(--fg)] leading-relaxed opacity-90">
+                                    ملف واحد. بدون صور خارجية. أنيميشن خفيف. JS محدود. يعني: سريع ويشتغل في أي استضافة.
+                                </div>
+                            </div>
+                            <div class="mt-6 grid grid-cols-2 gap-3 text-xs text-[color:var(--muted)]">
+                                <div class="rounded-xl bg-white/5 ring-1 ring-white/10 p-3">
+                                    <div class="font-extrabold text-[color:var(--fg)]">RTL-first</div>
+                                    <div class="mt-1">Arabic UX</div>
+                                </div>
+                                <div class="rounded-xl bg-white/5 ring-1 ring-white/10 p-3">
+                                    <div class="font-extrabold text-[color:var(--fg)]">A11y</div>
+                                    <div class="mt-1">Focus + Roles</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="noise lg:col-span-4 rounded-[2rem] border border-[color:var(--border)] bg-[color:var(--card)] backdrop-blur-md shadow-glass p-8 flex flex-col justify-center text-center" data-reveal>
+                    <h3 class="text-2xl font-black">جاهز نبدأ؟</h3>
+                    <p class="mt-2 text-sm text-[color:var(--muted)]">أرسل Brief مضبوط، وخلك مرتاح.</p>
+                    <a href="#brief" class="mt-6 inline-flex w-full items-center justify-center rounded-2xl px-4 py-4 text-base font-bold bg-gradient-to-l from-fikra-violet to-fikra-orange text-white shadow-glow-violet transition-transform hover:scale-[1.02]">
+                        افتح Brief Wizard
+                    </a>
+                </article>
             </div>
         </section>
 
-        <section id="products" class="py-10 sm:py-20" x-data="productsShop()" x-init="init()">
-            <div class="mb-8" data-reveal>
-                <h2 class="text-3xl sm:text-5xl font-black tracking-tight">متجر <span class="text-fikra-orange">المنتجات</span></h2>
-            </div>
-
-            <div class="mb-8 overflow-x-auto scrollbar-hide pb-2" data-reveal>
-                <div class="flex gap-2 min-w-max">
-                    <template x-for="cat in categories" :key="cat.id">
-                        <button class="px-5 py-3 rounded-2xl font-bold text-sm transition-all" 
-                            :class="activeCategory === cat.id ? 'bg-gradient-to-l from-fikra-violet to-fikra-orange text-white' : 'bg-white/5 text-[color:var(--muted)] hover:bg-white/10'"
-                            @click="filterByCategory(cat.id)" x-text="cat.name"></button>
-                    </template>
+        <section id="products" class="py-10 sm:py-20 overflow-hidden" x-data="productsShop()" x-init="init()">
+            <div class="mb-8 px-4 sm:px-6 mx-auto max-w-7xl" data-reveal>
+                <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                    <div>
+                        <h2 class="text-3xl sm:text-5xl font-black tracking-tight">متجر <span class="text-fikra-orange">المنتجات</span></h2>
+                        <p class="mt-2 text-[color:var(--muted)]">تصفح أحدث عروضنا ومنتجاتنا المميزة.</p>
+                    </div>
+                    <div class="flex gap-2 overflow-x-auto scrollbar-hide pb-2 max-w-full">
+                        <template x-for="cat in categories" :key="cat.id">
+                            <button class="px-4 py-2 rounded-xl font-bold text-xs whitespace-nowrap transition-all" 
+                                :class="activeCategory === cat.id ? 'bg-gradient-to-l from-fikra-violet to-fikra-orange text-white' : 'bg-white/5 text-[color:var(--muted)] hover:bg-white/10'"
+                                @click="filterByCategory(cat.id)" x-text="cat.name"></button>
+                        </template>
+                    </div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5" data-reveal>
-                <template x-for="product in filteredProducts" :key="product.id">
-                    <article class="group noise rounded-[2rem] border border-[color:var(--border)] bg-[color:var(--card)] overflow-hidden hover:-translate-y-1 transition-all duration-300">
-                        <div class="relative h-56 bg-gradient-to-br from-white/5 to-white/10 flex items-center justify-center">
-                            <span class="text-4xl">📦</span>
-                            <div class="absolute top-4 right-4 px-3 py-1 bg-black/40 rounded-full text-xs font-bold backdrop-blur-md" x-text="product.categoryName"></div>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex justify-between items-start">
-                                <h3 class="font-bold text-lg leading-tight" x-text="product.name"></h3>
-                                <div class="font-black text-lg text-fikra-orange" x-text="product.price + ' ر.س'"></div>
+            <div class="mb-10" data-reveal x-show="newArrivals.length > 0" x-transition>
+                <div class="px-4 sm:px-6 mx-auto max-w-7xl flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-bold flex items-center gap-2">
+                        <span class="text-xl">✨</span> وصل حديثاً
+                    </h3>
+                    <span class="text-[10px] font-bold text-fikra-orange bg-fikra-orange/10 px-2 py-1 rounded-lg">New</span>
+                </div>
+                <div class="flex overflow-x-auto snap-x snap-mandatory gap-3 pb-6 px-4 sm:px-6 -mx-4 sm:mx-0 scrollbar-hide">
+                    <div class="w-0 sm:w-0 shrink-0"></div> 
+                    <template x-for="product in newArrivals" :key="product.id">
+                        <article class="snap-center shrink-0 w-[160px] group noise rounded-2xl border border-[color:var(--border)] bg-[color:var(--card)] overflow-hidden transition-all duration-300 hover:border-fikra-orange/50">
+                            <div class="relative h-28 bg-gradient-to-br from-white/5 to-white/10 flex items-center justify-center">
+                                <span class="text-4xl drop-shadow-lg group-hover:scale-110 transition-transform duration-300" x-text="product.icon"></span>
+                                <div class="absolute top-2 right-2 px-2 py-0.5 bg-black/40 rounded text-[9px] font-bold backdrop-blur-md" x-text="product.categoryName"></div>
                             </div>
-                            <p class="mt-2 text-sm text-[color:var(--muted)] line-clamp-2" x-text="product.description"></p>
-                            <button @click="addToCart(product)" class="mt-4 w-full py-3 rounded-xl bg-white/10 hover:bg-white/20 font-bold text-sm transition" :class="isInCart(product.id) ? 'text-green-400' : ''">
-                                <span x-text="isInCart(product.id) ? 'تمت الإضافة ✓' : 'أضف للسلة'"></span>
-                            </button>
-                        </div>
-                    </article>
-                </template>
+                            <div class="p-3">
+                                <h4 class="font-bold text-sm leading-tight truncate" x-text="product.name"></h4>
+                                <p class="mt-1 text-[10px] text-[color:var(--muted)] line-clamp-2 h-7 leading-tight" x-text="product.description"></p>
+                                <div class="mt-3 flex items-center justify-between">
+                                    <div class="font-black text-sm text-fikra-orange" x-text="product.price + ' ر.س'"></div>
+                                    <button @click="addToCart(product)" class="w-7 h-7 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition" :class="isInCart(product.id) ? 'bg-green-500/20 text-green-400' : ''">
+                                        <span x-text="isInCart(product.id) ? '✓' : '+'" class="font-bold text-sm"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                    </template>
+                    <div class="w-2 sm:w-0 shrink-0"></div>
+                </div>
+            </div>
+
+            <div data-reveal x-show="bestSellers.length > 0" x-transition>
+                <div class="px-4 sm:px-6 mx-auto max-w-7xl flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-bold flex items-center gap-2">
+                        <span class="text-xl">🔥</span> الأكثر طلباً
+                    </h3>
+                    <span class="text-[10px] font-bold text-fikra-violet bg-fikra-violet/10 px-2 py-1 rounded-lg">Hot</span>
+                </div>
+                <div class="flex overflow-x-auto snap-x snap-mandatory gap-3 pb-6 px-4 sm:px-6 -mx-4 sm:mx-0 scrollbar-hide">
+                    <div class="w-0 sm:w-0 shrink-0"></div>
+                    <template x-for="product in bestSellers" :key="product.id">
+                        <article class="snap-center shrink-0 w-[160px] group noise rounded-2xl border border-[color:var(--border)] bg-[color:var(--card)] overflow-hidden transition-all duration-300 hover:border-fikra-violet/50">
+                            <div class="relative h-28 bg-gradient-to-br from-white/5 to-white/10 flex items-center justify-center">
+                                <span class="text-4xl drop-shadow-lg group-hover:scale-110 transition-transform duration-300" x-text="product.icon"></span>
+                                <div class="absolute top-2 right-2 px-2 py-0.5 bg-black/40 rounded text-[9px] font-bold backdrop-blur-md" x-text="product.categoryName"></div>
+                            </div>
+                            <div class="p-3">
+                                <h4 class="font-bold text-sm leading-tight truncate" x-text="product.name"></h4>
+                                <p class="mt-1 text-[10px] text-[color:var(--muted)] line-clamp-2 h-7 leading-tight" x-text="product.description"></p>
+                                <div class="mt-3 flex items-center justify-between">
+                                    <div class="font-black text-sm text-fikra-violet" x-text="product.price + ' ر.س'"></div>
+                                    <button @click="addToCart(product)" class="w-7 h-7 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition" :class="isInCart(product.id) ? 'bg-green-500/20 text-green-400' : ''">
+                                        <span x-text="isInCart(product.id) ? '✓' : '+'" class="font-bold text-sm"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                    </template>
+                    <div class="w-2 sm:w-0 shrink-0"></div>
+                </div>
             </div>
 
             <div class="fixed bottom-6 left-6 z-40" x-show="cart.length > 0" x-transition.scale>
                 <button @click="checkout()" class="flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-fikra-violet to-fikra-orange rounded-2xl shadow-glow-orange text-white font-bold hover:scale-105 transition-transform">
-                    <span>إتمام الطلب عبر واتساب</span>
+                    <span>إتمام الطلب</span>
                     <span class="bg-white/20 px-2 py-0.5 rounded text-sm" x-text="cartTotal + ' ر.س'"></span>
                 </button>
             </div>
@@ -259,6 +349,47 @@
                     <button class="px-6 py-2 rounded-xl bg-white/5 hover:bg-white/10 font-bold disabled:opacity-50" :disabled="step===1" @click="prev()">رجوع</button>
                     <button class="px-6 py-2 rounded-xl bg-white text-black font-bold hover:bg-white/90" x-show="step < 5" @click="next()">التالي</button>
                 </div>
+            </div>
+        </section>
+
+        <section id="work" class="py-10 sm:py-20">
+             <div data-reveal class="mb-8">
+                <h2 class="text-3xl sm:text-4xl font-black tracking-tight">Dynamic Gallery</h2>
+                <p class="mt-2 text-[color:var(--muted)]">أعمالنا تتحدث عن نفسها.</p>
+            </div>
+            
+            <div x-data="workGallery()" class="masonry">
+                 <div class="masonry-item">
+                    <article class="noise rounded-[2rem] border border-[color:var(--border)] bg-[color:var(--card)] overflow-hidden">
+                        <div class="p-6">
+                            <h3 class="font-bold text-lg">Before / After</h3>
+                             <div class="relative h-64 mt-4 rounded-2xl overflow-hidden ring-1 ring-white/10" x-data="beforeAfter()" @pointerdown="start($event)" @pointermove.window="move($event)" @pointerup.window="end()" @pointercancel.window="end()">
+                                <div class="absolute inset-0 bg-gray-700 flex items-center justify-center">Old Brand</div>
+                                <div class="absolute inset-0 bg-fikra-violet flex items-center justify-center text-black font-bold" :style="`clip-path: inset(0 0 0 ${pos}%)`">New Brand</div>
+                                <div class="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize" :style="`left: ${pos}%`">
+                                    <div class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center text-black text-xs font-bold"><></div>
+                                </div>
+                             </div>
+                        </div>
+                    </article>
+                 </div>
+                 
+                 <template x-for="p in projects" :key="p.id">
+                    <div class="masonry-item">
+                        <article class="noise rounded-[2rem] border border-[color:var(--border)] bg-[color:var(--card)] overflow-hidden hover:shadow-glow-violet transition-shadow duration-300">
+                             <div class="h-48 w-full" :style="`background: ${p.bg}`"></div>
+                             <div class="p-6">
+                                 <h3 class="font-bold text-lg" x-text="p.title"></h3>
+                                 <p class="text-sm text-[color:var(--muted)]" x-text="p.subtitle"></p>
+                                 <div class="mt-4 flex flex-wrap gap-2">
+                                     <template x-for="t in p.tags">
+                                         <span class="text-xs px-2 py-1 bg-white/10 rounded-md" x-text="t"></span>
+                                     </template>
+                                 </div>
+                             </div>
+                        </article>
+                    </div>
+                 </template>
             </div>
         </section>
 
