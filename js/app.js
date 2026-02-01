@@ -7,7 +7,7 @@ const SITE_CONFIG = {
   brand: {
     name: 'مجموعة الصافي',
     tagline: 'SAFI GROUP',
-    logo: 'assets/logo.webp' // Added logo path
+    logo: 'assets/logo.webp'
   },
   location: {
     city: 'Muhayl Asir, Saudi Arabia',
@@ -62,49 +62,45 @@ function fikraApp() {
 function briefWizard() {
   return {
     step: 1,
-    error: '',
-    projectTypes: [
-      { value: 'Design', label: 'تصميم (Design)', desc: 'هوية بصرية / UI / سوشيال ميديا' },
-      { value: 'Events', label: 'فعاليات (Events)', desc: 'تنظيم مؤتمرات / معارض' },
-      { value: 'Ads', label: 'إعلانات (Ads)', desc: 'حملات إعلانية / محتوى' }
+    preferences: { category: '', style: '' },
+    contact: { name: '', phone: '' },
+    
+    // بيانات المعرض للفلترة
+    portfolioDB: [
+      { id: 1, title: 'فندق قصر السحاب', category: 'decor', style: 'classic', img: 'linear-gradient(135deg, #2c1a1a, #4a3b3b)', desc: 'ديكور داخلي كلاسيكي فاخر.' },
+      { id: 2, title: 'مقهى سايبر نيون', category: 'decor', style: 'neon', img: 'linear-gradient(135deg, #0f0c29, #302b63, #24243e)', desc: 'إضاءة نيون وتصميم عصري.' },
+      { id: 3, title: 'هوية شركة تقنية', category: 'branding', style: 'modern', img: 'linear-gradient(135deg, #1a2980, #26d0ce)', desc: 'شعار وهوية بصرية بأسلوب بسيط.' },
+      { id: 4, title: 'مطعم برجر مودرن', category: 'decor', style: 'modern', img: 'linear-gradient(135deg, #ff512f, #dd2476)', desc: 'تصميم داخلي بألوان حيوية.' },
+      { id: 5, title: 'حفل زفاف ملكي', category: 'events', style: 'classic', img: 'linear-gradient(135deg, #ECE9E6, #FFFFFF)', desc: 'تنظيم وتنسيق كلاسيكي فخم.' },
+      { id: 6, title: 'لاونج نيون', category: 'decor', style: 'neon', img: 'linear-gradient(135deg, #11998e, #38ef7d)', desc: 'أجواء ليلية بإضاءة خافتة ونيون.' },
     ],
-    budgets: ['أقل من 5,000', '5,000 - 15,000', '15,000 - 50,000', 'أكثر من 50,000'],
-    timelines: [
-      { value: 'Urgent', label: 'عاجل جداً (1-2 أسبوع)' },
-      { value: '1 month', label: 'متوسط (شهر)' },
-      { value: 'Relaxed', label: 'موسع (2-3 أشهر)' }
-    ],
-    form: { type: '', budget: '', timeline: '', name: '', company: '', whatsapp: '' },
+    matches: [],
 
-    next() {
-      this.error = '';
-      if (this.step === 1 && !this.form.type) { this.error = 'الرجاء اختيار نوع المشروع'; return; }
-      if (this.step === 2 && !this.form.budget) { this.error = 'الرجاء تحديد الميزانية'; return; }
-      if (this.step === 3 && !this.form.timeline) { this.error = 'الرجاء تحديد الوقت'; return; }
-      if (this.step === 4) {
-        if (!this.form.name || this.form.name.length < 2) { this.error = 'الاسم مطلوب'; return; }
-        if (!this.form.whatsapp || this.form.whatsapp.length < 9) { this.error = 'رقم الواتساب مطلوب'; return; }
-      }
-      this.step++;
+    setCategory(cat) { this.preferences.category = cat; this.step = 2; },
+    setStyle(style) { this.preferences.style = style; this.step = 3; this.findMatches(); },
+    
+    findMatches() {
+      this.matches = this.portfolioDB.filter(p => (p.category === this.preferences.category) && (p.style === this.preferences.style));
+      if (this.matches.length === 0) this.matches = this.portfolioDB.filter(p => p.category === this.preferences.category).slice(0, 2);
     },
-    prev() { this.step = Math.max(1, this.step - 1); this.error = ''; },
-    reset() { this.step = 1; this.form = { type: '', budget: '', timeline: '', name: '', company: '', whatsapp: '' }; this.error = ''; },
-    get message() {
-      return `✨ *طلب مشروع جديد - ${SITE_CONFIG.brand.name}* ✨\n────────────────\n📌 *النوع:* ${this.form.type}\n💰 *الميزانية:* ${this.form.budget}\n⏳ *الوقت:* ${this.form.timeline}\n────────────────\n👤 *الاسم:* ${this.form.name}\n🏢 *الشركة:* ${this.form.company || '—'}\n📱 *جوال:* ${this.form.whatsapp}`;
+
+    sendRequest() {
+      if (!this.contact.name || !this.contact.phone) return;
+      const msg = `✨ *استفسار جديد (Style Finder)* ✨\n────────────────\n🎨 *التفضيلات:* ${this.preferences.category} / ${this.preferences.style}\n👤 *العميل:* ${this.contact.name}\n📱 *جوال:* ${this.contact.phone}`;
+      window.open(`https://wa.me/${SITE_CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`, '_blank');
     },
-    get whatsappUrl() {
-      return `https://wa.me/${SITE_CONFIG.whatsapp}?text=${encodeURIComponent(this.message)}`;
-    }
+
+    reset() { this.step = 1; this.preferences = { category: '', style: '' }; this.matches = []; this.contact = { name: '', phone: '' }; }
   };
 }
 
 // ==============================================
-// 3. PRODUCTS SHOP (مع الفلترة)
+// 3. PRODUCTS SHOP
 // ==============================================
 function productsShop() {
   return {
     cart: [],
-    activeCategory: 'all', // حالة الفلتر الحالية
+    activeCategory: 'all',
     
     categories: [
       { id: 'all', name: 'الكل' },
@@ -114,7 +110,6 @@ function productsShop() {
       { id: 'gifts', name: 'هدايا' }
     ],
 
-    // المنتجات مع إضافة خاصية category للفلترة
     products: [
       { id: 1, name: 'لوحة نيون', price: 350, tag: 'best', category: 'neon', icon: '⚡', categoryName: 'نيون', description: 'إضاءة LED جذابة.' },
       { id: 2, name: 'رول أب', price: 280, tag: 'new', category: 'stands', icon: '📜', categoryName: 'ستاندات', description: 'ستاند 85x200 سم.' },
@@ -126,59 +121,52 @@ function productsShop() {
       { id: 8, name: 'لوحة Open', price: 250, tag: 'new', category: 'neon', icon: '💡', categoryName: 'نيون', description: 'جاهزة للمحلات.' }
     ],
 
-    // دالة تغيير التصنيف
-    filterByCategory(id) {
-      this.activeCategory = id;
-    },
+    filterByCategory(id) { this.activeCategory = id; },
 
-    // جلب المنتجات الجديدة (مع مراعاة الفلتر)
     get newArrivals() {
       let items = this.products.filter(p => p.tag === 'new');
-      if (this.activeCategory !== 'all') {
-        items = items.filter(p => p.category === this.activeCategory);
-      }
+      if (this.activeCategory !== 'all') items = items.filter(p => p.category === this.activeCategory);
       return items;
     },
 
-    // جلب الأكثر طلباً (مع مراعاة الفلتر)
     get bestSellers() {
       let items = this.products.filter(p => p.tag === 'best');
-      if (this.activeCategory !== 'all') {
-        items = items.filter(p => p.category === this.activeCategory);
-      }
+      if (this.activeCategory !== 'all') items = items.filter(p => p.category === this.activeCategory);
       return items;
     },
 
-    addToCart(product) {
-      if (!this.isInCart(product.id)) {
-        this.cart.push(product);
-      }
-    },
-
-    isInCart(id) {
-      return this.cart.some(p => p.id === id);
-    },
-
-    get cartTotal() {
-      return this.cart.reduce((sum, item) => sum + item.price, 0);
-    },
-
+    addToCart(product) { if (!this.isInCart(product.id)) this.cart.push(product); },
+    isInCart(id) { return this.cart.some(p => p.id === id); },
+    get cartTotal() { return this.cart.reduce((sum, item) => sum + item.price, 0); },
     checkout() {
       if (this.cart.length === 0) return;
       const itemsList = this.cart.map((i, index) => `${index + 1}. ${i.name} - (${i.price} ر.س)`).join('\n');
-      const msg = `🛒 *طلب شراء جديد*\n────────────────\n${itemsList}\n────────────────\n💰 *الإجمالي: ${this.cartTotal} ر.س*`;
+      const msg = `🛒 *طلب منتجات*\n────────────────\n${itemsList}\n────────────────\n💰 *الإجمالي: ${this.cartTotal} ر.س*`;
       window.open(`https://wa.me/${SITE_CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`, '_blank');
     }
   };
 }
 
 // ==============================================
-// 4. WORK GALLERY
+// 4. TRANSFORMATIONS DATA (القسم الجديد)
+// ==============================================
+function transformationsData() {
+  return {
+    title: 'قصة نجاح: إعادة إحياء علامة تجارية',
+    desc: 'شاهد كيف حولنا المساحة من تصميم تقليدي باهت إلى تجربة بصرية عصرية تنبض بالحياة، مما ساهم في جذب شريحة عملاء جديدة.',
+    stats: [
+      { label: 'زيادة المبيعات', value: '45%' },
+      { label: 'تفاعل العملاء', value: '3x' }
+    ]
+  };
+}
+
+// ==============================================
+// 5. WORK GALLERY
 // ==============================================
 function workGallery() {
   return {
-    active: null,
-    modalOpen: false,
+    active: null, modalOpen: false,
     projects: [
       { id: 1, title: 'Conference Branding', subtitle: 'هوية بصرية لمؤتمر', bg: 'linear-gradient(135deg, #1a1a1a 0%, #2d3748 100%)', tags: ['طباعة', 'هوية'] },
       { id: 2, title: 'Coffee Shop Neon', subtitle: 'تنفيذ إضاءة نيون', bg: 'linear-gradient(135deg, #2c0b0e 0%, #5c181f 100%)', tags: ['نيون', 'ديكور'] },
@@ -188,7 +176,7 @@ function workGallery() {
 }
 
 // ==============================================
-// 5. HELPER UTILS
+// 6. HELPER UTILS (Slider Logic)
 // ==============================================
 function beforeAfter() {
   return {
@@ -209,5 +197,6 @@ window.SITE_CONFIG = SITE_CONFIG;
 window.fikraApp = fikraApp;
 window.briefWizard = briefWizard;
 window.productsShop = productsShop;
+window.transformationsData = transformationsData;
 window.workGallery = workGallery;
 window.beforeAfter = beforeAfter;
