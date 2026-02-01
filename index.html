@@ -19,7 +19,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-            darkMode: 'class',
+            darkMode: 'class', // Important for dark: classes
             theme: {
                 extend: {
                     fontFamily: { taj: ['Tajawal', 'sans-serif'] },
@@ -55,16 +55,9 @@
 <body class="font-taj bg-[color:var(--bg)] text-[color:var(--fg)] selection:bg-fikra-orange/30 selection:text-white transition-colors duration-500"
     x-data="fikraApp()" x-init="init()">
     
-    <div aria-hidden="true" class="fixed inset-0 -z-10 overflow-hidden bg-[#050505]">
-        
-        <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-
-        <div class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-fikra-orange/20 blur-[100px]"></div>
-        
-        <div class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-fikra-violet/20 blur-[100px]"></div>
-
-        <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent"></div>
-        
+    <div aria-hidden="true" class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+        <div class="absolute inset-0 transition-colors duration-500" style="background: radial-gradient(1200px 600px at 80% 10%, var(--blob-cyan), transparent 60%), radial-gradient(1000px 500px at 20% 20%, var(--blob-red), transparent 55%), linear-gradient(to bottom, var(--bg), var(--bg2));"></div>
+        <div class="absolute inset-0 opacity-10 dark:opacity-20" style="background-image: linear-gradient(to right, var(--grid) 1px, transparent 1px), linear-gradient(to bottom, var(--grid) 1px, transparent 1px); background-size: 48px 48px; mask-image: radial-gradient(closest-side, rgba(0,0,0,.9), transparent 78%);"></div>
     </div>
 
     <header class="site-header sticky top-0 z-50 bg-[color:var(--bg)]/80 backdrop-blur-md border-b border-[color:var(--border)] transition-all duration-300"
@@ -88,13 +81,13 @@
                 </nav>
 
                 <div class="flex items-center gap-3">
-                    <button type="button" class="group relative inline-flex items-center gap-2 rounded-2xl px-3 py-2 text-sm ring-1 ring-white/10 hover:ring-white/20 transition bg-white/5" @click="toggleTheme()">
+                    <button type="button" class="group relative inline-flex items-center gap-2 rounded-2xl px-3 py-2 text-sm ring-1 ring-[color:var(--border)] hover:ring-[color:var(--fg)]/20 transition bg-[color:var(--card)]" @click="toggleTheme()">
                         <span class="relative grid h-6 w-6 place-items-center">
-                            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none"><path d="M12 3.5c3 0 5.5 2.4 5.5 5.4 0 2-1.1 3.8-2.8 4.8-.4.2-.7.7-.7 1.2V16a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-1.1c0-.5-.3-1-.7-1.2C7.6 12.7 6.5 10.9 6.5 8.9 6.5 5.9 9 3.5 12 3.5Z" stroke="currentColor" stroke-width="1.6"/><path d="M10 19h4M10.7 21h2.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                            <svg class="h-5 w-5 text-[color:var(--fg)]" viewBox="0 0 24 24" fill="none"><path d="M12 3.5c3 0 5.5 2.4 5.5 5.4 0 2-1.1 3.8-2.8 4.8-.4.2-.7.7-.7 1.2V16a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-1.1c0-.5-.3-1-.7-1.2C7.6 12.7 6.5 10.9 6.5 8.9 6.5 5.9 9 3.5 12 3.5Z" stroke="currentColor" stroke-width="1.6"/><path d="M10 19h4M10.7 21h2.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
                         </span>
                     </button>
                     <button type="button" class="md:hidden inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-[color:var(--card)] ring-1 ring-[color:var(--border)] shadow-lg hover:bg-[color:var(--card)]/90 transition" @click="mobileOpen = true">
-                        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+                        <svg class="h-6 w-6 text-[color:var(--fg)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
                     </button>
                 </div>
             </div>
@@ -106,14 +99,14 @@
                 <div class="absolute inset-y-0 right-0 w-[85%] max-w-sm bg-[color:var(--bg)] border-l border-[color:var(--border)] shadow-2xl p-6">
                     <div class="flex items-center justify-between mb-8">
                         <div class="font-extrabold text-xl" x-text="SITE_CONFIG.brand.name"></div>
-                        <button class="h-10 w-10 rounded-xl bg-white/5 ring-1 ring-white/10 flex items-center justify-center" @click="mobileOpen=false">✕</button>
+                        <button class="h-10 w-10 rounded-xl bg-[color:var(--card)] ring-1 ring-[color:var(--border)] flex items-center justify-center" @click="mobileOpen=false">✕</button>
                     </div>
                     <nav class="space-y-3 text-[color:var(--muted)]">
-                        <a class="block rounded-2xl px-5 py-4 bg-white/5 ring-1 ring-white/10 font-bold" href="#services" @click="mobileOpen=false">الخدمات</a>
-                        <a class="block rounded-2xl px-5 py-4 bg-white/5 ring-1 ring-white/10 font-bold" href="#products" @click="mobileOpen=false">المنتجات</a>
-                        <a class="block rounded-2xl px-5 py-4 bg-white/5 ring-1 ring-white/10 font-bold" href="#transformations" @click="mobileOpen=false">أعمالنا</a>
-                        <a class="block rounded-2xl px-5 py-4 bg-white/5 ring-1 ring-white/10 font-bold" href="#brief" @click="mobileOpen=false">البرف</a>
-                        <a class="block rounded-2xl px-5 py-4 bg-white/5 ring-1 ring-white/10 font-bold" href="#contact" @click="mobileOpen=false">تواصل</a>
+                        <a class="block rounded-2xl px-5 py-4 bg-[color:var(--card)] ring-1 ring-[color:var(--border)] font-bold" href="#services" @click="mobileOpen=false">الخدمات</a>
+                        <a class="block rounded-2xl px-5 py-4 bg-[color:var(--card)] ring-1 ring-[color:var(--border)] font-bold" href="#products" @click="mobileOpen=false">المنتجات</a>
+                        <a class="block rounded-2xl px-5 py-4 bg-[color:var(--card)] ring-1 ring-[color:var(--border)] font-bold" href="#transformations" @click="mobileOpen=false">أعمالنا</a>
+                        <a class="block rounded-2xl px-5 py-4 bg-[color:var(--card)] ring-1 ring-[color:var(--border)] font-bold" href="#brief" @click="mobileOpen=false">البرف</a>
+                        <a class="block rounded-2xl px-5 py-4 bg-[color:var(--card)] ring-1 ring-[color:var(--border)] font-bold" href="#contact" @click="mobileOpen=false">تواصل</a>
                     </nav>
                 </div>
             </div>
@@ -122,10 +115,10 @@
 
     <main id="top" class="mx-auto max-w-7xl px-4 sm:px-6">
         <section class="pt-10 sm:pt-16 pb-10">
-            <div class="noise rounded-[2.5rem] border border-[color:var(--border)] bg-[color:var(--card)] backdrop-blur-md shadow-glass overflow-hidden">
+            <div class="noise rounded-[2.5rem] backdrop-blur-md shadow-glass overflow-hidden">
                 <div class="relative px-6 sm:px-10 py-12 sm:py-20 text-center sm:text-right">
                     <div class="max-w-3xl relative z-10" data-reveal>
-                        <p class="inline-flex items-center gap-2 rounded-full bg-white/5 ring-1 ring-white/10 px-4 py-2 text-xs text-[color:var(--muted)] font-medium">
+                        <p class="inline-flex items-center gap-2 rounded-full bg-[color:var(--card)] ring-1 ring-[color:var(--border)] px-4 py-2 text-xs text-[color:var(--muted)] font-medium">
                             <span class="h-2 w-2 rounded-full bg-fikra-orange shadow-glow-orange animate-pulse"></span>
                             منصة وكالة إبداعية
                         </p>
@@ -140,7 +133,7 @@
                             <a href="#brief" class="relative overflow-hidden rounded-2xl px-8 py-4 text-base font-bold text-white bg-gradient-to-l from-fikra-violet to-fikra-orange shadow-glow-orange hover:scale-[1.02] transition-transform">
                                   اكتشف ذوقك
                             </a>
-                            <a href="#products" class="rounded-2xl px-8 py-4 text-base font-bold bg-white/5 ring-1 ring-white/10 hover:bg-white/10 text-[color:var(--fg)] transition">
+                            <a href="#products" class="rounded-2xl px-8 py-4 text-base font-bold bg-[color:var(--card)] ring-1 ring-[color:var(--border)] hover:bg-[color:var(--fg)]/5 text-[color:var(--fg)] transition">
                                 المنتجات
                             </a>
                         </div>
@@ -149,10 +142,9 @@
             </div>
         </section>
 
-        <div class="relative w-full py-10 mb-20 overflow-hidden border-y border-white/10 bg-white/5 backdrop-blur-xl shadow-glass">
-            
+        <div class="relative w-full py-10 mb-20 overflow-hidden border-y border-[color:var(--border)] bg-[color:var(--card)] backdrop-blur-xl shadow-glass">
             <div class="absolute inset-0 z-0 opacity-10 pointer-events-none" 
-                 style="background-image: linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 32px 32px;">
+                 style="background-image: linear-gradient(to right, rgba(128,128,128,0.2) 1px, transparent 1px), linear-gradient(to bottom, rgba(128,128,128,0.2) 1px, transparent 1px); background-size: 32px 32px;">
             </div>
 
             <div class="absolute top-0 right-0 z-20 h-full w-24 bg-gradient-to-l from-[color:var(--bg)] to-transparent"></div>
@@ -163,23 +155,23 @@
                 
                 <div class="flex overflow-hidden" dir="ltr">
                     <div class="flex animate-infinite-scroll gap-20 py-2 pr-20 items-center">
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-white transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🏛️</span> <span class="font-bold text-lg tracking-wide">وزارة الصحة</span></div>
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-white transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🏗️</span> <span class="font-bold text-lg tracking-wide">aseer municipality أمانة عسير</span></div>
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-white transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">⛽</span> <span class="font-bold text-lg tracking-wide">Saudi Aramco</span></div>
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-white transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🎓</span> <span class="font-bold text-lg tracking-wide">وزارة التعليم</span></div>
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-white transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">📡</span> <span class="font-bold text-lg tracking-wide">STC</span></div>
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-white transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🌴</span> <span class="font-bold text-lg tracking-wide">الهيئة الملكية</span></div>
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-white transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🎢</span> <span class="font-bold text-lg tracking-wide">القدية Qiddiya</span></div>
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-white transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">✈️</span> <span class="font-bold text-lg tracking-wide">الخطوط السعودية</span></div>
+                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🏛️</span> <span class="font-bold text-lg tracking-wide">وزارة الصحة</span></div>
+                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🏗️</span> <span class="font-bold text-lg tracking-wide">NEOM نيوم</span></div>
+                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">⛽</span> <span class="font-bold text-lg tracking-wide">Saudi Aramco</span></div>
+                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🎓</span> <span class="font-bold text-lg tracking-wide">وزارة التعليم</span></div>
+                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">📡</span> <span class="font-bold text-lg tracking-wide">STC</span></div>
+                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🌴</span> <span class="font-bold text-lg tracking-wide">الهيئة الملكية</span></div>
+                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🎢</span> <span class="font-bold text-lg tracking-wide">القدية Qiddiya</span></div>
+                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">✈️</span> <span class="font-bold text-lg tracking-wide">الخطوط السعودية</span></div>
                         
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-white transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🏛️</span> <span class="font-bold text-lg tracking-wide">وزارة الصحة</span></div>
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-white transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🏗️</span> <span class="font-bold text-lg tracking-wide">NEOM نيوم</span></div>
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-white transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">⛽</span> <span class="font-bold text-lg tracking-wide">Saudi Aramco</span></div>
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-white transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🎓</span> <span class="font-bold text-lg tracking-wide">وزارة التعليم</span></div>
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-white transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">📡</span> <span class="font-bold text-lg tracking-wide">STC</span></div>
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-white transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🌴</span> <span class="font-bold text-lg tracking-wide">الهيئة الملكية</span></div>
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-white transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🎢</span> <span class="font-bold text-lg tracking-wide">القدية Qiddiya</span></div>
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-white transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">✈️</span> <span class="font-bold text-lg tracking-wide">الخطوط السعودية</span></div>
+                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🏛️</span> <span class="font-bold text-lg tracking-wide">وزارة الصحة</span></div>
+                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🏗️</span> <span class="font-bold text-lg tracking-wide">NEOM نيوم</span></div>
+                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">⛽</span> <span class="font-bold text-lg tracking-wide">Saudi Aramco</span></div>
+                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🎓</span> <span class="font-bold text-lg tracking-wide">وزارة التعليم</span></div>
+                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">📡</span> <span class="font-bold text-lg tracking-wide">STC</span></div>
+                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🌴</span> <span class="font-bold text-lg tracking-wide">الهيئة الملكية</span></div>
+                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🎢</span> <span class="font-bold text-lg tracking-wide">القدية Qiddiya</span></div>
+                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">✈️</span> <span class="font-bold text-lg tracking-wide">الخطوط السعودية</span></div>
                     </div>
                 </div>
             </div>
@@ -191,13 +183,13 @@
                     <h2 class="text-3xl sm:text-4xl font-black tracking-tight">خدماتنا</h2>
                     <p class="mt-2 text-[color:var(--muted)]">لماذا الصافي؟</p>
                 </div>
-                <a href="#brief" class="hidden sm:inline-flex rounded-2xl px-5 py-3 text-sm font-bold bg-white/5 ring-1 ring-white/10 hover:ring-white/20 transition hover:bg-white/10" data-reveal>
+                <a href="#brief" class="hidden sm:inline-flex rounded-2xl px-5 py-3 text-sm font-bold bg-[color:var(--card)] ring-1 ring-[color:var(--border)] hover:bg-[color:var(--fg)]/5 transition" data-reveal>
                     جهّز البرف
                 </a>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-5">
-                <article class="noise lg:col-span-8 rounded-[2rem] border border-[color:var(--border)] bg-[color:var(--card)] backdrop-blur-md shadow-glass p-8" data-reveal>
+                <article class="noise lg:col-span-8 rounded-[2rem] backdrop-blur-md shadow-glass p-8" data-reveal>
                     <div class="flex flex-col sm:flex-row items-start justify-between gap-8">
                         <div>
                             <h3 class="text-2xl sm:text-3xl font-black tracking-tight">Why Safi - لماذا الصافي</h3>
@@ -212,12 +204,12 @@
                                     <span><span class="font-extrabold text-[color:var(--fg)]">Craft - دقة التنفيذ:</span> يكمن السر في التفاصيل: نعتني بضبط العناصر وأدق التفاصيل.</span>
                                 </li>
                                 <li class="flex gap-4">
-                                    <span class="mt-1 h-2.5 w-2.5 rounded-full bg-white/70 flex-shrink-0"></span>
+                                    <span class="mt-1 h-2.5 w-2.5 rounded-full bg-gray-400 flex-shrink-0"></span>
                                     <span><span class="font-extrabold text-[color:var(--fg)]">Results/النتائج: </span>نصمم لتحقيق الأهداف.</span>
                                 </li>
                             </ul>
                         </div>
-                        <div class="w-full sm:w-[45%] rounded-3xl bg-gradient-to-l from-fikra-orange/10 via-fikra-violet/5 to-transparent ring-1 ring-white/10 p-6 self-stretch flex flex-col justify-between">
+                        <div class="w-full sm:w-[45%] rounded-3xl bg-gradient-to-l from-fikra-orange/10 via-fikra-violet/5 to-transparent ring-1 ring-[color:var(--border)] p-6 self-stretch flex flex-col justify-between">
                             <div>
                                 <div class="text-xs font-bold text-[color:var(--muted)] uppercase tracking-wider mb-2">تواصل معنا</div>
                                 <div class="text-sm text-[color:var(--fg)] leading-relaxed opacity-90">
@@ -225,11 +217,11 @@
                                 </div>
                             </div>
                             <div class="mt-6 grid grid-cols-2 gap-3 text-xs text-[color:var(--muted)]">
-                                <div class="rounded-xl bg-white/5 ring-1 ring-white/10 p-3">
+                                <div class="rounded-xl bg-[color:var(--card)] ring-1 ring-[color:var(--border)] p-3">
                                     <div class="font-extrabold text-[color:var(--fg)]">WhatsApp</div>
                                     <div class="mt-1" dir="ltr" x-text="SITE_CONFIG.whatsapp"></div>
                                 </div>
-                                <div class="rounded-xl bg-white/5 ring-1 ring-white/10 p-3">
+                                <div class="rounded-xl bg-[color:var(--card)] ring-1 ring-[color:var(--border)] p-3">
                                     <div class="font-extrabold text-[color:var(--fg)]">Location</div>
                                     <div class="mt-1">Muhayel</div>
                                 </div>
@@ -238,7 +230,7 @@
                     </div>
                 </article>
 
-                <article class="noise lg:col-span-4 rounded-[2rem] border border-[color:var(--border)] bg-[color:var(--card)] backdrop-blur-md shadow-glass p-8 flex flex-col justify-center text-center" data-reveal>
+                <article class="noise lg:col-span-4 rounded-[2rem] backdrop-blur-md shadow-glass p-8 flex flex-col justify-center text-center" data-reveal>
                     <h3 class="text-2xl font-black">جاهز نبدأ؟</h3>
                     <p class="mt-2 text-sm text-[color:var(--muted)]">جرب "مستكشف الذوق" الخاص بنا.</p>
                     <a href="#brief" class="mt-6 inline-flex w-full items-center justify-center rounded-2xl px-4 py-4 text-base font-bold bg-gradient-to-l from-fikra-violet to-fikra-orange text-white shadow-glow-violet transition-transform hover:scale-[1.02]">
@@ -258,7 +250,7 @@
                     <div class="flex gap-2 overflow-x-auto scrollbar-hide pb-2 max-w-full">
                         <template x-for="cat in categories" :key="cat.id">
                             <button class="px-4 py-2 rounded-xl font-bold text-xs whitespace-nowrap transition-all" 
-                                :class="activeCategory === cat.id ? 'bg-gradient-to-l from-fikra-violet to-fikra-orange text-white' : 'bg-white/5 text-[color:var(--muted)] hover:bg-white/10'"
+                                :class="activeCategory === cat.id ? 'bg-gradient-to-l from-fikra-violet to-fikra-orange text-white' : 'bg-[color:var(--card)] text-[color:var(--muted)] ring-1 ring-[color:var(--border)] hover:bg-[color:var(--fg)]/5'"
                                 @click="filterByCategory(cat.id)" x-text="cat.name"></button>
                         </template>
                     </div>
@@ -275,17 +267,17 @@
                 <div class="flex overflow-x-auto snap-x snap-mandatory gap-3 pb-6 px-4 sm:px-6 -mx-4 sm:mx-0 scrollbar-hide">
                     <div class="w-0 sm:w-0 shrink-0"></div> 
                     <template x-for="product in newArrivals" :key="product.id">
-                        <article class="snap-center shrink-0 w-[160px] group noise rounded-2xl border border-[color:var(--border)] bg-[color:var(--card)] overflow-hidden transition-all duration-300 hover:border-fikra-orange/50">
-                            <div class="relative h-28 bg-gradient-to-br from-white/5 to-white/10 flex items-center justify-center">
+                        <article class="snap-center shrink-0 w-[160px] group noise rounded-2xl overflow-hidden transition-all duration-300 hover:border-fikra-orange/50">
+                            <div class="relative h-28 bg-gradient-to-br from-[color:var(--fg)]/5 to-[color:var(--fg)]/10 flex items-center justify-center">
                                 <span class="text-4xl drop-shadow-lg group-hover:scale-110 transition-transform duration-300" x-text="product.icon"></span>
-                                <div class="absolute top-2 right-2 px-2 py-0.5 bg-black/40 rounded text-[9px] font-bold backdrop-blur-md" x-text="product.categoryName"></div>
+                                <div class="absolute top-2 right-2 px-2 py-0.5 bg-black/40 rounded text-[9px] font-bold text-white backdrop-blur-md" x-text="product.categoryName"></div>
                             </div>
                             <div class="p-3">
                                 <h4 class="font-bold text-sm leading-tight truncate" x-text="product.name"></h4>
                                 <p class="mt-1 text-[10px] text-[color:var(--muted)] line-clamp-2 h-7 leading-tight" x-text="product.description"></p>
                                 <div class="mt-3 flex items-center justify-between">
                                     <div class="font-black text-sm text-fikra-orange" x-text="product.price + ' ر.س'"></div>
-                                    <button @click="addToCart(product)" class="w-7 h-7 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition" :class="isInCart(product.id) ? 'bg-green-500/20 text-green-400' : ''">
+                                    <button @click="addToCart(product)" class="w-7 h-7 rounded-lg bg-[color:var(--fg)]/10 hover:bg-[color:var(--fg)]/20 flex items-center justify-center transition" :class="isInCart(product.id) ? 'bg-green-500/20 text-green-400' : ''">
                                         <span x-text="isInCart(product.id) ? '✓' : '+'" class="font-bold text-sm"></span>
                                     </button>
                                 </div>
@@ -306,17 +298,17 @@
                 <div class="flex overflow-x-auto snap-x snap-mandatory gap-3 pb-6 px-4 sm:px-6 -mx-4 sm:mx-0 scrollbar-hide">
                     <div class="w-0 sm:w-0 shrink-0"></div>
                     <template x-for="product in bestSellers" :key="product.id">
-                        <article class="snap-center shrink-0 w-[160px] group noise rounded-2xl border border-[color:var(--border)] bg-[color:var(--card)] overflow-hidden transition-all duration-300 hover:border-fikra-violet/50">
-                            <div class="relative h-28 bg-gradient-to-br from-white/5 to-white/10 flex items-center justify-center">
+                        <article class="snap-center shrink-0 w-[160px] group noise rounded-2xl overflow-hidden transition-all duration-300 hover:border-fikra-violet/50">
+                            <div class="relative h-28 bg-gradient-to-br from-[color:var(--fg)]/5 to-[color:var(--fg)]/10 flex items-center justify-center">
                                 <span class="text-4xl drop-shadow-lg group-hover:scale-110 transition-transform duration-300" x-text="product.icon"></span>
-                                <div class="absolute top-2 right-2 px-2 py-0.5 bg-black/40 rounded text-[9px] font-bold backdrop-blur-md" x-text="product.categoryName"></div>
+                                <div class="absolute top-2 right-2 px-2 py-0.5 bg-black/40 rounded text-[9px] font-bold text-white backdrop-blur-md" x-text="product.categoryName"></div>
                             </div>
                             <div class="p-3">
                                 <h4 class="font-bold text-sm leading-tight truncate" x-text="product.name"></h4>
                                 <p class="mt-1 text-[10px] text-[color:var(--muted)] line-clamp-2 h-7 leading-tight" x-text="product.description"></p>
                                 <div class="mt-3 flex items-center justify-between">
                                     <div class="font-black text-sm text-fikra-violet" x-text="product.price + ' ر.س'"></div>
-                                    <button @click="addToCart(product)" class="w-7 h-7 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition" :class="isInCart(product.id) ? 'bg-green-500/20 text-green-400' : ''">
+                                    <button @click="addToCart(product)" class="w-7 h-7 rounded-lg bg-[color:var(--fg)]/10 hover:bg-[color:var(--fg)]/20 flex items-center justify-center transition" :class="isInCart(product.id) ? 'bg-green-500/20 text-green-400' : ''">
                                         <span x-text="isInCart(product.id) ? '✓' : '+'" class="font-bold text-sm"></span>
                                     </button>
                                 </div>
@@ -345,7 +337,7 @@
                 <div class="grid lg:grid-cols-2 gap-8 items-center">
                     
                     <div data-reveal>
-                        <div class="inline-block px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-bold text-fikra-orange mb-4">
+                        <div class="inline-block px-3 py-1 rounded-full bg-[color:var(--fg)]/5 border border-[color:var(--border)] text-xs font-bold text-fikra-orange mb-4">
                             دراسة حالة: Rebranding
                         </div>
                         <h3 class="text-2xl sm:text-4xl font-black leading-tight mb-4" x-text="title"></h3>
@@ -353,8 +345,8 @@
                         
                         <div class="grid grid-cols-2 gap-4 mb-8">
                             <template x-for="stat in stats">
-                                <div class="p-4 rounded-2xl bg-white/5 border border-white/10">
-                                    <div class="text-3xl font-black text-white" x-text="stat.value"></div>
+                                <div class="p-4 rounded-2xl bg-[color:var(--card)] border border-[color:var(--border)]">
+                                    <div class="text-3xl font-black text-[color:var(--fg)]" x-text="stat.value"></div>
                                     <div class="text-sm text-[color:var(--muted)]" x-text="stat.label"></div>
                                 </div>
                             </template>
@@ -366,7 +358,7 @@
                         </a>
                     </div>
 
-                    <div class="relative w-full aspect-[4/3] sm:aspect-video rounded-[2rem] overflow-hidden border-4 border-white/10 shadow-2xl select-none" 
+                    <div class="relative w-full aspect-[4/3] sm:aspect-video rounded-[2rem] overflow-hidden border-4 border-[color:var(--border)] shadow-2xl select-none" 
                          x-data="beforeAfter()" 
                          @mousedown="start($event)" @touchstart="start($event)"
                          @mousemove.window="move($event)" @touchmove.window="move($event)"
@@ -394,7 +386,7 @@
                         </div>
 
                         <div class="absolute top-4 right-4 bg-black/60 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-lg pointer-events-none z-10">بعد التنفيذ ✨</div>
-                        <div class="absolute top-4 left-4 bg-black/60 backdrop-blur-md text-[color:var(--muted)] text-xs font-bold px-3 py-1 rounded-lg pointer-events-none z-10">قبل 🏚️</div>
+                        <div class="absolute top-4 left-4 bg-black/60 backdrop-blur-md text-gray-300 text-xs font-bold px-3 py-1 rounded-lg pointer-events-none z-10">قبل 🏚️</div>
 
                         <div class="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize shadow-[0_0_20px_rgba(0,0,0,0.5)] z-20" :style="`left: ${pos}%`">
                             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-fikra-violet">
@@ -407,8 +399,8 @@
         </section>
 
         <section id="brief" class="py-10 sm:py-20" x-data="briefWizard()">
-            <div class="noise rounded-[2.5rem] border border-[color:var(--border)] bg-[color:var(--card)] p-6 sm:p-10 relative overflow-hidden" data-reveal>
-                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+            <div class="noise rounded-[2.5rem] p-6 sm:p-10 relative overflow-hidden" data-reveal>
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[color:var(--fg)]/10 to-transparent"></div>
 
                 <div class="flex justify-between items-center mb-10 relative z-10">
                     <div>
@@ -416,8 +408,8 @@
                         <p class="mt-2 text-[color:var(--muted)]">صمم تجربتك.. اختر ما يمثل رؤيتك.</p>
                     </div>
                     <div class="flex items-center gap-2">
-                        <span class="text-sm font-bold text-[color:var(--muted)]">خطوة <span x-text="step" class="text-white"></span>/3</span>
-                        <div class="w-20 h-1.5 bg-white/10 rounded-full overflow-hidden">
+                        <span class="text-sm font-bold text-[color:var(--muted)]">خطوة <span x-text="step" class="text-[color:var(--fg)]"></span>/3</span>
+                        <div class="w-20 h-1.5 bg-[color:var(--fg)]/10 rounded-full overflow-hidden">
                             <div class="h-full bg-fikra-orange transition-all duration-500" :style="`width: ${(step/3)*100}%`"></div>
                         </div>
                     </div>
@@ -470,34 +462,34 @@
                         أي نمط يميل إليه ذوقك أكثر؟
                     </h3>
                     <div class="grid gap-4 sm:grid-cols-3">
-                        <button @click="setStyle('modern')" class="group p-6 rounded-3xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/30 text-right transition-all">
+                        <button @click="setStyle('modern')" class="group p-6 rounded-3xl bg-[color:var(--fg)]/5 border border-[color:var(--border)] hover:bg-[color:var(--fg)]/10 hover:border-[color:var(--fg)]/30 text-right transition-all">
                             <div class="flex justify-between items-start mb-4">
                                 <span class="text-4xl filter grayscale group-hover:grayscale-0 transition-all">☁️</span>
-                                <div class="w-6 h-6 rounded-full border-2 border-white/20 group-hover:border-fikra-violet group-hover:bg-fikra-violet transition-colors"></div>
+                                <div class="w-6 h-6 rounded-full border-2 border-[color:var(--border)] group-hover:border-fikra-violet group-hover:bg-fikra-violet transition-colors"></div>
                             </div>
-                            <div class="font-bold text-lg text-white group-hover:text-fikra-violet transition-colors">مودرن / بسيط</div>
+                            <div class="font-bold text-lg text-[color:var(--fg)] group-hover:text-fikra-violet transition-colors">مودرن / بسيط</div>
                             <div class="text-sm text-[color:var(--muted)] mt-2">خطوط نظيفة، مساحات بيضاء.</div>
                         </button>
 
-                        <button @click="setStyle('classic')" class="group p-6 rounded-3xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/30 text-right transition-all">
+                        <button @click="setStyle('classic')" class="group p-6 rounded-3xl bg-[color:var(--fg)]/5 border border-[color:var(--border)] hover:bg-[color:var(--fg)]/10 hover:border-[color:var(--fg)]/30 text-right transition-all">
                             <div class="flex justify-between items-start mb-4">
                                 <span class="text-4xl filter grayscale group-hover:grayscale-0 transition-all">🏛️</span>
-                                <div class="w-6 h-6 rounded-full border-2 border-white/20 group-hover:border-yellow-500 group-hover:bg-yellow-500 transition-colors"></div>
+                                <div class="w-6 h-6 rounded-full border-2 border-[color:var(--border)] group-hover:border-yellow-500 group-hover:bg-yellow-500 transition-colors"></div>
                             </div>
-                            <div class="font-bold text-lg text-white group-hover:text-yellow-500 transition-colors">كلاسيكي / فخم</div>
+                            <div class="font-bold text-lg text-[color:var(--fg)] group-hover:text-yellow-500 transition-colors">كلاسيكي / فخم</div>
                             <div class="text-sm text-[color:var(--muted)] mt-2">تفاصيل غنية، زخارف، ألوان دافئة.</div>
                         </button>
 
-                        <button @click="setStyle('neon')" class="group p-6 rounded-3xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/30 text-right transition-all">
+                        <button @click="setStyle('neon')" class="group p-6 rounded-3xl bg-[color:var(--fg)]/5 border border-[color:var(--border)] hover:bg-[color:var(--fg)]/10 hover:border-[color:var(--fg)]/30 text-right transition-all">
                             <div class="flex justify-between items-start mb-4">
                                 <span class="text-4xl filter grayscale group-hover:grayscale-0 transition-all">⚡</span>
-                                <div class="w-6 h-6 rounded-full border-2 border-white/20 group-hover:border-fikra-orange group-hover:bg-fikra-orange transition-colors"></div>
+                                <div class="w-6 h-6 rounded-full border-2 border-[color:var(--border)] group-hover:border-fikra-orange group-hover:bg-fikra-orange transition-colors"></div>
                             </div>
-                            <div class="font-bold text-lg text-white group-hover:text-fikra-orange transition-colors">نيون / جريء</div>
+                            <div class="font-bold text-lg text-[color:var(--fg)] group-hover:text-fikra-orange transition-colors">نيون / جريء</div>
                             <div class="text-sm text-[color:var(--muted)] mt-2">إضاءة عالية، طابع شبابي.</div>
                         </button>
                     </div>
-                    <button @click="step=1" class="mt-8 flex items-center gap-2 text-sm font-bold text-[color:var(--muted)] hover:text-white transition-colors">
+                    <button @click="step=1" class="mt-8 flex items-center gap-2 text-sm font-bold text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-colors">
                         <svg class="w-4 h-4 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                         رجوع للخطوة السابقة
                     </button>
@@ -506,8 +498,8 @@
                 <div x-show="step===3" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 translate-y-8" x-transition:enter-end="opacity-100 translate-y-0">
                     <div class="text-center mb-8">
                         <div class="inline-block p-3 rounded-full bg-green-500/20 text-green-400 text-3xl mb-4">✨</div>
-                        <h3 class="text-2xl font-black text-white">وجدنا ما يناسب ذوقك!</h3>
-                        <p class="text-sm text-[color:var(--muted)] mt-2">بناءً على اختيارك: <span class="font-bold text-white px-2 py-1 rounded bg-white/10" x-text="preferences.style"></span></p>
+                        <h3 class="text-2xl font-black text-[color:var(--fg)]">وجدنا ما يناسب ذوقك!</h3>
+                        <p class="text-sm text-[color:var(--muted)] mt-2">بناءً على اختيارك: <span class="font-bold text-[color:var(--fg)] px-2 py-1 rounded bg-[color:var(--fg)]/10" x-text="preferences.style"></span></p>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
@@ -523,18 +515,18 @@
                         </template>
                     </div>
 
-                    <div class="bg-gradient-to-br from-white/5 to-white/10 rounded-[2rem] p-6 border border-white/10 text-center">
-                        <h4 class="font-bold text-lg mb-6">لنحول هذه الرؤية إلى واقع 🔻</h4>
+                    <div class="bg-gradient-to-br from-[color:var(--fg)]/5 to-[color:var(--fg)]/10 rounded-[2rem] p-6 border border-[color:var(--border)] text-center">
+                        <h4 class="font-bold text-lg mb-6 text-[color:var(--fg)]">لنحول هذه الرؤية إلى واقع 🔻</h4>
                         <div class="grid gap-3 sm:grid-cols-2 mb-4">
-                            <input x-model="contact.name" type="text" placeholder="الاسم الكريم" class="w-full p-4 rounded-xl bg-black/40 border border-white/10 outline-none focus:border-fikra-orange focus:bg-black/60 transition text-white placeholder-white/30">
-                            <input x-model="contact.phone" type="tel" placeholder="رقم الجوال" class="w-full p-4 rounded-xl bg-black/40 border border-white/10 outline-none focus:border-fikra-orange focus:bg-black/60 transition text-white placeholder-white/30">
+                            <input x-model="contact.name" type="text" placeholder="الاسم الكريم" class="w-full p-4 rounded-xl bg-[color:var(--bg)] border border-[color:var(--border)] outline-none focus:border-fikra-orange focus:bg-[color:var(--card)] transition text-[color:var(--fg)] placeholder-[color:var(--muted)]">
+                            <input x-model="contact.phone" type="tel" placeholder="رقم الجوال" class="w-full p-4 rounded-xl bg-[color:var(--bg)] border border-[color:var(--border)] outline-none focus:border-fikra-orange focus:bg-[color:var(--card)] transition text-[color:var(--fg)] placeholder-[color:var(--muted)]">
                         </div>
                         <button @click="sendRequest()" class="w-full py-4 rounded-xl bg-gradient-to-l from-fikra-orange to-fikra-violet text-white font-bold text-lg shadow-glow-orange hover:scale-[1.01] transition-transform flex items-center justify-center gap-2">
                             <span>•</span> أرسل طلب استشارة مجانية
                         </button>
                     </div>
                     
-                    <button @click="reset()" class="mt-6 w-full text-center text-sm font-medium text-[color:var(--muted)] hover:text-white transition-colors">بدء من جديد ↻</button>
+                    <button @click="reset()" class="mt-6 w-full text-center text-sm font-medium text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-colors">بدء من جديد ↻</button>
                 </div>
             </div>
         </section>
@@ -570,7 +562,7 @@
                                  <p class="text-sm text-[color:var(--muted)]" x-text="p.subtitle"></p>
                                  <div class="mt-4 flex flex-wrap gap-2">
                                      <template x-for="t in p.tags">
-                                         <span class="text-xs px-2 py-1 bg-white/10 rounded-md" x-text="t"></span>
+                                         <span class="text-xs px-2 py-1 bg-[color:var(--fg)]/5 rounded-md" x-text="t"></span>
                                      </template>
                                  </div>
                              </div>
