@@ -3,10 +3,11 @@
   Goal: stable offline-first behavior without changing the UI.
 */
 
-const CACHE_VERSION = 'v09';
+const CACHE_VERSION = 'v11';
 const CACHE_NAME = `safi-pwa-${CACHE_VERSION}`;
 
 // Core assets (same-origin)
+// ملاحظة: صور المنتجات (assets/products/*) تُخزن تلقائياً عند تحميلها
 const CORE_ASSETS = [
   './',
   './index.html',
@@ -15,7 +16,13 @@ const CORE_ASSETS = [
   './manifest.json',
   './assets/icons/icon-192.webp',
   './assets/icons/icon-512.webp',
-  './assets/logo.webp'
+  './assets/logo.webp',
+  // ملفات البيانات
+  './data/config.js',
+  './data/products.js',
+  './data/portfolio.js',
+  './data/partners.js',
+  './data/services.js'
 ];
 
 self.addEventListener('install', (event) => {

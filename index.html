@@ -47,6 +47,15 @@
     </script>
 
     <link rel="stylesheet" href="css/style.css" />
+
+    <!-- ملفات البيانات - يمكن تعديلها بسهولة -->
+    <script src="data/config.js"></script>
+    <script src="data/products.js"></script>
+    <script src="data/portfolio.js"></script>
+    <script src="data/partners.js"></script>
+    <script src="data/services.js"></script>
+
+    <!-- منطق التطبيق -->
     <script src="js/app.js"></script>
     <script defer src="https://unpkg.com/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -142,8 +151,8 @@
             </div>
         </section>
 
-        <div class="relative w-full py-10 mb-20 overflow-hidden border-y border-[color:var(--border)] bg-[color:var(--card)] backdrop-blur-xl shadow-glass">
-            <div class="absolute inset-0 z-0 opacity-10 pointer-events-none" 
+        <div class="relative w-full py-10 mb-20 overflow-hidden border-y border-[color:var(--border)] bg-[color:var(--card)] backdrop-blur-xl shadow-glass" x-data="partnersCarousel()">
+            <div class="absolute inset-0 z-0 opacity-10 pointer-events-none"
                  style="background-image: linear-gradient(to right, rgba(128,128,128,0.2) 1px, transparent 1px), linear-gradient(to bottom, rgba(128,128,128,0.2) 1px, transparent 1px); background-size: 32px 32px;">
             </div>
 
@@ -152,26 +161,23 @@
 
             <div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 text-center">
                 <p class="text-xs font-bold text-[color:var(--muted)] tracking-[0.2em] uppercase mb-8 opacity-80">شركاء النجاح في رحلتنا</p>
-                
+
                 <div class="flex overflow-hidden" dir="ltr">
                     <div class="flex animate-infinite-scroll gap-20 py-2 pr-20 items-center">
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🏛️</span> <span class="font-bold text-lg tracking-wide">وزارة الصحة</span></div>
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🏗️</span> <span class="font-bold text-lg tracking-wide">NEOM نيوم</span></div>
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">⛽</span> <span class="font-bold text-lg tracking-wide">Saudi Aramco</span></div>
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🎓</span> <span class="font-bold text-lg tracking-wide">وزارة التعليم</span></div>
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">📡</span> <span class="font-bold text-lg tracking-wide">STC</span></div>
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🌴</span> <span class="font-bold text-lg tracking-wide">الهيئة الملكية</span></div>
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🎢</span> <span class="font-bold text-lg tracking-wide">القدية Qiddiya</span></div>
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">✈️</span> <span class="font-bold text-lg tracking-wide">الخطوط السعودية</span></div>
-                        
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🏛️</span> <span class="font-bold text-lg tracking-wide">وزارة الصحة</span></div>
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🏗️</span> <span class="font-bold text-lg tracking-wide">NEOM نيوم</span></div>
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">⛽</span> <span class="font-bold text-lg tracking-wide">Saudi Aramco</span></div>
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🎓</span> <span class="font-bold text-lg tracking-wide">وزارة التعليم</span></div>
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">📡</span> <span class="font-bold text-lg tracking-wide">STC</span></div>
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🌴</span> <span class="font-bold text-lg tracking-wide">الهيئة الملكية</span></div>
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">🎢</span> <span class="font-bold text-lg tracking-wide">القدية Qiddiya</span></div>
-                        <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0"><span class="text-3xl">✈️</span> <span class="font-bold text-lg tracking-wide">الخطوط السعودية</span></div>
+                        <!-- الشركاء - النسخة الأولى -->
+                        <template x-for="partner in partners" :key="partner.name">
+                            <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0">
+                                <span class="text-3xl" x-text="partner.icon"></span>
+                                <span class="font-bold text-lg tracking-wide" x-text="partner.name"></span>
+                            </div>
+                        </template>
+                        <!-- الشركاء - النسخة الثانية للتمرير المستمر -->
+                        <template x-for="partner in partners" :key="'dup-' + partner.name">
+                            <div class="flex items-center gap-3 text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-all duration-300 hover:scale-105 cursor-default grayscale hover:grayscale-0">
+                                <span class="text-3xl" x-text="partner.icon"></span>
+                                <span class="font-bold text-lg tracking-wide" x-text="partner.name"></span>
+                            </div>
+                        </template>
                     </div>
                 </div>
             </div>
@@ -268,8 +274,15 @@
                     <div class="w-0 sm:w-0 shrink-0"></div> 
                     <template x-for="product in newArrivals" :key="product.id">
                         <article class="snap-center shrink-0 w-[160px] group noise rounded-2xl overflow-hidden transition-all duration-300 hover:border-fikra-orange/50">
-                            <div class="relative h-28 bg-gradient-to-br from-[color:var(--fg)]/5 to-[color:var(--fg)]/10 flex items-center justify-center">
-                                <span class="text-4xl drop-shadow-lg group-hover:scale-110 transition-transform duration-300" x-text="product.icon"></span>
+                            <div class="relative h-28 bg-gradient-to-br from-[color:var(--fg)]/5 to-[color:var(--fg)]/10 flex items-center justify-center overflow-hidden">
+                                <!-- صورة المنتج (إذا وجدت) -->
+                                <template x-if="product.image">
+                                    <img :src="PRODUCTS_DATA.imagesPath + product.image" :alt="product.name" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                                </template>
+                                <!-- الإيموجي (إذا لم توجد صورة) -->
+                                <template x-if="!product.image">
+                                    <span class="text-4xl drop-shadow-lg group-hover:scale-110 transition-transform duration-300" x-text="product.icon"></span>
+                                </template>
                                 <div class="absolute top-2 right-2 px-2 py-0.5 bg-black/40 rounded text-[9px] font-bold text-white backdrop-blur-md" x-text="product.categoryName"></div>
                             </div>
                             <div class="p-3">
@@ -299,8 +312,15 @@
                     <div class="w-0 sm:w-0 shrink-0"></div>
                     <template x-for="product in bestSellers" :key="product.id">
                         <article class="snap-center shrink-0 w-[160px] group noise rounded-2xl overflow-hidden transition-all duration-300 hover:border-fikra-violet/50">
-                            <div class="relative h-28 bg-gradient-to-br from-[color:var(--fg)]/5 to-[color:var(--fg)]/10 flex items-center justify-center">
-                                <span class="text-4xl drop-shadow-lg group-hover:scale-110 transition-transform duration-300" x-text="product.icon"></span>
+                            <div class="relative h-28 bg-gradient-to-br from-[color:var(--fg)]/5 to-[color:var(--fg)]/10 flex items-center justify-center overflow-hidden">
+                                <!-- صورة المنتج (إذا وجدت) -->
+                                <template x-if="product.image">
+                                    <img :src="PRODUCTS_DATA.imagesPath + product.image" :alt="product.name" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                                </template>
+                                <!-- الإيموجي (إذا لم توجد صورة) -->
+                                <template x-if="!product.image">
+                                    <span class="text-4xl drop-shadow-lg group-hover:scale-110 transition-transform duration-300" x-text="product.icon"></span>
+                                </template>
                                 <div class="absolute top-2 right-2 px-2 py-0.5 bg-black/40 rounded text-[9px] font-bold text-white backdrop-blur-md" x-text="product.categoryName"></div>
                             </div>
                             <div class="p-3">

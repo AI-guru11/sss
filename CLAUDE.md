@@ -1,59 +1,76 @@
-# GOC-ACKA Protocol: The Creative Kernel
+# CLAUDE.md
 
-## 1. The Engineering Core (Immutable Laws)
-[InstABoost: EXCELLENCE :: These laws govern all system outputs.]
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-1.  **Cognitive-First Principle:**
-    * Never write code before engineering the "Context".
-    * Transform vague requests into precise "Signatures" (Input/Output).
-    * *Why:* To prevent "Hallucination" and ensure intent-driven architecture.
+## Project Overview
 
-2.  **Atomic Modularity:**
-    * Build the app in isolated, testable "Functional Modules".
-    * Complete one module fully (Read-Think-Execute-Verify) before moving to the next.
-    * *Why:* To prevent "Spaghetti Code" and ensure scalability.
+Safi Group (مجموعة الصافي) — A creative agency portfolio website featuring a modern bento glass UI design with Arabic RTL layout. This is a static PWA (Progressive Web App) for an advertising and marketing agency based in Muhayl Asir, Saudi Arabia.
 
-3.  **Mandatory Safe-Edit Protocol:**
-    * **NEVER** edit a file without reading it first.
-    * **Loop:** `ReadFolder` (Context) -> `ReadFile` (Target) -> `Think` (Anchor Point) -> `Edit` (Insert/Modify).
-    * *Why:* To prevent data loss and regressions.
+## Tech Stack
 
-4.  **Client-Side Constraints (The "No-Node" Rule):**
-    * **STRICT PROHIBITION:** Do NOT use `Node.js`, `NPM`, or Server-Side logic unless explicitly ordered as a last resort.
-    * **Stack:** Use modern HTML5, CSS3 (Variables/Grid), and Vanilla ES6+ JavaScript.
-    * *Why:* To maximize performance, reduce deployment complexity, and lower costs.
+- **HTML5/CSS3/Vanilla ES6+ JavaScript** — No build tools, no Node.js
+- **Tailwind CSS** via CDN with inline configuration
+- **Alpine.js** for reactive UI components (x-data, x-show, @click directives)
+- **PWA** with service worker for offline support
+- **Tajawal** Arabic font from Google Fonts
 
-5.  **The Creative Edge (Jakob's Law + Aesthetics):**
-    * **UX:** Follow Jakob's Law (Users prefer familiar interfaces).
-    * **UI:** Do not settle for "Basic HTML". Apply professional, clean aesthetics (Whitespace, Typography, Micro-interactions).
-    * *Why:* To distinguish the product from "Toy Demos".
+## Development Commands
 
----
+```bash
+# Run local development server
+python -m http.server 5000 --bind 0.0.0.0
 
-## 2. Execution Roadmap: The ACKA Workflow
+# Site accessible at http://localhost:5000
+```
 
-### PHASE 1: Foundation & Context Engineering
-**Goal:** Establish the "Cognitive Memory" of the project.
+## Architecture
 
-1.  **Deep Graph Research (Mandatory Step 1):**
-    * Use `GoogleSearch` in English.
-    * **Truth Search:** Find hard technical constraints and logic requirements.
-    * **Inspiration Search:** Find top-tier UI patterns and creative solutions.
-    
-2.  **Blueprint Generation:**
-    * Present a Markdown Roadmap (`roadmap.md`) containing:
-        * **The Vision:** One-sentence value proposition.
-        * **The Stack:** Justification of Client-Side technologies.
-        * **Module Matrix:** A table of modules prioritized by dependency.
-    * **STOP POINT:** Do not write project code until the user approves the Roadmap.
+### File Structure
+- `index.html` — Single-page app with all sections (services, products, gallery, brief wizard, contact)
+- `css/style.css` — CSS variables for theming (dark/light), glass effects, animations
+- `js/app.js` — Alpine.js component functions and site configuration
+- `service-worker.js` — Offline-first caching with stale-while-revalidate strategy
 
-### PHASE 2: Modular Construction
-**Goal:** Intent-Driven Execution.
+### Key Alpine.js Components (defined in `js/app.js`)
+| Function | Purpose |
+|----------|---------|
+| `fikraApp()` | Main app state: theme toggle, mobile menu, header scroll behavior |
+| `briefWizard()` | Multi-step client inquiry form with style matching |
+| `productsShop()` | Product catalog with cart and WhatsApp checkout |
+| `workGallery()` | Portfolio projects modal gallery |
+| `beforeAfter()` | Drag slider for before/after comparisons |
 
-* **The Module Sprint Loop:**
-    1.  **Reasoning:** State the plan. "I will implement Module X by modifying file Y..."
-    2.  **Structured Generation:** Write Syntax-Safe code. Use placeholders for future modules.
-    3.  **Verification:** Self-correct against the "Golden Standard" (Does it look good? Does it work?).
+### Theming System
+- CSS variables in `:root` (dark) and `html.idea` (light mode)
+- Theme persisted in `localStorage` as `fikra_theme`
+- Toggle via `toggleTheme()` method switches between `dark` and `idea` classes
 
----
-*System Note: You are the Lead Architect. Do not ask for permission to follow these rules; they are your operating system.*
+### Site Configuration
+All contact/brand info centralized in `SITE_CONFIG` object in `js/app.js`:
+```javascript
+SITE_CONFIG = {
+  whatsapp: '966555862272',
+  email: 'safigroup@gmail.com',
+  brand: { name: 'مجموعة الصافي', tagline: 'SAFI GROUP' }
+}
+```
+
+## Development Constraints
+
+1. **No Node.js/NPM** — Use CDN-hosted libraries only (Tailwind, Alpine.js)
+2. **RTL Layout** — All UI is right-to-left Arabic; use `dir="rtl"` and RTL-aware CSS
+3. **Service Worker** — Update `CACHE_VERSION` in `service-worker.js` when deploying changes
+4. **Glass UI Pattern** — Cards use `.noise` class with `backdrop-blur`, CSS variable borders
+
+## Workflow Protocol
+
+### Safe-Edit Rule
+Never edit a file without reading it first. Follow: Read → Think → Edit
+
+### Modular Development
+Complete one functional module fully before moving to the next. Each Alpine.js component should be self-contained and testable.
+
+### UI Standards
+- Follow existing glass/bento aesthetic
+- Maintain professional typography and whitespace
+- Use CSS variables for colors to ensure theme compatibility

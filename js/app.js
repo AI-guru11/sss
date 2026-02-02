@@ -1,19 +1,13 @@
 // ==============================================
-// SITE CONFIGURATION (إعدادات الموقع)
+// MAIN APPLICATION LOGIC
+// تطبيق مجموعة الصافي
 // ==============================================
-const SITE_CONFIG = {
-  whatsapp: '966555862272',
-  email: 'safigroup@gmail.com',
-  brand: {
-    name: 'مجموعة الصافي',
-    tagline: 'SAFI GROUP',
-    logo: 'assets/logo.webp'
-  },
-  location: {
-    city: 'Muhayl Asir, Saudi Arabia',
-    mapsUrl: 'https://maps.google.com/?q=Muhayl+Asir'
-  }
-};
+// ملاحظة: البيانات موجودة في مجلد data/
+// - data/config.js    → إعدادات الموقع
+// - data/products.js  → المنتجات
+// - data/portfolio.js → المشاريع
+// - data/partners.js  → الشركاء
+// - data/services.js  → الخدمات
 
 // ==============================================
 // 1. MAIN APP LOGIC
@@ -64,21 +58,16 @@ function briefWizard() {
     step: 1,
     preferences: { category: '', style: '' },
     contact: { name: '', phone: '' },
-    
-    // بيانات المعرض للفلترة
-    portfolioDB: [
-      { id: 1, title: 'فندق قصر السحاب', category: 'decor', style: 'classic', img: 'linear-gradient(135deg, #2c1a1a, #4a3b3b)', desc: 'ديكور داخلي كلاسيكي فاخر.' },
-      { id: 2, title: 'مقهى سايبر نيون', category: 'decor', style: 'neon', img: 'linear-gradient(135deg, #0f0c29, #302b63, #24243e)', desc: 'إضاءة نيون وتصميم عصري.' },
-      { id: 3, title: 'هوية شركة تقنية', category: 'branding', style: 'modern', img: 'linear-gradient(135deg, #1a2980, #26d0ce)', desc: 'شعار وهوية بصرية بأسلوب بسيط.' },
-      { id: 4, title: 'مطعم برجر مودرن', category: 'decor', style: 'modern', img: 'linear-gradient(135deg, #ff512f, #dd2476)', desc: 'تصميم داخلي بألوان حيوية.' },
-      { id: 5, title: 'حفل زفاف ملكي', category: 'events', style: 'classic', img: 'linear-gradient(135deg, #ECE9E6, #FFFFFF)', desc: 'تنظيم وتنسيق كلاسيكي فخم.' },
-      { id: 6, title: 'لاونج نيون', category: 'decor', style: 'neon', img: 'linear-gradient(135deg, #11998e, #38ef7d)', desc: 'أجواء ليلية بإضاءة خافتة ونيون.' },
-    ],
+
+    // استيراد البيانات من ملف portfolio.js
+    get portfolioDB() {
+      return window.PORTFOLIO_DATA?.briefProjects || [];
+    },
     matches: [],
 
     setCategory(cat) { this.preferences.category = cat; this.step = 2; },
     setStyle(style) { this.preferences.style = style; this.step = 3; this.findMatches(); },
-    
+
     findMatches() {
       this.matches = this.portfolioDB.filter(p => (p.category === this.preferences.category) && (p.style === this.preferences.style));
       if (this.matches.length === 0) this.matches = this.portfolioDB.filter(p => p.category === this.preferences.category).slice(0, 2);
@@ -101,25 +90,15 @@ function productsShop() {
   return {
     cart: [],
     activeCategory: 'all',
-    
-    categories: [
-      { id: 'all', name: 'الكل' },
-      { id: 'neon', name: 'نيون' },
-      { id: 'stands', name: 'ستاندات' },
-      { id: 'print', name: 'طباعة' },
-      { id: 'gifts', name: 'هدايا' }
-    ],
 
-    products: [
-      { id: 1, name: 'لوحة نيون', price: 350, tag: 'best', category: 'neon', icon: '⚡', categoryName: 'نيون', description: 'إضاءة LED جذابة.' },
-      { id: 2, name: 'رول أب', price: 280, tag: 'new', category: 'stands', icon: '📜', categoryName: 'ستاندات', description: 'ستاند 85x200 سم.' },
-      { id: 3, name: 'أقلام (50)', price: 125, tag: 'best', category: 'gifts', icon: '🖊️', categoryName: 'هدايا', description: 'أقلام مع طباعة.' },
-      { id: 4, name: 'كروت (1000)', price: 180, tag: 'new', category: 'print', icon: '📇', categoryName: 'طباعة', description: 'ورق مقوى 350 جرام.' },
-      { id: 5, name: 'كوب سيراميك', price: 25, tag: 'best', category: 'gifts', icon: '☕', categoryName: 'هدايا', description: 'طباعة حرارية ثابتة.' },
-      { id: 6, name: 'بنر جداري', price: 45, tag: 'new', category: 'print', icon: '🖼️', categoryName: 'طباعة', description: 'للمتر المربع خارجي.' },
-      { id: 7, name: 'بوب أب 3x3', price: 1800, tag: 'best', category: 'stands', icon: '🎪', categoryName: 'ستاندات', description: 'جدارية للمعارض.' },
-      { id: 8, name: 'لوحة Open', price: 250, tag: 'new', category: 'neon', icon: '💡', categoryName: 'نيون', description: 'جاهزة للمحلات.' }
-    ],
+    // استيراد البيانات من ملف products.js
+    get categories() {
+      return window.PRODUCTS_DATA?.categories || [];
+    },
+
+    get products() {
+      return window.PRODUCTS_DATA?.products || [];
+    },
 
     filterByCategory(id) { this.activeCategory = id; },
 
@@ -148,16 +127,15 @@ function productsShop() {
 }
 
 // ==============================================
-// 4. TRANSFORMATIONS DATA (القسم الجديد)
+// 4. TRANSFORMATIONS DATA
 // ==============================================
 function transformationsData() {
+  // استيراد البيانات من ملف portfolio.js
+  const data = window.PORTFOLIO_DATA?.transformations || {};
   return {
-    title: 'قصة نجاح: إعادة إحياء علامة تجارية',
-    desc: 'شاهد كيف حولنا المساحة من تصميم تقليدي باهت إلى تجربة بصرية عصرية تنبض بالحياة، مما ساهم في جذب شريحة عملاء جديدة.',
-    stats: [
-      { label: 'زيادة المبيعات', value: '45%' },
-      { label: 'تفاعل العملاء', value: '3x' }
-    ]
+    title: data.title || '',
+    desc: data.desc || '',
+    stats: data.stats || []
   };
 }
 
@@ -166,17 +144,28 @@ function transformationsData() {
 // ==============================================
 function workGallery() {
   return {
-    active: null, modalOpen: false,
-    projects: [
-      { id: 1, title: 'Conference Branding', subtitle: 'هوية بصرية لمؤتمر', bg: 'linear-gradient(135deg, #1a1a1a 0%, #2d3748 100%)', tags: ['طباعة', 'هوية'] },
-      { id: 2, title: 'Coffee Shop Neon', subtitle: 'تنفيذ إضاءة نيون', bg: 'linear-gradient(135deg, #2c0b0e 0%, #5c181f 100%)', tags: ['نيون', 'ديكور'] },
-      { id: 3, title: 'Marketing Campaign', subtitle: 'حملة إعلانية', bg: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)', tags: ['تصميم', 'إعلانات'] }
-    ]
+    active: null,
+    modalOpen: false,
+    // استيراد البيانات من ملف portfolio.js
+    get projects() {
+      return window.PORTFOLIO_DATA?.galleryProjects || [];
+    }
   };
 }
 
 // ==============================================
-// 6. HELPER UTILS (Slider Logic)
+// 6. PARTNERS CAROUSEL
+// ==============================================
+function partnersCarousel() {
+  return {
+    get partners() {
+      return window.PARTNERS_DATA || [];
+    }
+  };
+}
+
+// ==============================================
+// 7. HELPER UTILS (Slider Logic)
 // ==============================================
 function beforeAfter() {
   return {
@@ -192,11 +181,13 @@ function beforeAfter() {
   };
 }
 
-// Export Global
-window.SITE_CONFIG = SITE_CONFIG;
+// ==============================================
+// Export Global Functions
+// ==============================================
 window.fikraApp = fikraApp;
 window.briefWizard = briefWizard;
 window.productsShop = productsShop;
 window.transformationsData = transformationsData;
 window.workGallery = workGallery;
+window.partnersCarousel = partnersCarousel;
 window.beforeAfter = beforeAfter;
