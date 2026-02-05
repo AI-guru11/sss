@@ -246,103 +246,225 @@
             </div>
         </section>
 
-        <section id="products" class="py-10 sm:py-20 overflow-hidden" x-data="productsShop()" x-init="init()">
-            <div class="mb-8 px-4 sm:px-6 mx-auto max-w-7xl" data-reveal>
-                <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <section id="products" class="py-10 sm:py-20" x-data="productsShop()" x-init="init()">
+            <!-- Header & Filters -->
+            <div class="mb-8" data-reveal>
+                <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8">
                     <div>
                         <h2 class="text-3xl sm:text-5xl font-black tracking-tight">متجر <span class="text-fikra-orange">المنتجات</span></h2>
-                        <p class="mt-2 text-[color:var(--muted)]">تصفح أحدث عروضنا ومنتجاتنا المميزة.</p>
-                    </div>
-                    <div class="flex gap-2 overflow-x-auto scrollbar-hide pb-2 max-w-full">
-                        <template x-for="cat in categories" :key="cat.id">
-                            <button class="px-4 py-2 rounded-xl font-bold text-xs whitespace-nowrap transition-all" 
-                                :class="activeCategory === cat.id ? 'bg-gradient-to-l from-fikra-violet to-fikra-orange text-white' : 'bg-[color:var(--card)] text-[color:var(--muted)] ring-1 ring-[color:var(--border)] hover:bg-[color:var(--fg)]/5'"
-                                @click="filterByCategory(cat.id)" x-text="cat.name"></button>
-                        </template>
+                        <p class="mt-2 text-[color:var(--muted)]">تصفح أحدث عروضنا ومنتجاتنا المميزة — <span x-text="filteredProducts.length"></span> منتج</p>
                     </div>
                 </div>
+
+                <!-- Category Filter Buttons -->
+                <div class="category-filter">
+                    <template x-for="cat in categories" :key="cat.id">
+                        <button class="category-filter-btn"
+                            :class="{ 'active': activeCategory === cat.id }"
+                            @click="filterByCategory(cat.id)">
+                            <span class="category-icon" x-text="cat.icon"></span>
+                            <span x-text="cat.name"></span>
+                            <span class="category-count" x-text="getCategoryCount(cat.id)"></span>
+                        </button>
+                    </template>
+                </div>
             </div>
 
-            <div class="mb-10" data-reveal x-show="newArrivals.length > 0" x-transition>
-                <div class="px-4 sm:px-6 mx-auto max-w-7xl flex items-center justify-between mb-4">
-                    <h3 class="text-lg font-bold flex items-center gap-2">
-                        <span class="text-xl">✨</span> وصل حديثاً
-                    </h3>
-                    <span class="text-[10px] font-bold text-fikra-orange bg-fikra-orange/10 px-2 py-1 rounded-lg">New</span>
-                </div>
-                <div class="flex overflow-x-auto snap-x snap-mandatory gap-3 pb-6 px-4 sm:px-6 -mx-4 sm:mx-0 scrollbar-hide">
-                    <div class="w-0 sm:w-0 shrink-0"></div> 
-                    <template x-for="product in newArrivals" :key="product.id">
-                        <article class="snap-center shrink-0 w-[160px] group noise rounded-2xl overflow-hidden transition-all duration-300 hover:border-fikra-orange/50">
-                            <div class="relative h-28 bg-gradient-to-br from-[color:var(--fg)]/5 to-[color:var(--fg)]/10 flex items-center justify-center overflow-hidden">
-                                <!-- صورة المنتج (إذا وجدت) -->
-                                <template x-if="product.image">
-                                    <img :src="PRODUCTS_DATA.imagesPath + product.image" :alt="product.name" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
-                                </template>
-                                <!-- الإيموجي (إذا لم توجد صورة) -->
-                                <template x-if="!product.image">
-                                    <span class="text-4xl drop-shadow-lg group-hover:scale-110 transition-transform duration-300" x-text="product.icon"></span>
-                                </template>
-                                <div class="absolute top-2 right-2 px-2 py-0.5 bg-black/40 rounded text-[9px] font-bold text-white backdrop-blur-md" x-text="product.categoryName"></div>
+            <!-- Products Grid -->
+            <div class="products-grid" data-reveal>
+                <template x-for="product in filteredProducts" :key="product.id">
+                    <article class="product-card">
+                        <!-- Product Image -->
+                        <div class="product-card-image">
+                            <!-- Badge -->
+                            <template x-if="product.tag === 'new'">
+                                <span class="product-badge product-badge-new">جديد</span>
+                            </template>
+                            <template x-if="product.tag === 'best'">
+                                <span class="product-badge product-badge-best">الأكثر طلباً</span>
+                            </template>
+
+                            <!-- Category Label -->
+                            <span class="product-category-label" x-text="product.categoryName"></span>
+
+                            <!-- Image or Icon -->
+                            <template x-if="product.image">
+                                <img :data-src="imagesPath + product.image"
+                                     :alt="product.name"
+                                     class="lazy-image"
+                                     loading="lazy">
+                            </template>
+                            <template x-if="!product.image">
+                                <div class="product-card-icon">
+                                    <span x-text="product.icon"></span>
+                                </div>
+                            </template>
+
+                            <!-- Quick View Button -->
+                            <button class="product-quick-view" @click="openProductModal(product)">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                </svg>
+                            </button>
+
+                            <!-- Out of Stock -->
+                            <template x-if="!product.inStock">
+                                <div class="product-out-of-stock">
+                                    <span>نفذت الكمية</span>
+                                </div>
+                            </template>
+                        </div>
+
+                        <!-- Product Content -->
+                        <div class="product-card-content">
+                            <h4 class="product-card-title" x-text="product.name"></h4>
+                            <p class="product-card-desc" x-text="product.description"></p>
+
+                            <!-- Rating -->
+                            <div class="product-rating">
+                                <div class="product-rating-stars">
+                                    <template x-for="i in getStars(product.rating).full">
+                                        <svg class="product-rating-star" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                        </svg>
+                                    </template>
+                                    <template x-for="i in getStars(product.rating).empty">
+                                        <svg class="product-rating-star empty" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                        </svg>
+                                    </template>
+                                </div>
+                                <span class="product-rating-value" x-text="product.rating"></span>
                             </div>
-                            <div class="p-3">
-                                <h4 class="font-bold text-sm leading-tight truncate" x-text="product.name"></h4>
-                                <p class="mt-1 text-[10px] text-[color:var(--muted)] line-clamp-2 h-7 leading-tight" x-text="product.description"></p>
-                                <div class="mt-3 flex items-center justify-between">
-                                    <div class="font-black text-sm text-fikra-orange" x-text="product.price + ' ر.س'"></div>
-                                    <button @click="addToCart(product)" class="w-7 h-7 rounded-lg bg-[color:var(--fg)]/10 hover:bg-[color:var(--fg)]/20 flex items-center justify-center transition" :class="isInCart(product.id) ? 'bg-green-500/20 text-green-400' : ''">
-                                        <span x-text="isInCart(product.id) ? '✓' : '+'" class="font-bold text-sm"></span>
-                                    </button>
+
+                            <!-- Price -->
+                            <div class="product-price-container">
+                                <span class="product-price" x-text="product.price + ' ر.س'"></span>
+                                <template x-if="product.originalPrice && product.originalPrice > product.price">
+                                    <span class="product-price-original" x-text="product.originalPrice + ' ر.س'"></span>
+                                </template>
+                                <template x-if="getDiscount(product) > 0">
+                                    <span class="product-discount" x-text="'-' + getDiscount(product) + '%'"></span>
+                                </template>
+                            </div>
+
+                            <!-- Actions -->
+                            <div class="product-actions">
+                                <button class="product-action-btn product-action-btn-primary"
+                                    :class="{ 'in-cart': isInCart(product.id) }"
+                                    @click="addToCart(product)"
+                                    :disabled="!product.inStock">
+                                    <template x-if="!isInCart(product.id)">
+                                        <span>إضافة للسلة</span>
+                                    </template>
+                                    <template x-if="isInCart(product.id)">
+                                        <span>✓ في السلة</span>
+                                    </template>
+                                </button>
+                                <button class="product-action-btn product-action-btn-secondary"
+                                    @click="openProductModal(product)">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+                </template>
+            </div>
+
+            <!-- Product Modal -->
+            <div class="product-modal-overlay"
+                 x-show="modalOpen"
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 @click.self="closeProductModal()"
+                 @keydown.escape.window="closeProductModal()"
+                 x-cloak>
+                <div class="product-modal"
+                     x-show="modalOpen"
+                     x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="opacity-0 scale-95 translate-y-4"
+                     x-transition:enter-end="opacity-100 scale-100 translate-y-0">
+
+                    <button class="product-modal-close" @click="closeProductModal()">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+
+                    <template x-if="selectedProduct">
+                        <div>
+                            <!-- Modal Image -->
+                            <div class="product-modal-image">
+                                <template x-if="selectedProduct.image">
+                                    <img :src="imagesPath + selectedProduct.image" :alt="selectedProduct.name" class="w-full h-full object-cover">
+                                </template>
+                                <template x-if="!selectedProduct.image">
+                                    <span x-text="selectedProduct.icon"></span>
+                                </template>
+                            </div>
+
+                            <!-- Modal Content -->
+                            <div class="product-modal-content">
+                                <span class="product-modal-category" x-text="selectedProduct.categoryName"></span>
+                                <h3 class="product-modal-title" x-text="selectedProduct.name"></h3>
+                                <p class="product-modal-desc" x-text="selectedProduct.description"></p>
+
+                                <!-- Features -->
+                                <div class="product-modal-features">
+                                    <template x-for="feature in selectedProduct.features" :key="feature">
+                                        <div class="product-modal-feature">
+                                            <svg class="w-4 h-4 product-modal-feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                            </svg>
+                                            <span x-text="feature"></span>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                <!-- Price & Actions -->
+                                <div class="product-modal-price-section">
+                                    <div>
+                                        <span class="product-modal-price" x-text="selectedProduct.price + ' ر.س'"></span>
+                                        <template x-if="selectedProduct.originalPrice && selectedProduct.originalPrice > selectedProduct.price">
+                                            <span class="product-price-original mr-2" x-text="selectedProduct.originalPrice + ' ر.س'"></span>
+                                        </template>
+                                    </div>
+                                    <div class="product-modal-actions">
+                                        <button class="product-modal-btn product-modal-btn-primary"
+                                            @click="addToCart(selectedProduct); closeProductModal()">
+                                            إضافة للسلة
+                                        </button>
+                                        <button class="product-modal-btn product-modal-btn-whatsapp"
+                                            @click="orderProduct(selectedProduct)">
+                                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                                            </svg>
+                                            طلب مباشر
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </article>
+                        </div>
                     </template>
-                    <div class="w-2 sm:w-0 shrink-0"></div>
                 </div>
             </div>
 
-            <div data-reveal x-show="bestSellers.length > 0" x-transition>
-                <div class="px-4 sm:px-6 mx-auto max-w-7xl flex items-center justify-between mb-4">
-                    <h3 class="text-lg font-bold flex items-center gap-2">
-                        <span class="text-xl">🔥</span> الأكثر طلباً
-                    </h3>
-                    <span class="text-[10px] font-bold text-fikra-violet bg-fikra-violet/10 px-2 py-1 rounded-lg">Hot</span>
-                </div>
-                <div class="flex overflow-x-auto snap-x snap-mandatory gap-3 pb-6 px-4 sm:px-6 -mx-4 sm:mx-0 scrollbar-hide">
-                    <div class="w-0 sm:w-0 shrink-0"></div>
-                    <template x-for="product in bestSellers" :key="product.id">
-                        <article class="snap-center shrink-0 w-[160px] group noise rounded-2xl overflow-hidden transition-all duration-300 hover:border-fikra-violet/50">
-                            <div class="relative h-28 bg-gradient-to-br from-[color:var(--fg)]/5 to-[color:var(--fg)]/10 flex items-center justify-center overflow-hidden">
-                                <!-- صورة المنتج (إذا وجدت) -->
-                                <template x-if="product.image">
-                                    <img :src="PRODUCTS_DATA.imagesPath + product.image" :alt="product.name" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
-                                </template>
-                                <!-- الإيموجي (إذا لم توجد صورة) -->
-                                <template x-if="!product.image">
-                                    <span class="text-4xl drop-shadow-lg group-hover:scale-110 transition-transform duration-300" x-text="product.icon"></span>
-                                </template>
-                                <div class="absolute top-2 right-2 px-2 py-0.5 bg-black/40 rounded text-[9px] font-bold text-white backdrop-blur-md" x-text="product.categoryName"></div>
-                            </div>
-                            <div class="p-3">
-                                <h4 class="font-bold text-sm leading-tight truncate" x-text="product.name"></h4>
-                                <p class="mt-1 text-[10px] text-[color:var(--muted)] line-clamp-2 h-7 leading-tight" x-text="product.description"></p>
-                                <div class="mt-3 flex items-center justify-between">
-                                    <div class="font-black text-sm text-fikra-violet" x-text="product.price + ' ر.س'"></div>
-                                    <button @click="addToCart(product)" class="w-7 h-7 rounded-lg bg-[color:var(--fg)]/10 hover:bg-[color:var(--fg)]/20 flex items-center justify-center transition" :class="isInCart(product.id) ? 'bg-green-500/20 text-green-400' : ''">
-                                        <span x-text="isInCart(product.id) ? '✓' : '+'" class="font-bold text-sm"></span>
-                                    </button>
-                                </div>
-                            </div>
-                        </article>
-                    </template>
-                    <div class="w-2 sm:w-0 shrink-0"></div>
-                </div>
-            </div>
-
-            <div class="fixed bottom-6 left-6 z-40" x-show="cart.length > 0" x-transition.scale>
-                <button @click="checkout()" class="flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-fikra-violet to-fikra-orange rounded-2xl shadow-glow-orange text-white font-bold hover:scale-105 transition-transform">
+            <!-- Floating Cart Button -->
+            <div class="cart-floating" x-show="cart.length > 0" x-transition.scale x-cloak>
+                <button class="cart-floating-btn" @click="checkout()">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    </svg>
                     <span>إتمام الطلب</span>
-                    <span class="bg-white/20 px-2 py-0.5 rounded text-sm" x-text="cartTotal + ' ر.س'"></span>
+                    <span class="cart-count" x-text="cart.length"></span>
+                    <span class="text-sm opacity-80" x-text="cartTotal + ' ر.س'"></span>
                 </button>
             </div>
         </section>
