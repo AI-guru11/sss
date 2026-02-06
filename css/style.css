@@ -128,36 +128,68 @@ footer .noise::after {
 /* 4. HERO SECTION (INTERACTIVE CANVAS)   */
 /* ====================================== */
 #nebulaCanvas {
-  opacity: 0.8;
+  opacity: 0.7;
   transition: opacity 0.3s ease;
 }
 
-/* Hero Text Contrast Enhancement */
-section:has(#nebulaCanvas) h1,
-section:has(#nebulaCanvas) p,
+/* Floating Text Effect - Dark Mode */
+section:has(#nebulaCanvas) h1 {
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.8),
+    0 4px 12px rgba(0, 0, 0, 0.6),
+    0 8px 24px rgba(0, 0, 0, 0.4),
+    0 0 40px rgba(0, 0, 0, 0.3);
+}
+
+section:has(#nebulaCanvas) p {
+  text-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.7),
+    0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* Gradient text special handling */
 section:has(#nebulaCanvas) .bg-clip-text {
   text-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.4),
-    0 4px 16px rgba(0, 0, 0, 0.3);
+    0 2px 8px rgba(229, 57, 53, 0.4),
+    0 4px 16px rgba(129, 216, 208, 0.3);
+  filter: drop-shadow(0 0 20px rgba(229, 57, 53, 0.3));
 }
 
 /* Light mode adjustments */
-html.idea section:has(#nebulaCanvas) h1,
+html.idea section:has(#nebulaCanvas) #nebulaCanvas {
+  opacity: 0.6;
+}
+
+html.idea section:has(#nebulaCanvas) h1 {
+  text-shadow:
+    0 1px 2px rgba(255, 255, 255, 0.9),
+    0 2px 8px rgba(255, 255, 255, 0.8),
+    0 4px 16px rgba(255, 255, 255, 0.6),
+    0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
 html.idea section:has(#nebulaCanvas) p {
   text-shadow:
     0 1px 3px rgba(255, 255, 255, 0.8),
     0 2px 8px rgba(255, 255, 255, 0.6),
-    0 4px 16px rgba(0, 0, 0, 0.1);
+    0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Badge contrast */
+html.idea section:has(#nebulaCanvas) .bg-clip-text {
+  filter: drop-shadow(0 0 16px rgba(251, 146, 60, 0.4));
+}
+
+/* Badge floating effect */
 section:has(#nebulaCanvas) .bg-\[color\:var\(--card\)\] {
-  background-color: rgba(0, 0, 0, 0.3) !important;
-  backdrop-filter: blur(8px);
+  background-color: rgba(0, 0, 0, 0.4) !important;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
 html.idea section:has(#nebulaCanvas) .bg-\[color\:var\(--card\)\] {
-  background-color: rgba(255, 255, 255, 0.7) !important;
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
 /* ====================================== */
