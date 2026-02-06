@@ -135,10 +135,195 @@ footer .noise::after {
 }
 
 /* ====================================== */
-/* 5. PRODUCTS GRID SYSTEM                */
+/* 5. PRODUCTS SLIDER SYSTEM              */
 /* ====================================== */
 
-/* Products Grid Container */
+/* Category Row Container */
+.category-row {
+  margin-bottom: 4rem;
+}
+
+/* Category Header */
+.category-row-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  padding: 0 0.5rem;
+}
+
+.category-row-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.category-row-title h3 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--fg);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.category-row-icon {
+  font-size: 1.75rem;
+}
+
+.category-row-count {
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+}
+
+.category-view-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  color: var(--muted);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.category-view-all:hover {
+  background: linear-gradient(135deg, #E53935, #81D8D0);
+  color: white;
+  border-color: transparent;
+  transform: translateX(-4px);
+}
+
+.category-view-all svg {
+  width: 1rem;
+  height: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.category-view-all:hover svg {
+  transform: translateX(-4px);
+}
+
+/* Slider Container with Navigation */
+.slider-container {
+  position: relative;
+  isolation: isolate;
+}
+
+/* Horizontal Slider */
+.horizontal-slider {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 1rem 0.5rem 1.5rem 0.5rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.horizontal-slider::-webkit-scrollbar {
+  display: none;
+}
+
+.horizontal-slider > * {
+  flex: 0 0 calc(33.333% - 1rem);
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Responsive - Mobile 1.5 cards */
+@media (max-width: 768px) {
+  .horizontal-slider > * {
+    flex: 0 0 66.666%;
+  }
+}
+
+/* Responsive - Tablet 2 cards */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .horizontal-slider > * {
+    flex: 0 0 calc(50% - 0.75rem);
+  }
+}
+
+/* Navigation Arrows */
+.slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  color: var(--fg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.slider-container:hover .slider-arrow {
+  opacity: 1;
+}
+
+.slider-arrow:hover {
+  background: linear-gradient(135deg, #81D8D0, #E53935);
+  border-color: transparent;
+  color: white;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.slider-arrow:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.slider-arrow-left {
+  right: 1rem;
+}
+
+.slider-arrow-right {
+  left: 1rem;
+}
+
+.slider-arrow svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* Hide arrows on mobile */
+@media (max-width: 768px) {
+  .slider-arrow {
+    display: none;
+  }
+}
+
+/* Light mode adjustments */
+html.idea .slider-arrow {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+html.idea .slider-arrow:hover {
+  background: linear-gradient(135deg, #E53935, #81D8D0);
+}
+
+/* Products Grid Container (Fallback for "View All") */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
