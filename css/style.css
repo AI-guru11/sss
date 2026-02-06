@@ -857,3 +857,591 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
 .view-toggle-btn:hover:not(.active) {
   color: var(--fg);
 }
+
+/* ====================================== */
+/* 12. TESTIMONIALS CAROUSEL              */
+/* ====================================== */
+
+.testimonials-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.testimonial-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  position: relative;
+  transition: all 0.4s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.3);
+}
+
+.testimonial-card::before {
+  content: '"';
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  font-size: 4rem;
+  font-family: Georgia, serif;
+  color: var(--border);
+  line-height: 1;
+  opacity: 0.5;
+}
+
+.testimonial-avatar {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #81D8D0, #E53935);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: 0 4px 15px rgba(129, 216, 208, 0.3);
+}
+
+.testimonial-stars {
+  display: flex;
+  gap: 2px;
+}
+
+.testimonial-star {
+  width: 1rem;
+  height: 1rem;
+  color: #FCD34D;
+}
+
+.testimonial-text {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--fg);
+  margin: 1rem 0;
+}
+
+.testimonial-nav {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.testimonial-nav-btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--fg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.testimonial-nav-btn:hover {
+  background: linear-gradient(135deg, #81D8D0, #E53935);
+  border-color: transparent;
+  color: white;
+}
+
+.testimonial-dots {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.testimonial-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--border);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.testimonial-dot.active {
+  width: 1.5rem;
+  border-radius: 0.25rem;
+  background: linear-gradient(135deg, #81D8D0, #E53935);
+}
+
+/* ====================================== */
+/* 13. FAQ ACCORDION                      */
+/* ====================================== */
+
+.faq-search {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.faq-search-input {
+  width: 100%;
+  padding: 1rem 1.5rem 1rem 3rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  color: var(--fg);
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.faq-search-input:focus {
+  border-color: #81D8D0;
+  box-shadow: 0 0 0 3px rgba(129, 216, 208, 0.2);
+}
+
+.faq-search-input::placeholder {
+  color: var(--muted);
+}
+
+.faq-search-icon {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+}
+
+.faq-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  margin-bottom: 0.75rem;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+  border-color: rgba(129, 216, 208, 0.3);
+}
+
+.faq-item.open {
+  border-color: #81D8D0;
+  box-shadow: 0 4px 20px rgba(129, 216, 208, 0.15);
+}
+
+.faq-question {
+  width: 100%;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: transparent;
+  border: none;
+  color: var(--fg);
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: right;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.faq-question:hover {
+  color: #81D8D0;
+}
+
+.faq-question-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.faq-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.faq-toggle {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.faq-item.open .faq-toggle {
+  background: linear-gradient(135deg, #81D8D0, #E53935);
+  transform: rotate(180deg);
+}
+
+.faq-answer {
+  padding: 0 1.5rem 1.25rem;
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 0.95rem;
+}
+
+/* ====================================== */
+/* 14. STATS COUNTER                      */
+/* ====================================== */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #81D8D0, #E53935);
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+
+.stat-card:hover::before {
+  transform: scaleX(1);
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #E53935, #81D8D0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: var(--muted);
+  margin-top: 0.5rem;
+}
+
+/* ====================================== */
+/* 15. PRICE CALCULATOR                   */
+/* ====================================== */
+
+.calculator-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  padding: 2rem;
+}
+
+.calculator-row {
+  margin-bottom: 1.5rem;
+}
+
+.calculator-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--fg);
+  margin-bottom: 0.75rem;
+}
+
+.calculator-select,
+.calculator-input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  color: var(--fg);
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.calculator-select:focus,
+.calculator-input:focus {
+  border-color: #81D8D0;
+  box-shadow: 0 0 0 3px rgba(129, 216, 208, 0.2);
+}
+
+.calculator-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.calculator-option {
+  padding: 0.75rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.8rem;
+}
+
+.calculator-option:hover {
+  border-color: var(--fg);
+}
+
+.calculator-option.active {
+  background: linear-gradient(135deg, #81D8D0, #4ECDC4);
+  border-color: transparent;
+  color: #0A0A0A;
+  font-weight: 600;
+}
+
+.calculator-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.calculator-checkbox:hover {
+  border-color: var(--fg);
+}
+
+.calculator-checkbox.active {
+  border-color: #81D8D0;
+  background: rgba(129, 216, 208, 0.1);
+}
+
+.calculator-checkbox-box {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid var(--border);
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.calculator-checkbox.active .calculator-checkbox-box {
+  background: #81D8D0;
+  border-color: #81D8D0;
+}
+
+.calculator-total {
+  background: linear-gradient(135deg, rgba(129, 216, 208, 0.1), rgba(229, 57, 53, 0.1));
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.calculator-price {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #E53935, #81D8D0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.calculator-discount {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: rgba(34, 197, 94, 0.2);
+  color: #22C55E;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-right: 0.5rem;
+}
+
+/* ====================================== */
+/* 16. WHATSAPP FLOATING WIDGET           */
+/* ====================================== */
+
+.wa-widget {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 100;
+}
+
+.wa-widget-btn {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+  transition: all 0.3s ease;
+}
+
+.wa-widget-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 30px rgba(37, 211, 102, 0.5);
+}
+
+.wa-widget-btn svg {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.wa-widget-pulse {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: rgba(37, 211, 102, 0.4);
+  animation: wa-pulse 2s infinite;
+}
+
+@keyframes wa-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.wa-widget-popup {
+  position: absolute;
+  bottom: 4.5rem;
+  right: 0;
+  width: 320px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.wa-widget-header {
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  padding: 1.25rem;
+  color: white;
+}
+
+.wa-widget-header-title {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.wa-widget-header-subtitle {
+  font-size: 0.75rem;
+  opacity: 0.9;
+  margin-top: 0.25rem;
+}
+
+.wa-widget-close {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+
+.wa-widget-body {
+  padding: 1rem;
+}
+
+.wa-widget-quick-msgs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.wa-widget-quick-msg {
+  padding: 0.625rem 0.875rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--fg);
+  text-align: right;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.wa-widget-quick-msg:hover {
+  background: var(--fg);
+  color: var(--bg);
+  border-color: var(--fg);
+}
+
+.wa-widget-input-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.wa-widget-input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  color: var(--fg);
+  font-size: 0.875rem;
+  outline: none;
+}
+
+.wa-widget-input::placeholder {
+  color: var(--muted);
+}
+
+.wa-widget-send {
+  padding: 0.75rem 1rem;
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  border: none;
+  border-radius: 0.75rem;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.wa-widget-send:hover {
+  transform: scale(1.05);
+}
