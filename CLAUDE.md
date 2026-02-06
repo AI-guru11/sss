@@ -30,13 +30,13 @@ python -m http.server 5000 --bind 0.0.0.0
 
 ```
 /
-├── index.html              # Single-page app (~600 lines)
+├── index.html              # Single-page app (~850 lines)
 ├── manifest.json           # PWA manifest (RTL, Arabic, standalone)
 ├── service-worker.js       # Offline-first caching (v11)
 ├── CLAUDE.md               # This file
 │
 ├── css/
-│   └── style.css           # Theme system, glass effects, animations
+│   └── style.css           # Theme system, glass effects, animations, slider system
 │
 ├── js/
 │   └── app.js              # Alpine.js component functions
@@ -44,8 +44,8 @@ python -m http.server 5000 --bind 0.0.0.0
 ├── data/                   # Data-driven content layer
 │   ├── config.js           # Site branding, contact, location, social
 │   ├── products.js         # Product catalog (24 items, 7 categories)
-│   ├── portfolio.js        # Brief wizard projects + gallery + stats
-│   ├── services.js         # Service categories and design styles
+│   ├── portfolio.js        # Brief wizard + Our Works (15 projects, 6 categories)
+│   ├── services.js         # Main services (3 pillars, 24 sub-services) + brief wizard data
 │   └── partners.js         # Client/partner logos (8 orgs)
 │
 └── assets/
@@ -62,9 +62,9 @@ Content is separated from presentation. All dynamic data lives in `/data/*.js` f
 | File | Exports | Purpose |
 |------|---------|---------|
 | `config.js` | `SITE_CONFIG` | WhatsApp, email, brand info, location, social links |
-| `products.js` | `PRODUCTS_DATA` | Categories array + products array with prices |
-| `portfolio.js` | `PORTFOLIO_DATA` | Brief projects, gallery projects, transformation stats |
-| `services.js` | `SERVICES_DATA` | Service categories, design style options |
+| `products.js` | `PRODUCTS_DATA` | Categories (7) + products (24) with prices |
+| `portfolio.js` | `PORTFOLIO_DATA` | Brief projects + Our Works (15 projects, 6 categories) + gallery + stats |
+| `services.js` | `SERVICES_DATA` | Main services (3 pillars: Creative Design, Marketing, Advertising/Printing) + brief wizard categories/styles |
 | `partners.js` | `PARTNERS_DATA` | Partner organization icons and names |
 
 Data files export to `window` global scope and are accessed via Alpine.js getters:
@@ -78,11 +78,17 @@ get products() { return window.PRODUCTS_DATA?.products || []; }
 |----------|---------|
 | `fikraApp()` | Main app state: theme toggle, mobile menu, header scroll behavior |
 | `briefWizard()` | Multi-step client inquiry form with style matching |
-| `productsShop()` | Product catalog with cart and WhatsApp checkout |
+| `productsShop()` | Product catalog with category-based horizontal sliders, cart management, WhatsApp checkout. Dual-mode: slider view (all categories) + grid view (single category). RTL-aware scroll navigation. |
 | `workGallery()` | Portfolio projects modal gallery |
 | `transformationsData()` | Transformation section statistics |
 | `partnersCarousel()` | Infinite-scroll partner logos |
 | `beforeAfter()` | Drag slider for before/after comparisons |
+
+**Inline Alpine.js Components (in `index.html`):**
+| Component | Purpose |
+|-----------|---------|
+| `#services` | Services section: displays 3 main service pillars with nested sub-services (24 total). Bento glass cards with gradients. |
+| `#our-works` | Our Works section: category-based horizontal sliders (same system as products). 15 projects across 6 categories. Dual-mode view. |
 
 ### Theming System
 
@@ -158,17 +164,27 @@ Never edit a file without reading it first. Follow: Read -> Think -> Edit
 Complete one functional module fully before moving to the next. Each Alpine.js component should be self-contained and testable.
 
 ### Content Updates
-- To add products: Edit `data/products.js`
-- To add portfolio items: Edit `data/portfolio.js`
+- To add products: Edit `data/products.js` (categories array + products array)
+- To add Our Works projects: Edit `data/portfolio.js` (ourWorks array, ensure category matches workCategories)
+- To add/modify main services: Edit `data/services.js` (mainServices array - 3 pillars with sub-services)
+- To update Brief Wizard projects: Edit `data/portfolio.js` (briefProjects array)
 - To change contact info: Edit `data/config.js`
-- To modify services: Edit `data/services.js`
 - To update partners: Edit `data/partners.js`
 
+**Important:** When adding new categories to products or portfolio, update both the category definitions and the items array to maintain consistency.
+
 ### UI Standards
-- Follow existing glass/bento aesthetic
+- Follow existing glass/bento aesthetic with `.noise` class
 - Maintain professional typography and whitespace
 - Use CSS variables for colors to ensure theme compatibility
 - Test both dark and light themes when making visual changes
+- **Slider System Constraints:**
+  - Use existing `.horizontal-slider`, `.slider-container`, `.slider-arrow` classes
+  - Desktop: 3 cards visible (`flex: 0 0 calc(33.333% - 1rem)`)
+  - Mobile: 1.5 cards visible (`flex: 0 0 66.666%`)
+  - RTL-aware scroll: direction multiplied by -1
+  - Navigation arrows appear on hover (desktop only)
+  - Maintain `scroll-snap-type: x mandatory` for smooth UX
 
 ### Deployment Checklist
 1. Test locally with `python -m http.server 5000`
@@ -189,8 +205,39 @@ Complete one functional module fully before moving to the next. Each Alpine.js c
 - Used for dynamic padding/opacity transitions
 - Throttled via `{ passive: true }` scroll listener
 
-### Product Categories
-Categories defined in `data/products.js`: print, gifts, boards, rollup, exhibitions, illuminated, packages
+### Product Slider System
+**Architecture:** Category-based horizontal sliders with dual-mode view
+- **Slider Mode (default):** All categories displayed in separate horizontal rows
+- **Grid Mode:** Single category expanded in traditional grid layout
+- **Categories:** print, gifts, boards, rollup, exhibitions, illuminated (7 total, 24 products)
+
+**Key Methods (in `productsShop()`):**
+```javascript
+categoriesWithProducts     // Filters categories with products > 0
+getProductsByCategory(id)  // Returns products for specific category
+scrollSlider(id, dir)      // RTL-aware horizontal scroll (dir * -1)
+viewAllCategory(id)        // Switches to grid view for category
+```
+
+**Responsive Behavior:**
+- Desktop: 3 cards per row, glassmorphism arrows on hover
+- Mobile: 1.5 cards per row (hints more content), swipe to scroll
+- Snap scrolling: `scroll-snap-type: x mandatory`
+
+### Services Section (#services)
+**Data Source:** `SERVICES_DATA.mainServices` (3 pillars)
+- Creative Design: 6 services (Branding, Ad Campaigns, Social Media, Digital Illustration, Packaging, Motion)
+- Marketing: 4 services (Strategy, Social Media Management, SEO, Google Ads)
+- Advertising & Printing: 14 services (Signs, Stickers, Printing, Exhibitions, Gifts, Fences)
+
+**Layout:** Responsive grid (1/2/3 columns), Bento glass cards with nested sub-service items
+
+### Our Works Section (#our-works)
+**Data Source:** `PORTFOLIO_DATA.ourWorks` (15 projects, 6 categories)
+- Uses same slider system as products
+- Categories: creative-design, marketing, advertising-printing, branding, events, digital
+- Each work: gradient background, icon, tags, description
+- Dual-mode: slider view (all categories) + grid view (single category)
 
 ### Brief Wizard Flow
 1. Select category (step 1)
