@@ -3,7 +3,7 @@
   Goal: stable offline-first behavior without changing the UI.
 */
 
-const CACHE_VERSION = 'v11';
+const CACHE_VERSION = 'v12';
 const CACHE_NAME = `safi-pwa-${CACHE_VERSION}`;
 
 // Core assets (same-origin)
@@ -22,7 +22,9 @@ const CORE_ASSETS = [
   './data/products.js',
   './data/portfolio.js',
   './data/partners.js',
-  './data/services.js'
+  './data/services.js',
+  './data/testimonials.js',
+  './data/faq.js'
 ];
 
 self.addEventListener('install', (event) => {
