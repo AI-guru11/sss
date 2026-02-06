@@ -156,28 +156,35 @@
         <!-- ====================================== -->
         <!-- PARTNERS CAROUSEL - شركاء النجاح      -->
         <!-- ====================================== -->
-        <div class="partners-marquee" x-data="partnersCarousel()">
-            <p class="text-xs font-bold text-[color:var(--muted)] tracking-[0.2em] uppercase mb-6 text-center opacity-70">شركاء النجاح في رحلتنا</p>
+    </main>
 
-            <div class="partners-track" dir="ltr">
-                <div class="partners-scroll">
+    <!-- Full-Bleed Glass Partners Section -->
+    <section class="partners-glass-section noise backdrop-blur-md shadow-glass bg-[color:var(--card)]/40 border-y border-[color:var(--border)]" x-data="partnersCarousel()">
+        <div class="partners-glass-container">
+            <p class="text-xs font-bold text-[color:var(--muted)] tracking-[0.2em] uppercase mb-8 text-center opacity-70">شركاء النجاح في رحلتنا</p>
+
+            <div class="partners-glass-track" dir="ltr">
+                <div class="partners-glass-scroll">
                     <!-- الشركاء - النسخة الأولى -->
                     <template x-for="partner in partners" :key="partner.name">
-                        <div class="partner-item">
-                            <span class="text-2xl" x-text="partner.icon"></span>
-                            <span class="font-bold text-sm tracking-wide" x-text="partner.name"></span>
+                        <div class="partner-capsule">
+                            <span class="partner-icon" x-text="partner.icon"></span>
+                            <span class="partner-name" x-text="partner.name"></span>
                         </div>
                     </template>
                     <!-- الشركاء - النسخة الثانية للتمرير المستمر -->
                     <template x-for="partner in partners" :key="'dup-' + partner.name">
-                        <div class="partner-item">
-                            <span class="text-2xl" x-text="partner.icon"></span>
-                            <span class="font-bold text-sm tracking-wide" x-text="partner.name"></span>
+                        <div class="partner-capsule">
+                            <span class="partner-icon" x-text="partner.icon"></span>
+                            <span class="partner-name" x-text="partner.name"></span>
                         </div>
                     </template>
                 </div>
             </div>
         </div>
+    </section>
+
+    <main class="mx-auto max-w-7xl px-4 sm:px-6">
 
         <section id="services" class="py-10 sm:py-20">
             <div class="flex items-end justify-between gap-4 mb-8">

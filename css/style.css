@@ -1447,37 +1447,45 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
 }
 
 /* ====================================== */
-/* 15. PARTNERS CAROUSEL - Simple & Smooth */
+/* 15. PARTNERS GLASS CAROUSEL - Ultimate UI */
 /* ====================================== */
 
-/* Main Container - Full Width, No Padding */
-.partners-marquee {
+/* Full-Bleed Glass Section */
+.partners-glass-section {
   position: relative;
-  width: 100%;
-  max-width: none;
-  padding: 2rem 0;
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  padding: 3rem 0;
   margin-bottom: 4rem;
-  background: transparent;
+  overflow: hidden;
 }
 
-/* Track - Full width, no masks */
-.partners-track {
+/* Container for content */
+.partners-glass-container {
+  width: 100%;
+  max-width: none;
+}
+
+/* Track - Full width overflow */
+.partners-glass-track {
   display: flex;
   overflow: hidden;
   width: 100%;
 }
 
-/* Scrolling Container - Centered items */
-.partners-scroll {
+/* Scrolling Container with items centered */
+.partners-glass-scroll {
   display: flex;
   align-items: center;
-  gap: 3rem;
-  padding: 0;
-  animation: partners-scroll 30s linear infinite;
+  gap: 2rem;
+  padding: 0 2rem;
+  animation: partners-glass-scroll 40s linear infinite;
   will-change: transform;
 }
 
-@keyframes partners-scroll {
+@keyframes partners-glass-scroll {
   0% {
     transform: translateX(0);
   }
@@ -1486,53 +1494,128 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
   }
 }
 
-/* Pause on hover */
-.partners-track:hover .partners-scroll {
+/* Pause animation on hover */
+.partners-glass-track:hover .partners-glass-scroll {
   animation-play-state: paused;
 }
 
-/* Partner Item - Simple Flex */
-.partner-item {
+/* Partner Capsule Design */
+.partner-capsule {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  height: 3rem;
   flex-shrink: 0;
-  color: var(--muted);
-  cursor: default;
-  transition: all 0.3s ease;
+
+  /* Capsule styling */
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 9999px;
+  padding: 0.5rem 1.25rem;
+
+  /* Ring border */
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+
+  /* Default state: grayscale + low opacity */
+  filter: grayscale(1);
+  opacity: 0.5;
+
+  /* Smooth transitions */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  cursor: pointer;
   white-space: nowrap;
 }
 
-.partner-item:hover {
-  color: #E53935;
-  transform: scale(1.05);
+/* Hover State: Full color + scale + glow */
+.partner-capsule:hover {
+  filter: grayscale(0) drop-shadow(0 0 12px rgba(129, 216, 208, 0.6));
+  opacity: 1;
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 0 0 1px rgba(129, 216, 208, 0.3),
+    0 4px 20px rgba(129, 216, 208, 0.2),
+    0 0 30px rgba(129, 216, 208, 0.15);
 }
 
-/* Responsive */
+/* Light mode adjustments */
+html.idea .partner-capsule {
+  background: rgba(0, 0, 0, 0.03);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+html.idea .partner-capsule:hover {
+  background: rgba(0, 0, 0, 0.05);
+  filter: grayscale(0) drop-shadow(0 0 12px rgba(229, 57, 53, 0.5));
+  box-shadow:
+    0 0 0 1px rgba(229, 57, 53, 0.3),
+    0 4px 20px rgba(229, 57, 53, 0.2),
+    0 0 30px rgba(229, 57, 53, 0.15);
+}
+
+/* Partner Icon */
+.partner-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  transition: transform 0.3s ease;
+}
+
+.partner-capsule:hover .partner-icon {
+  transform: scale(1.15) rotate(5deg);
+}
+
+/* Partner Name */
+.partner-name {
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  color: currentColor;
+}
+
+/* Responsive Adjustments */
 @media (max-width: 768px) {
-  .partners-marquee {
-    padding: 1.5rem 0;
+  .partners-glass-section {
+    padding: 2rem 0;
     margin-bottom: 3rem;
   }
 
-  .partners-scroll {
-    gap: 2.5rem;
+  .partners-glass-scroll {
+    gap: 1.5rem;
+    padding: 0 1rem;
   }
 
-  .partner-item {
-    height: 2.5rem;
+  .partner-capsule {
+    padding: 0.375rem 1rem;
     gap: 0.5rem;
+  }
+
+  .partner-icon {
+    font-size: 1.25rem;
+  }
+
+  .partner-name {
+    font-size: 0.75rem;
   }
 }
 
 @media (max-width: 480px) {
-  .partners-scroll {
-    gap: 2rem;
-    animation-duration: 20s;
+  .partners-glass-section {
+    padding: 1.5rem 0;
   }
 
-  .partner-item {
-    height: 2rem;
+  .partners-glass-scroll {
+    gap: 1.25rem;
+    animation-duration: 30s;
+  }
+
+  .partner-capsule {
+    padding: 0.375rem 0.875rem;
+  }
+
+  .partner-icon {
+    font-size: 1.125rem;
+  }
+
+  .partner-name {
+    font-size: 0.7rem;
   }
 }
