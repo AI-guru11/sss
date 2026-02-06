@@ -84,7 +84,7 @@ function briefWizard() {
 }
 
 // ==============================================
-// 3. PRODUCTS SHOP (ENHANCED VERSION)
+// 3. PRODUCTS SHOP (ENHANCED VERSION WITH SLIDER)
 // ==============================================
 function productsShop() {
   return {
@@ -120,6 +120,44 @@ function productsShop() {
     getCategoryCount(categoryId) {
       if (categoryId === 'all') return this.products.length;
       return this.products.filter(p => p.category === categoryId).length;
+    },
+
+    // ========================================
+    // SLIDER SYSTEM - NEW METHODS
+    // ========================================
+
+    // الحصول على الفئات التي تحتوي على منتجات (بدون "الكل")
+    get categoriesWithProducts() {
+      return this.categories.filter(cat =>
+        cat.id !== 'all' && this.getProductsByCategory(cat.id).length > 0
+      );
+    },
+
+    // الحصول على المنتجات حسب الفئة
+    getProductsByCategory(categoryId) {
+      return this.products.filter(p => p.category === categoryId);
+    },
+
+    // تمرير السلايدر بالسهم
+    scrollSlider(categoryId, direction) {
+      const slider = document.getElementById(`slider-${categoryId}`);
+      if (!slider) return;
+
+      const scrollAmount = slider.offsetWidth * 0.8;
+      slider.scrollBy({
+        left: direction * scrollAmount * -1, // RTL: reverse direction
+        behavior: 'smooth'
+      });
+    },
+
+    // عرض جميع المنتجات في فئة معينة
+    viewAllCategory(categoryId) {
+      this.activeCategory = categoryId;
+      // التمرير إلى أعلى القسم
+      const productsSection = document.getElementById('products');
+      if (productsSection) {
+        productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     },
 
     // تغيير الفئة مع تأثير حركي
