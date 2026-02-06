@@ -250,32 +250,49 @@
         </section>
 
         <section id="products" class="py-10 sm:py-20" x-data="productsShop()" x-init="init()">
-            <!-- Header & Filters -->
-            <div class="mb-8" data-reveal>
-                <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8">
+            <!-- Header -->
+            <div class="mb-12" data-reveal>
+                <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
                     <div>
                         <h2 class="text-3xl sm:text-5xl font-black tracking-tight">متجر <span class="text-fikra-orange">المنتجات</span></h2>
-                        <p class="mt-2 text-[color:var(--muted)]">تصفح أحدث عروضنا ومنتجاتنا المميزة — <span x-text="filteredProducts.length"></span> منتج</p>
+                        <p class="mt-2 text-[color:var(--muted)]">تصفح أحدث عروضنا ومنتجاتنا المميزة — <span x-text="products.length"></span> منتج متنوع</p>
                     </div>
-                </div>
-
-                <!-- Category Filter Buttons -->
-                <div class="category-filter">
-                    <template x-for="cat in categories" :key="cat.id">
-                        <button class="category-filter-btn"
-                            :class="{ 'active': activeCategory === cat.id }"
-                            @click="filterByCategory(cat.id)">
-                            <span class="category-icon" x-text="cat.icon"></span>
-                            <span x-text="cat.name"></span>
-                            <span class="category-count" x-text="getCategoryCount(cat.id)"></span>
-                        </button>
-                    </template>
                 </div>
             </div>
 
-            <!-- Products Grid -->
-            <div class="products-grid" data-reveal>
-                <template x-for="product in filteredProducts" :key="product.id">
+            <!-- Category-Based Horizontal Sliders -->
+            <div x-show="activeCategory === 'all'">
+                <template x-for="cat in categoriesWithProducts" :key="cat.id">
+                    <div class="category-row" data-reveal>
+                        <!-- Category Header -->
+                        <div class="category-row-header">
+                            <div class="category-row-title">
+                                <h3>
+                                    <span class="category-row-icon" x-text="cat.icon"></span>
+                                    <span x-text="cat.name"></span>
+                                    <span class="category-row-count" x-text="getProductsByCategory(cat.id).length"></span>
+                                </h3>
+                            </div>
+                            <button class="category-view-all" @click="viewAllCategory(cat.id)">
+                                <span>عرض الكل</span>
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Horizontal Slider -->
+                        <div class="slider-container">
+                            <!-- Right Arrow (for RTL) -->
+                            <button class="slider-arrow slider-arrow-right" @click="scrollSlider(cat.id, 1)" aria-label="السابق">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                                </svg>
+                            </button>
+
+                            <!-- Slider with Products -->
+                            <div class="horizontal-slider" :id="'slider-' + cat.id">
+                                <template x-for="product in getProductsByCategory(cat.id)" :key="product.id">
                     <article class="product-card">
                         <!-- Product Image -->
                         <div class="product-card-image">
@@ -375,6 +392,134 @@
                         </div>
                     </article>
                 </template>
+                            </div>
+
+                            <!-- Left Arrow (for RTL) -->
+                            <button class="slider-arrow slider-arrow-left" @click="scrollSlider(cat.id, -1)" aria-label="التالي">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Single Category Grid View (When "View All" is clicked) -->
+            <div x-show="activeCategory !== 'all'" x-transition>
+                <!-- Back Button -->
+                <div class="mb-6">
+                    <button class="inline-flex items-center gap-2 px-4 py-2 bg-[color:var(--card)] border border-[color:var(--border)] rounded-2xl text-[color:var(--muted)] hover:text-[color:var(--fg)] hover:border-[color:var(--fg)] transition" @click="activeCategory = 'all'">
+                        <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                        </svg>
+                        <span class="font-bold">العودة لجميع الفئات</span>
+                    </button>
+                </div>
+
+                <!-- Products Grid -->
+                <div class="products-grid" data-reveal>
+                    <template x-for="product in filteredProducts" :key="product.id">
+                        <article class="product-card">
+                            <!-- Product Image -->
+                            <div class="product-card-image">
+                                <!-- Badge -->
+                                <template x-if="product.tag === 'new'">
+                                    <span class="product-badge product-badge-new">جديد</span>
+                                </template>
+                                <template x-if="product.tag === 'best'">
+                                    <span class="product-badge product-badge-best">الأكثر طلباً</span>
+                                </template>
+
+                                <!-- Category Label -->
+                                <span class="product-category-label" x-text="product.categoryName"></span>
+
+                                <!-- Image or Icon -->
+                                <template x-if="product.image">
+                                    <img :data-src="imagesPath + product.image"
+                                         :alt="product.name"
+                                         class="lazy-image"
+                                         loading="lazy">
+                                </template>
+                                <template x-if="!product.image">
+                                    <div class="product-card-icon">
+                                        <span x-text="product.icon"></span>
+                                    </div>
+                                </template>
+
+                                <!-- Quick View Button -->
+                                <button class="product-quick-view" @click="openProductModal(product)">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                    </svg>
+                                </button>
+
+                                <!-- Out of Stock -->
+                                <template x-if="!product.inStock">
+                                    <div class="product-out-of-stock">
+                                        <span>نفذت الكمية</span>
+                                    </div>
+                                </template>
+                            </div>
+
+                            <!-- Product Content -->
+                            <div class="product-card-content">
+                                <h4 class="product-card-title" x-text="product.name"></h4>
+                                <p class="product-card-desc" x-text="product.description"></p>
+
+                                <!-- Rating -->
+                                <div class="product-rating">
+                                    <div class="product-rating-stars">
+                                        <template x-for="i in getStars(product.rating).full">
+                                            <svg class="product-rating-star" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                            </svg>
+                                        </template>
+                                        <template x-for="i in getStars(product.rating).empty">
+                                            <svg class="product-rating-star empty" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                            </svg>
+                                        </template>
+                                    </div>
+                                    <span class="product-rating-value" x-text="product.rating"></span>
+                                </div>
+
+                                <!-- Price -->
+                                <div class="product-price-container">
+                                    <span class="product-price" x-text="product.price + ' ر.س'"></span>
+                                    <template x-if="product.originalPrice && product.originalPrice > product.price">
+                                        <span class="product-price-original" x-text="product.originalPrice + ' ر.س'"></span>
+                                    </template>
+                                    <template x-if="getDiscount(product) > 0">
+                                        <span class="product-discount" x-text="'-' + getDiscount(product) + '%'"></span>
+                                    </template>
+                                </div>
+
+                                <!-- Actions -->
+                                <div class="product-actions">
+                                    <button class="product-action-btn product-action-btn-primary"
+                                        :class="{ 'in-cart': isInCart(product.id) }"
+                                        @click="addToCart(product)"
+                                        :disabled="!product.inStock">
+                                        <template x-if="!isInCart(product.id)">
+                                            <span>إضافة للسلة</span>
+                                        </template>
+                                        <template x-if="isInCart(product.id)">
+                                            <span>✓ في السلة</span>
+                                        </template>
+                                    </button>
+                                    <button class="product-action-btn product-action-btn-secondary"
+                                        @click="openProductModal(product)">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                    </template>
+                </div>
             </div>
 
             <!-- Product Modal -->
