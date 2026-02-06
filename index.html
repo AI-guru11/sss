@@ -59,6 +59,7 @@
 
     <!-- منطق التطبيق -->
     <script src="js/app.js"></script>
+    <script src="js/nebula.js"></script>
     <script defer src="https://unpkg.com/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
@@ -126,7 +127,10 @@
 
     <main id="top" class="mx-auto max-w-7xl px-4 sm:px-6">
         <section class="pt-10 sm:pt-16 pb-10">
-            <div class="noise rounded-[2.5rem] backdrop-blur-md shadow-glass overflow-hidden">
+            <div class="noise rounded-[2.5rem] backdrop-blur-md shadow-glass overflow-hidden relative">
+                <!-- Interactive Nebula Canvas Background -->
+                <canvas id="nebulaCanvas" class="absolute inset-0 w-full h-full pointer-events-auto"></canvas>
+
                 <div class="relative px-6 sm:px-10 py-12 sm:py-20 text-center sm:text-right">
                     <div class="max-w-3xl relative z-10" data-reveal>
                         <p class="inline-flex items-center gap-2 rounded-full bg-[color:var(--card)] ring-1 ring-[color:var(--border)] px-4 py-2 text-xs text-[color:var(--muted)] font-medium">
