@@ -84,9 +84,9 @@
                 </a>
 
                 <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-[color:var(--muted)]">
-                    <a class="hover:text-[color:var(--fg)] transition" href="#services">الخدمات</a>
+                    <a class="hover:text-[color:var(--fg)] transition" href="services.html">الخدمات</a>
                     <a class="hover:text-[color:var(--fg)] transition" href="#products">المنتجات</a>
-                    <a class="hover:text-[color:var(--fg)] transition" href="#transformations">أعمالنا</a>
+                    <a class="hover:text-[color:var(--fg)] transition" href="portfolio.html">أعمالنا</a>
                     <a class="hover:text-[color:var(--fg)] transition" href="#brief">البرف</a>
                     <a class="hover:text-[color:var(--fg)] transition" href="#contact">تواصل</a>
                 </nav>
@@ -113,9 +113,9 @@
                         <button class="h-10 w-10 rounded-xl bg-[color:var(--card)] ring-1 ring-[color:var(--border)] flex items-center justify-center" @click="mobileOpen=false">✕</button>
                     </div>
                     <nav class="space-y-3 text-[color:var(--muted)]">
-                        <a class="block rounded-2xl px-5 py-4 bg-[color:var(--card)] ring-1 ring-[color:var(--border)] font-bold" href="#services" @click="mobileOpen=false">الخدمات</a>
+                        <a class="block rounded-2xl px-5 py-4 bg-[color:var(--card)] ring-1 ring-[color:var(--border)] font-bold" href="services.html">الخدمات</a>
                         <a class="block rounded-2xl px-5 py-4 bg-[color:var(--card)] ring-1 ring-[color:var(--border)] font-bold" href="#products" @click="mobileOpen=false">المنتجات</a>
-                        <a class="block rounded-2xl px-5 py-4 bg-[color:var(--card)] ring-1 ring-[color:var(--border)] font-bold" href="#transformations" @click="mobileOpen=false">أعمالنا</a>
+                        <a class="block rounded-2xl px-5 py-4 bg-[color:var(--card)] ring-1 ring-[color:var(--border)] font-bold" href="portfolio.html">أعمالنا</a>
                         <a class="block rounded-2xl px-5 py-4 bg-[color:var(--card)] ring-1 ring-[color:var(--border)] font-bold" href="#brief" @click="mobileOpen=false">البرف</a>
                         <a class="block rounded-2xl px-5 py-4 bg-[color:var(--card)] ring-1 ring-[color:var(--border)] font-bold" href="#contact" @click="mobileOpen=false">تواصل</a>
                     </nav>
@@ -626,11 +626,19 @@
             }
         }">
             <!-- Header -->
-            <div class="mb-12" data-reveal>
-                <h2 class="text-3xl sm:text-5xl font-black tracking-tight">
-                    <span class="text-fikra-violet">خدماتنا</span>
-                </h2>
-                <p class="mt-2 text-[color:var(--muted)]">حلول إبداعية متكاملة تلبي جميع احتياجاتك التسويقية والإعلانية</p>
+            <div class="mb-12 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4" data-reveal>
+                <div>
+                    <h2 class="text-3xl sm:text-5xl font-black tracking-tight">
+                        <span class="text-fikra-violet">خدماتنا</span>
+                    </h2>
+                    <p class="mt-2 text-[color:var(--muted)]">حلول إبداعية متكاملة تلبي جميع احتياجاتك التسويقية والإعلانية</p>
+                </div>
+                <a href="services.html" class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-[color:var(--card)] border border-[color:var(--border)] text-[color:var(--muted)] hover:text-[color:var(--fg)] hover:border-[color:var(--fg)] font-bold transition">
+                    <span>عرض جميع الخدمات</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                </a>
             </div>
 
             <!-- Services Grid -->
@@ -719,11 +727,19 @@
             }
         }">
             <!-- Header -->
-            <div class="mb-12" data-reveal>
-                <h2 class="text-3xl sm:text-5xl font-black tracking-tight">
-                    <span class="text-fikra-orange">أعمالنا</span>
-                </h2>
-                <p class="mt-2 text-[color:var(--muted)]">مشاريع منجزة بنجاح تعكس خبرتنا وإبداعنا — <span x-text="works.length"></span> مشروع</p>
+            <div class="mb-12 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4" data-reveal>
+                <div>
+                    <h2 class="text-3xl sm:text-5xl font-black tracking-tight">
+                        <span class="text-fikra-orange">أعمالنا</span>
+                    </h2>
+                    <p class="mt-2 text-[color:var(--muted)]">مشاريع منجزة بنجاح تعكس خبرتنا وإبداعنا — <span x-text="works.length"></span> مشروع</p>
+                </div>
+                <a href="portfolio.html" class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-[color:var(--card)] border border-[color:var(--border)] text-[color:var(--muted)] hover:text-[color:var(--fg)] hover:border-[color:var(--border)] font-bold transition">
+                    <span>عرض جميع الأعمال</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                </a>
             </div>
 
             <!-- Category-Based Horizontal Sliders -->
