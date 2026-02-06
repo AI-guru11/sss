@@ -294,6 +294,301 @@ function beforeAfter() {
 }
 
 // ==============================================
+// 8. TESTIMONIALS CAROUSEL
+// ==============================================
+function testimonialsCarousel() {
+  return {
+    currentIndex: 0,
+    autoplayInterval: null,
+    isHovered: false,
+
+    get testimonials() {
+      return window.TESTIMONIALS_DATA || [];
+    },
+
+    get current() {
+      return this.testimonials[this.currentIndex] || {};
+    },
+
+    get visibleTestimonials() {
+      const items = [];
+      const total = this.testimonials.length;
+      for (let i = 0; i < 3; i++) {
+        const index = (this.currentIndex + i) % total;
+        items.push({ ...this.testimonials[index], position: i });
+      }
+      return items;
+    },
+
+    init() {
+      this.startAutoplay();
+    },
+
+    next() {
+      this.currentIndex = (this.currentIndex + 1) % this.testimonials.length;
+    },
+
+    prev() {
+      this.currentIndex = (this.currentIndex - 1 + this.testimonials.length) % this.testimonials.length;
+    },
+
+    goTo(index) {
+      this.currentIndex = index;
+    },
+
+    startAutoplay() {
+      this.autoplayInterval = setInterval(() => {
+        if (!this.isHovered) this.next();
+      }, 5000);
+    },
+
+    stopAutoplay() {
+      if (this.autoplayInterval) {
+        clearInterval(this.autoplayInterval);
+      }
+    },
+
+    getStars(rating) {
+      return Array(5).fill(0).map((_, i) => i < rating ? 'full' : 'empty');
+    }
+  };
+}
+
+// ==============================================
+// 9. FAQ ACCORDION
+// ==============================================
+function faqAccordion() {
+  return {
+    openItem: null,
+    searchQuery: '',
+
+    get faqs() {
+      return window.FAQ_DATA || [];
+    },
+
+    get filteredFaqs() {
+      if (!this.searchQuery.trim()) return this.faqs;
+      const query = this.searchQuery.toLowerCase();
+      return this.faqs.filter(faq =>
+        faq.question.toLowerCase().includes(query) ||
+        faq.answer.toLowerCase().includes(query)
+      );
+    },
+
+    toggle(id) {
+      this.openItem = this.openItem === id ? null : id;
+    },
+
+    isOpen(id) {
+      return this.openItem === id;
+    }
+  };
+}
+
+// ==============================================
+// 10. ANIMATED STATS COUNTER
+// ==============================================
+function statsCounter() {
+  return {
+    animated: false,
+    counters: {
+      clients: 0,
+      projects: 0,
+      cities: 0,
+      years: 0
+    },
+
+    get stats() {
+      return window.STATS_DATA || {};
+    },
+
+    init() {
+      this.setupObserver();
+    },
+
+    setupObserver() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !this.animated) {
+            this.animated = true;
+            this.animateCounters();
+          }
+        });
+      }, { threshold: 0.3 });
+
+      setTimeout(() => {
+        const el = document.querySelector('[data-stats-counter]');
+        if (el) observer.observe(el);
+      }, 100);
+    },
+
+    animateCounters() {
+      const duration = 2000;
+      const steps = 60;
+      const interval = duration / steps;
+
+      Object.keys(this.stats).forEach(key => {
+        const target = this.stats[key].value;
+        const increment = target / steps;
+        let current = 0;
+        let step = 0;
+
+        const timer = setInterval(() => {
+          step++;
+          current = Math.min(Math.round(increment * step), target);
+          this.counters[key] = current;
+
+          if (step >= steps) {
+            clearInterval(timer);
+            this.counters[key] = target;
+          }
+        }, interval);
+      });
+    }
+  };
+}
+
+// ==============================================
+// 11. PRICE CALCULATOR
+// ==============================================
+function priceCalculator() {
+  return {
+    selectedProduct: 'cards',
+    quantity: 100,
+    size: 'standard',
+    finishing: 'matte',
+    design: false,
+    urgent: false,
+
+    products: {
+      cards: { name: 'كروت عمل', basePrice: 0.18, minQty: 100 },
+      flyers: { name: 'فلايرات A5', basePrice: 0.30, minQty: 100 },
+      brochures: { name: 'بروشورات A4', basePrice: 0.50, minQty: 50 },
+      stickers: { name: 'ستيكرات', basePrice: 0.25, minQty: 50 },
+      rollup: { name: 'رول أب', basePrice: 280, minQty: 1 },
+      banner: { name: 'بنر (م²)', basePrice: 35, minQty: 1 }
+    },
+
+    sizes: {
+      standard: { name: 'قياسي', multiplier: 1 },
+      large: { name: 'كبير', multiplier: 1.5 },
+      custom: { name: 'مخصص', multiplier: 1.8 }
+    },
+
+    finishings: {
+      matte: { name: 'مطفي', price: 0 },
+      glossy: { name: 'لامع', price: 0.02 },
+      laminated: { name: 'مغلف', price: 0.05 }
+    },
+
+    get basePrice() {
+      return this.products[this.selectedProduct]?.basePrice || 0;
+    },
+
+    get minQuantity() {
+      return this.products[this.selectedProduct]?.minQty || 1;
+    },
+
+    get sizeMultiplier() {
+      return this.sizes[this.size]?.multiplier || 1;
+    },
+
+    get finishingPrice() {
+      return this.finishings[this.finishing]?.price || 0;
+    },
+
+    get subtotal() {
+      const base = this.basePrice * this.quantity * this.sizeMultiplier;
+      const finishing = this.finishingPrice * this.quantity;
+      return base + finishing;
+    },
+
+    get designCost() {
+      return this.design ? 50 : 0;
+    },
+
+    get urgentCost() {
+      return this.urgent ? this.subtotal * 0.25 : 0;
+    },
+
+    get total() {
+      return Math.round(this.subtotal + this.designCost + this.urgentCost);
+    },
+
+    get discount() {
+      if (this.quantity >= 1000) return 15;
+      if (this.quantity >= 500) return 10;
+      if (this.quantity >= 250) return 5;
+      return 0;
+    },
+
+    get finalPrice() {
+      const discountAmount = this.total * (this.discount / 100);
+      return Math.round(this.total - discountAmount);
+    },
+
+    orderViaWhatsApp() {
+      const product = this.products[this.selectedProduct]?.name;
+      const sizeText = this.sizes[this.size]?.name;
+      const finishText = this.finishings[this.finishing]?.name;
+
+      const msg = `💰 *طلب عرض سعر*\n────────────────\n📦 *المنتج:* ${product}\n📏 *المقاس:* ${sizeText}\n🔢 *الكمية:* ${this.quantity}\n✨ *التشطيب:* ${finishText}\n🎨 *تصميم:* ${this.design ? 'نعم' : 'لا'}\n⚡ *عاجل:* ${this.urgent ? 'نعم' : 'لا'}\n────────────────\n💵 *السعر التقديري:* ${this.finalPrice} ر.س\n${this.discount > 0 ? `🎁 *خصم الكمية:* ${this.discount}%` : ''}\n\nأرجو تأكيد الطلب`;
+
+      window.open(`https://wa.me/${SITE_CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+  };
+}
+
+// ==============================================
+// 12. FLOATING WHATSAPP WIDGET
+// ==============================================
+function whatsappWidget() {
+  return {
+    isOpen: false,
+    message: '',
+    hasInteracted: false,
+
+    quickMessages: [
+      'أريد الاستفسار عن الأسعار',
+      'أحتاج تصميم هوية بصرية',
+      'أريد طلب لوحات للمحل',
+      'استفسار عن خدمات المعارض'
+    ],
+
+    init() {
+      // إظهار البوب أب بعد 10 ثواني للزوار الجدد
+      setTimeout(() => {
+        if (!this.hasInteracted && !localStorage.getItem('wa_widget_closed')) {
+          this.isOpen = true;
+        }
+      }, 10000);
+    },
+
+    toggle() {
+      this.isOpen = !this.isOpen;
+      this.hasInteracted = true;
+    },
+
+    close() {
+      this.isOpen = false;
+      this.hasInteracted = true;
+      localStorage.setItem('wa_widget_closed', 'true');
+    },
+
+    sendMessage(text = null) {
+      const msg = text || this.message || 'مرحباً، أريد الاستفسار عن خدماتكم';
+      window.open(`https://wa.me/${SITE_CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`, '_blank');
+      this.message = '';
+      this.close();
+    },
+
+    selectQuickMessage(msg) {
+      this.message = msg;
+    }
+  };
+}
+
+// ==============================================
 // Export Global Functions
 // ==============================================
 window.fikraApp = fikraApp;
@@ -303,3 +598,8 @@ window.transformationsData = transformationsData;
 window.workGallery = workGallery;
 window.partnersCarousel = partnersCarousel;
 window.beforeAfter = beforeAfter;
+window.testimonialsCarousel = testimonialsCarousel;
+window.faqAccordion = faqAccordion;
+window.statsCounter = statsCounter;
+window.priceCalculator = priceCalculator;
+window.whatsappWidget = whatsappWidget;

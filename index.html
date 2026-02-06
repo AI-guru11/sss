@@ -54,6 +54,8 @@
     <script src="data/portfolio.js"></script>
     <script src="data/partners.js"></script>
     <script src="data/services.js"></script>
+    <script src="data/testimonials.js"></script>
+    <script src="data/faq.js"></script>
 
     <!-- منطق التطبيق -->
     <script src="js/app.js"></script>
@@ -678,7 +680,7 @@
                 <h2 class="text-3xl sm:text-4xl font-black tracking-tight">معرض الأعمال</h2>
                 <p class="mt-2 text-[color:var(--muted)]">أعمالنا تتحدث عن نفسها.</p>
             </div>
-            
+
             <div x-data="workGallery()" class="masonry">
                  <div class="masonry-item">
                     <article class="noise rounded-[2rem] border border-[color:var(--border)] bg-[color:var(--card)] overflow-hidden">
@@ -694,7 +696,7 @@
                         </div>
                     </article>
                  </div>
-                 
+
                  <template x-for="p in projects" :key="p.id">
                     <div class="masonry-item">
                         <article class="noise rounded-[2rem] border border-[color:var(--border)] bg-[color:var(--card)] overflow-hidden hover:shadow-glow-violet transition-shadow duration-300">
@@ -714,7 +716,283 @@
             </div>
         </section>
 
+        <!-- Stats Counter Section -->
+        <section class="py-16 sm:py-24" x-data="statsCounter()" x-init="init()">
+            <div data-stats-counter class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value"><span x-text="counters.clients"></span><span x-text="stats.clients?.suffix"></span></div>
+                    <div class="stat-label" x-text="stats.clients?.label"></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value"><span x-text="counters.projects"></span><span x-text="stats.projects?.suffix"></span></div>
+                    <div class="stat-label" x-text="stats.projects?.label"></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value"><span x-text="counters.cities"></span><span x-text="stats.cities?.suffix"></span></div>
+                    <div class="stat-label" x-text="stats.cities?.label"></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value"><span x-text="counters.years"></span><span x-text="stats.years?.suffix"></span></div>
+                    <div class="stat-label" x-text="stats.years?.label"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="py-10 sm:py-20 testimonials-section" x-data="testimonialsCarousel()" x-init="init()">
+            <div class="mb-10" data-reveal>
+                <h2 class="text-3xl sm:text-5xl font-black tracking-tight">ماذا يقول <span class="text-fikra-violet">عملاؤنا</span></h2>
+                <p class="mt-2 text-[color:var(--muted)]">آراء حقيقية من عملاء سعداء.</p>
+            </div>
+
+            <div class="relative" @mouseenter="isHovered = true" @mouseleave="isHovered = false">
+                <!-- Main Testimonial -->
+                <div class="testimonial-card max-w-3xl mx-auto" data-reveal>
+                    <div class="flex items-start gap-4 mb-4">
+                        <div class="testimonial-avatar">
+                            <span x-text="current.avatar"></span>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-lg text-[color:var(--fg)]" x-text="current.name"></h4>
+                            <p class="text-sm text-[color:var(--muted)]" x-text="current.role"></p>
+                            <div class="flex items-center gap-2 mt-1">
+                                <span class="text-xs text-[color:var(--muted)]" x-text="current.location"></span>
+                                <span class="text-xs px-2 py-0.5 bg-fikra-violet/20 text-fikra-violet rounded-full" x-text="current.project"></span>
+                            </div>
+                        </div>
+                        <div class="testimonial-stars">
+                            <template x-for="star in getStars(current.rating)" :key="star">
+                                <svg class="testimonial-star" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                </svg>
+                            </template>
+                        </div>
+                    </div>
+                    <p class="testimonial-text" x-text="current.text"></p>
+                </div>
+
+                <!-- Navigation -->
+                <div class="flex items-center justify-center gap-4 mt-8">
+                    <div class="testimonial-nav">
+                        <button class="testimonial-nav-btn" @click="prev()">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                        <button class="testimonial-nav-btn" @click="next()">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Dots -->
+                <div class="testimonial-dots">
+                    <template x-for="(t, index) in testimonials" :key="t.id">
+                        <button class="testimonial-dot" :class="{ 'active': currentIndex === index }" @click="goTo(index)"></button>
+                    </template>
+                </div>
+            </div>
+        </section>
+
+        <!-- Price Calculator Section -->
+        <section id="calculator" class="py-10 sm:py-20">
+            <div class="mb-10" data-reveal>
+                <h2 class="text-3xl sm:text-5xl font-black tracking-tight">حاسبة <span class="text-fikra-orange">الأسعار</span></h2>
+                <p class="mt-2 text-[color:var(--muted)]">احسب تكلفة طلبك بشكل تقريبي فوراً.</p>
+            </div>
+
+            <div class="max-w-2xl mx-auto" x-data="priceCalculator()">
+                <div class="calculator-card" data-reveal>
+                    <!-- Product Selection -->
+                    <div class="calculator-row">
+                        <label class="calculator-label">نوع المنتج</label>
+                        <select class="calculator-select" x-model="selectedProduct">
+                            <template x-for="(prod, key) in products" :key="key">
+                                <option :value="key" x-text="prod.name"></option>
+                            </template>
+                        </select>
+                    </div>
+
+                    <!-- Quantity -->
+                    <div class="calculator-row">
+                        <label class="calculator-label">الكمية</label>
+                        <input type="number" class="calculator-input" x-model.number="quantity" :min="minQuantity" placeholder="أدخل الكمية">
+                    </div>
+
+                    <!-- Size -->
+                    <div class="calculator-row">
+                        <label class="calculator-label">المقاس</label>
+                        <div class="calculator-options">
+                            <template x-for="(s, key) in sizes" :key="key">
+                                <button class="calculator-option" :class="{ 'active': size === key }" @click="size = key" x-text="s.name"></button>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- Finishing -->
+                    <div class="calculator-row">
+                        <label class="calculator-label">التشطيب</label>
+                        <div class="calculator-options">
+                            <template x-for="(f, key) in finishings" :key="key">
+                                <button class="calculator-option" :class="{ 'active': finishing === key }" @click="finishing = key" x-text="f.name"></button>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- Extra Options -->
+                    <div class="calculator-row">
+                        <label class="calculator-label">خيارات إضافية</label>
+                        <div class="grid sm:grid-cols-2 gap-3">
+                            <div class="calculator-checkbox" :class="{ 'active': design }" @click="design = !design">
+                                <div class="calculator-checkbox-box">
+                                    <svg x-show="design" class="w-3 h-3 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-[color:var(--fg)]">تصميم (+50 ر.س)</div>
+                                    <div class="text-xs text-[color:var(--muted)]">تصميم احترافي للمنتج</div>
+                                </div>
+                            </div>
+                            <div class="calculator-checkbox" :class="{ 'active': urgent }" @click="urgent = !urgent">
+                                <div class="calculator-checkbox-box">
+                                    <svg x-show="urgent" class="w-3 h-3 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-[color:var(--fg)]">طلب عاجل (+25%)</div>
+                                    <div class="text-xs text-[color:var(--muted)]">تسليم خلال 24 ساعة</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Total -->
+                    <div class="calculator-total">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-[color:var(--muted)]">السعر التقديري:</span>
+                            <div>
+                                <span class="calculator-price" x-text="finalPrice + ' ر.س'"></span>
+                                <template x-if="discount > 0">
+                                    <span class="calculator-discount" x-text="'خصم ' + discount + '%'"></span>
+                                </template>
+                            </div>
+                        </div>
+                        <button class="w-full py-4 rounded-xl bg-gradient-to-l from-fikra-orange to-fikra-violet text-white font-bold text-lg shadow-glow-orange hover:scale-[1.01] transition-transform" @click="orderViaWhatsApp()">
+                            طلب عرض سعر عبر واتساب
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="py-10 sm:py-20" x-data="faqAccordion()">
+            <div class="mb-10" data-reveal>
+                <h2 class="text-3xl sm:text-5xl font-black tracking-tight">الأسئلة <span class="text-fikra-violet">الشائعة</span></h2>
+                <p class="mt-2 text-[color:var(--muted)]">كل ما تريد معرفته عن خدماتنا.</p>
+            </div>
+
+            <div class="max-w-3xl mx-auto" data-reveal>
+                <!-- Search -->
+                <div class="faq-search">
+                    <svg class="w-5 h-5 faq-search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                    <input type="text" class="faq-search-input" placeholder="ابحث في الأسئلة..." x-model="searchQuery">
+                </div>
+
+                <!-- FAQ Items -->
+                <div class="space-y-3">
+                    <template x-for="faq in filteredFaqs" :key="faq.id">
+                        <div class="faq-item" :class="{ 'open': isOpen(faq.id) }">
+                            <button class="faq-question" @click="toggle(faq.id)">
+                                <div class="faq-question-content">
+                                    <span class="faq-icon" x-text="faq.icon"></span>
+                                    <span x-text="faq.question"></span>
+                                </div>
+                                <div class="faq-toggle">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                    </svg>
+                                </div>
+                            </button>
+                            <div class="faq-answer" x-show="isOpen(faq.id)" x-collapse x-cloak>
+                                <p x-text="faq.answer"></p>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- No Results -->
+                <div class="text-center py-8" x-show="filteredFaqs.length === 0" x-cloak>
+                    <div class="text-4xl mb-3">🔍</div>
+                    <p class="text-[color:var(--muted)]">لم نجد نتائج لبحثك. جرب كلمات أخرى.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-10 sm:py-20">
+            <div class="noise rounded-[2.5rem] p-8 sm:p-12 text-center" data-reveal>
+                <h2 class="text-3xl sm:text-4xl font-black tracking-tight mb-4">جاهز تبدأ مشروعك؟</h2>
+                <p class="text-[color:var(--muted)] mb-8 max-w-xl mx-auto">تواصل معنا الآن واحصل على استشارة مجانية. فريقنا جاهز لتحويل أفكارك إلى واقع مبهر.</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a :href="'https://wa.me/' + SITE_CONFIG.whatsapp" target="_blank" class="inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-l from-green-600 to-green-500 text-white font-bold rounded-2xl hover:scale-105 transition-transform shadow-lg">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                        تواصل عبر واتساب
+                    </a>
+                    <a :href="'mailto:' + SITE_CONFIG.email" class="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[color:var(--card)] border border-[color:var(--border)] text-[color:var(--fg)] font-bold rounded-2xl hover:bg-[color:var(--fg)]/10 transition">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        راسلنا بالإيميل
+                    </a>
+                </div>
+            </div>
+        </section>
+
     </main>
+
+    <!-- WhatsApp Floating Widget -->
+    <div class="wa-widget" x-data="whatsappWidget()" x-init="init()">
+        <!-- Popup -->
+        <div class="wa-widget-popup" x-show="isOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95 translate-y-4" x-transition:enter-end="opacity-100 scale-100 translate-y-0" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95 translate-y-4" x-cloak @click.outside="close()">
+            <div class="wa-widget-header">
+                <button class="wa-widget-close" @click="close()">✕</button>
+                <div class="wa-widget-header-title">مرحباً! 👋</div>
+                <div class="wa-widget-header-subtitle">كيف يمكننا مساعدتك؟</div>
+            </div>
+            <div class="wa-widget-body">
+                <div class="wa-widget-quick-msgs">
+                    <template x-for="msg in quickMessages" :key="msg">
+                        <button class="wa-widget-quick-msg" @click="sendMessage(msg)" x-text="msg"></button>
+                    </template>
+                </div>
+                <div class="wa-widget-input-row">
+                    <input type="text" class="wa-widget-input" placeholder="أو اكتب رسالتك..." x-model="message" @keyup.enter="sendMessage()">
+                    <button class="wa-widget-send" @click="sendMessage()">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating Button -->
+        <button class="wa-widget-btn" @click="toggle()">
+            <div class="wa-widget-pulse"></div>
+            <svg fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+        </button>
+    </div>
 
     <footer class="py-10 text-center text-sm text-[color:var(--muted)] border-t border-[color:var(--border)]">
         © <span x-text="new Date().getFullYear()"></span> Safi Group.
