@@ -1450,41 +1450,29 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
 /* 15. PARTNERS CAROUSEL - Simple & Smooth */
 /* ====================================== */
 
-/* Main Container - Transparent Background */
+/* Main Container - Full Width, No Padding */
 .partners-marquee {
   position: relative;
   width: 100%;
+  max-width: none;
   padding: 2rem 0;
   margin-bottom: 4rem;
   background: transparent;
 }
 
-/* Track with Mask for Portal Effect */
+/* Track - Full width, no masks */
 .partners-track {
   display: flex;
   overflow: hidden;
-  /* Smooth fade edges using mask-image */
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    black 10%,
-    black 90%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    black 10%,
-    black 90%,
-    transparent 100%
-  );
+  width: 100%;
 }
 
-/* Scrolling Container */
+/* Scrolling Container - Centered items */
 .partners-scroll {
   display: flex;
+  align-items: center;
   gap: 3rem;
-  padding: 0.5rem 1.5rem;
+  padding: 0;
   animation: partners-scroll 30s linear infinite;
   will-change: transform;
 }
@@ -1529,7 +1517,7 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
   }
 
   .partners-scroll {
-    gap: 2rem;
+    gap: 2.5rem;
   }
 
   .partner-item {
@@ -1540,7 +1528,7 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
 
 @media (max-width: 480px) {
   .partners-scroll {
-    gap: 1.5rem;
+    gap: 2rem;
     animation-duration: 20s;
   }
 
