@@ -156,44 +156,28 @@
         <!-- ====================================== -->
         <!-- PARTNERS CAROUSEL - شركاء النجاح      -->
         <!-- ====================================== -->
-        <section class="partners-section" x-data="partnersCarousel()">
-            <!-- Grid Background Pattern -->
-            <div class="partners-grid-pattern"></div>
+        <div class="partners-marquee" x-data="partnersCarousel()">
+            <p class="text-xs font-bold text-[color:var(--muted)] tracking-[0.2em] uppercase mb-6 text-center opacity-70">شركاء النجاح في رحلتنا</p>
 
-            <!-- Enhanced Fade Edges - Portal Effect -->
-            <div class="partners-fade-right"></div>
-            <div class="partners-fade-left"></div>
-
-            <!-- Content Container -->
-            <div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6">
-                <!-- Section Title -->
-                <p class="partners-title">شركاء النجاح في رحلتنا</p>
-
-                <!-- Partners Carousel Track -->
-                <div class="partners-track">
-                    <div class="partners-scroll">
-                        <!-- الشركاء - النسخة الأولى -->
-                        <template x-for="partner in partners" :key="partner.name">
-                            <div class="partner-card">
-                                <div class="partner-icon-wrapper">
-                                    <span class="partner-icon" x-text="partner.icon"></span>
-                                </div>
-                                <span class="partner-name" x-text="partner.name"></span>
-                            </div>
-                        </template>
-                        <!-- الشركاء - النسخة الثانية للتمرير المستمر -->
-                        <template x-for="partner in partners" :key="'dup-' + partner.name">
-                            <div class="partner-card">
-                                <div class="partner-icon-wrapper">
-                                    <span class="partner-icon" x-text="partner.icon"></span>
-                                </div>
-                                <span class="partner-name" x-text="partner.name"></span>
-                            </div>
-                        </template>
-                    </div>
+            <div class="partners-track" dir="ltr">
+                <div class="partners-scroll">
+                    <!-- الشركاء - النسخة الأولى -->
+                    <template x-for="partner in partners" :key="partner.name">
+                        <div class="partner-item">
+                            <span class="text-2xl" x-text="partner.icon"></span>
+                            <span class="font-bold text-sm tracking-wide" x-text="partner.name"></span>
+                        </div>
+                    </template>
+                    <!-- الشركاء - النسخة الثانية للتمرير المستمر -->
+                    <template x-for="partner in partners" :key="'dup-' + partner.name">
+                        <div class="partner-item">
+                            <span class="text-2xl" x-text="partner.icon"></span>
+                            <span class="font-bold text-sm tracking-wide" x-text="partner.name"></span>
+                        </div>
+                    </template>
                 </div>
             </div>
-        </section>
+        </div>
 
         <section id="services" class="py-10 sm:py-20">
             <div class="flex items-end justify-between gap-4 mb-8">
