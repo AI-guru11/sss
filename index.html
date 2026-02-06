@@ -617,6 +617,218 @@
             </div>
         </section>
 
+        <!-- ============================================ -->
+        <!-- خدماتنا (Our Services Section)               -->
+        <!-- ============================================ -->
+        <section id="services" class="py-10 sm:py-20" x-data="{
+            get services() {
+                return window.SERVICES_DATA?.mainServices || [];
+            }
+        }">
+            <!-- Header -->
+            <div class="mb-12" data-reveal>
+                <h2 class="text-3xl sm:text-5xl font-black tracking-tight">
+                    <span class="text-fikra-violet">خدماتنا</span>
+                </h2>
+                <p class="mt-2 text-[color:var(--muted)]">حلول إبداعية متكاملة تلبي جميع احتياجاتك التسويقية والإعلانية</p>
+            </div>
+
+            <!-- Services Grid -->
+            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-reveal>
+                <template x-for="service in services" :key="service.id">
+                    <article class="noise rounded-[2rem] backdrop-blur-md shadow-glass p-6 sm:p-8 hover:scale-[1.02] transition-all duration-300">
+                        <!-- Service Header -->
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="text-5xl" x-text="service.icon"></div>
+                            <div>
+                                <h3 class="text-xl sm:text-2xl font-black text-[color:var(--fg)]" x-text="service.title"></h3>
+                                <p class="text-xs text-[color:var(--muted)] uppercase tracking-wide" x-text="service.titleEn"></p>
+                            </div>
+                        </div>
+
+                        <!-- Service Description -->
+                        <p class="text-sm text-[color:var(--muted)] mb-6" x-text="service.description"></p>
+
+                        <!-- Service Items Grid -->
+                        <div class="grid gap-2">
+                            <template x-for="item in service.services" :key="item.name">
+                                <div class="flex items-start gap-3 p-3 rounded-xl bg-[color:var(--card)] border border-[color:var(--border)] hover:border-[color:var(--fg)] transition-colors">
+                                    <span class="text-2xl flex-shrink-0" x-text="item.icon"></span>
+                                    <div class="min-w-0">
+                                        <div class="text-sm font-bold text-[color:var(--fg)] line-clamp-1" x-text="item.name"></div>
+                                        <div class="text-xs text-[color:var(--muted)] line-clamp-1" x-text="item.desc"></div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+
+                        <!-- CTA Button -->
+                        <a href="#brief" class="mt-6 w-full inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-bold bg-gradient-to-l from-fikra-violet to-fikra-orange text-white shadow-glow-violet transition-transform hover:scale-[1.05]">
+                            <span>ابدأ مشروعك</span>
+                            <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                            </svg>
+                        </a>
+                    </article>
+                </template>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- أعمالنا (Our Works Section)                  -->
+        <!-- ============================================ -->
+        <section id="our-works" class="py-10 sm:py-20" x-data="{
+            activeCategory: 'all',
+
+            get categories() {
+                const cats = window.PORTFOLIO_DATA?.workCategories || [];
+                return cats.map(cat => ({
+                    ...cat,
+                    count: this.getWorksByCategory(cat.id).length
+                }));
+            },
+
+            get works() {
+                return window.PORTFOLIO_DATA?.ourWorks || [];
+            },
+
+            get categoriesWithWorks() {
+                return this.categories.filter(cat => cat.count > 0);
+            },
+
+            getWorksByCategory(categoryId) {
+                return this.works.filter(w => w.category === categoryId);
+            },
+
+            scrollSlider(categoryId, direction) {
+                const slider = document.getElementById('works-slider-' + categoryId);
+                if (!slider) return;
+                const scrollAmount = slider.offsetWidth * 0.8;
+                slider.scrollBy({
+                    left: direction * scrollAmount * -1,
+                    behavior: 'smooth'
+                });
+            },
+
+            viewAllCategory(categoryId) {
+                this.activeCategory = categoryId;
+                const section = document.getElementById('our-works');
+                if (section) {
+                    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        }">
+            <!-- Header -->
+            <div class="mb-12" data-reveal>
+                <h2 class="text-3xl sm:text-5xl font-black tracking-tight">
+                    <span class="text-fikra-orange">أعمالنا</span>
+                </h2>
+                <p class="mt-2 text-[color:var(--muted)]">مشاريع منجزة بنجاح تعكس خبرتنا وإبداعنا — <span x-text="works.length"></span> مشروع</p>
+            </div>
+
+            <!-- Category-Based Horizontal Sliders -->
+            <div x-show="activeCategory === 'all'">
+                <template x-for="cat in categoriesWithWorks" :key="cat.id">
+                    <div class="category-row" data-reveal>
+                        <!-- Category Header -->
+                        <div class="category-row-header">
+                            <div class="category-row-title">
+                                <h3>
+                                    <span class="category-row-icon" x-text="cat.icon"></span>
+                                    <span x-text="cat.name"></span>
+                                    <span class="category-row-count" x-text="cat.count"></span>
+                                </h3>
+                            </div>
+                            <button class="category-view-all" @click="viewAllCategory(cat.id)">
+                                <span>عرض الكل</span>
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Horizontal Slider -->
+                        <div class="slider-container">
+                            <!-- Right Arrow (for RTL) -->
+                            <button class="slider-arrow slider-arrow-right" @click="scrollSlider(cat.id, 1)" aria-label="السابق">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                                </svg>
+                            </button>
+
+                            <!-- Slider with Works -->
+                            <div class="horizontal-slider" :id="'works-slider-' + cat.id">
+                                <template x-for="work in getWorksByCategory(cat.id)" :key="work.id">
+                                    <article class="noise rounded-[2rem] backdrop-blur-md shadow-glass overflow-hidden hover:scale-[1.02] transition-all duration-300">
+                                        <!-- Work Image/Gradient -->
+                                        <div class="relative h-48 flex items-center justify-center" :style="'background: ' + work.gradient">
+                                            <span class="text-6xl" x-text="work.icon"></span>
+                                            <!-- Tags -->
+                                            <div class="absolute bottom-3 left-3 right-3 flex gap-2 flex-wrap">
+                                                <template x-for="tag in work.tags" :key="tag">
+                                                    <span class="px-2 py-1 rounded-full text-xs font-bold bg-black/50 backdrop-blur-sm text-white border border-white/20" x-text="tag"></span>
+                                                </template>
+                                            </div>
+                                        </div>
+
+                                        <!-- Work Content -->
+                                        <div class="p-5">
+                                            <h4 class="text-lg font-black text-[color:var(--fg)] mb-2 line-clamp-1" x-text="work.title"></h4>
+                                            <p class="text-sm text-[color:var(--muted)] line-clamp-2" x-text="work.description"></p>
+                                        </div>
+                                    </article>
+                                </template>
+                            </div>
+
+                            <!-- Left Arrow (for RTL) -->
+                            <button class="slider-arrow slider-arrow-left" @click="scrollSlider(cat.id, -1)" aria-label="التالي">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Single Category Grid View (When "View All" is clicked) -->
+            <div x-show="activeCategory !== 'all'" x-transition>
+                <!-- Back Button -->
+                <div class="mb-6">
+                    <button class="inline-flex items-center gap-2 px-4 py-2 bg-[color:var(--card)] border border-[color:var(--border)] rounded-2xl text-[color:var(--muted)] hover:text-[color:var(--fg)] hover:border-[color:var(--fg)] transition" @click="activeCategory = 'all'">
+                        <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                        </svg>
+                        <span class="font-bold">العودة لجميع الفئات</span>
+                    </button>
+                </div>
+
+                <!-- Works Grid -->
+                <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-reveal>
+                    <template x-for="work in works.filter(w => activeCategory === 'all' || w.category === activeCategory)" :key="work.id">
+                        <article class="noise rounded-[2rem] backdrop-blur-md shadow-glass overflow-hidden hover:scale-[1.02] transition-all duration-300">
+                            <!-- Work Image/Gradient -->
+                            <div class="relative h-48 flex items-center justify-center" :style="'background: ' + work.gradient">
+                                <span class="text-6xl" x-text="work.icon"></span>
+                                <!-- Tags -->
+                                <div class="absolute bottom-3 left-3 right-3 flex gap-2 flex-wrap">
+                                    <template x-for="tag in work.tags" :key="tag">
+                                        <span class="px-2 py-1 rounded-full text-xs font-bold bg-black/50 backdrop-blur-sm text-white border border-white/20" x-text="tag"></span>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <!-- Work Content -->
+                            <div class="p-5">
+                                <h4 class="text-lg font-black text-[color:var(--fg)] mb-2 line-clamp-1" x-text="work.title"></h4>
+                                <p class="text-sm text-[color:var(--muted)] line-clamp-2" x-text="work.description"></p>
+                            </div>
+                        </article>
+                    </template>
+                </div>
+            </div>
+        </section>
+
         <section id="transformations" class="py-10 sm:py-20" x-data="transformationsData()">
             <div class="mb-10 px-4 sm:px-6 mx-auto max-w-7xl" data-reveal>
                 <h2 class="text-3xl sm:text-5xl font-black tracking-tight">لمسة <span class="text-fikra-violet">الصافي</span></h2>
