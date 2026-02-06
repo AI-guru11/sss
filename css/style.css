@@ -125,6 +125,42 @@ footer .noise::after {
 }
 
 /* ====================================== */
+/* 4. HERO SECTION (INTERACTIVE CANVAS)   */
+/* ====================================== */
+#nebulaCanvas {
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+/* Hero Text Contrast Enhancement */
+section:has(#nebulaCanvas) h1,
+section:has(#nebulaCanvas) p,
+section:has(#nebulaCanvas) .bg-clip-text {
+  text-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.4),
+    0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Light mode adjustments */
+html.idea section:has(#nebulaCanvas) h1,
+html.idea section:has(#nebulaCanvas) p {
+  text-shadow:
+    0 1px 3px rgba(255, 255, 255, 0.8),
+    0 2px 8px rgba(255, 255, 255, 0.6),
+    0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Badge contrast */
+section:has(#nebulaCanvas) .bg-\[color\:var\(--card\)\] {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(8px);
+}
+
+html.idea section:has(#nebulaCanvas) .bg-\[color\:var\(--card\)\] {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* ====================================== */
 /* 4. ANIMATIONS & INTERACTIONS           */
 /* ====================================== */
 
