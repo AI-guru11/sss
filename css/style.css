@@ -68,8 +68,49 @@ html.idea {
 .noise {
   position: relative;
   isolation: isolate;
-  background-color: var(--card); /* استخدام المتغير لضبط اللون تلقائياً */
-  border: 1px solid var(--border); /* استخدام المتغير للحدود */
+  background-color: var(--card);
+  border-radius: 24px; /* Premium rounded-3xl */
+
+  /* Premium gradient border */
+  border: 1px solid transparent;
+  background-image:
+    linear-gradient(var(--card), var(--card)),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05), transparent);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+
+  /* Subtle base shadow */
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+/* Light mode border adjustment */
+html.idea .noise {
+  background-image:
+    linear-gradient(var(--card), var(--card)),
+    linear-gradient(135deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.05), transparent);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* Premium hover glow */
+.noise:hover {
+  box-shadow:
+    0 0 15px rgba(255, 255, 255, 0.05),
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
+}
+
+html.idea .noise:hover {
+  box-shadow:
+    0 0 15px rgba(0, 0, 0, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 /* Texture Overlay */
@@ -101,19 +142,19 @@ html.idea .noise:before {
   z-index: 1;
 }
 
-/* Glass Edge Highlight */
+/* Glass Edge Highlight - Premium Edition */
 .noise::after {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
-  border-radius: inherit;
+  border-radius: 24px; /* Match rounded-3xl */
   background:
-    linear-gradient(to right, var(--edge-line-strong), transparent) top left / 140px 1px no-repeat,
-    linear-gradient(to left, var(--edge-line-soft), transparent) top right / 140px 1px no-repeat,
-    linear-gradient(to right, var(--edge-line-soft), transparent) bottom left / 160px 1px no-repeat,
-    linear-gradient(to left, var(--edge-line-soft), transparent) bottom right / 160px 1px no-repeat;
-  opacity: .55;
+    linear-gradient(to right, var(--edge-line-strong), transparent) top left / 160px 1px no-repeat,
+    linear-gradient(to left, var(--edge-line-soft), transparent) top right / 160px 1px no-repeat,
+    linear-gradient(to right, var(--edge-line-soft), transparent) bottom left / 180px 1px no-repeat,
+    linear-gradient(to left, var(--edge-line-soft), transparent) bottom right / 180px 1px no-repeat;
+  opacity: .65;
   mix-blend-mode: normal;
   z-index: 10;
 }
@@ -193,7 +234,36 @@ html.idea section:has(#nebulaCanvas) .bg-\[color\:var\(--card\)\] {
 }
 
 /* ====================================== */
-/* 4. ANIMATIONS & INTERACTIONS           */
+/* 4. PREMIUM TYPOGRAPHY                  */
+/* ====================================== */
+
+/* Section Labels (Small Uppercase Category Indicators) */
+.section-label,
+.premium-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--muted);
+  opacity: 0.8;
+  margin-bottom: 0.75rem;
+}
+
+/* Section Titles */
+h2, h3 {
+  font-weight: 800; /* extrabold */
+}
+
+/* Bento Card Titles */
+.noise h3,
+.noise h4 {
+  font-weight: 800; /* extrabold */
+  letter-spacing: -0.02em; /* Tighter tracking for premium feel */
+}
+
+/* ====================================== */
+/* 5. ANIMATIONS & INTERACTIONS           */
 /* ====================================== */
 
 [data-reveal] {
