@@ -193,6 +193,7 @@
         <section id="services" class="py-10 sm:py-20">
             <div class="flex items-end justify-between gap-4 mb-8">
                 <div data-reveal>
+                    <span class="section-label">SERVICES — الخدمات</span>
                     <h2 class="text-3xl sm:text-4xl font-black tracking-tight">خدماتنا</h2>
                     <p class="mt-2 text-[color:var(--muted)]">لماذا الصافي؟</p>
                 </div>
@@ -201,8 +202,8 @@
                 </a>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-5">
-                <article class="noise lg:col-span-8 rounded-[2rem] backdrop-blur-md shadow-glass p-8" data-reveal>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8">
+                <article class="noise lg:col-span-8 backdrop-blur-md shadow-glass p-8" data-reveal>
                     <div class="flex flex-col sm:flex-row items-start justify-between gap-8">
                         <div>
                             <h3 class="text-2xl sm:text-3xl font-black tracking-tight">Why Safi - لماذا الصافي</h3>
@@ -258,6 +259,7 @@
             <div class="mb-12" data-reveal>
                 <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
                     <div>
+                        <span class="section-label">PRODUCTS — المنتجات</span>
                         <h2 class="text-3xl sm:text-5xl font-black tracking-tight">متجر <span class="text-fikra-orange">المنتجات</span></h2>
                         <p class="mt-2 text-[color:var(--muted)]">تصفح أحدث عروضنا ومنتجاتنا المميزة — <span x-text="products.length"></span> منتج متنوع</p>
                     </div>
@@ -646,9 +648,9 @@
             </div>
 
             <!-- Services Grid -->
-            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-reveal>
+            <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3" data-reveal>
                 <template x-for="service in services" :key="service.id">
-                    <article class="noise rounded-[2rem] backdrop-blur-md shadow-glass p-6 sm:p-8 hover:scale-[1.02] transition-all duration-300">
+                    <article class="noise backdrop-blur-md shadow-glass p-6 sm:p-8 hover:scale-[1.02] transition-all duration-300">
                         <!-- Service Header -->
                         <div class="flex items-center gap-3 mb-4">
                             <div class="text-5xl" x-text="service.icon"></div>
@@ -733,6 +735,7 @@
             <!-- Header -->
             <div class="mb-12 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4" data-reveal>
                 <div>
+                    <span class="section-label">OUR WORKS — أعمالنا</span>
                     <h2 class="text-3xl sm:text-5xl font-black tracking-tight">
                         <span class="text-fikra-orange">أعمالنا</span>
                     </h2>
@@ -779,7 +782,7 @@
                             <!-- Slider with Works -->
                             <div class="horizontal-slider" :id="'works-slider-' + cat.id">
                                 <template x-for="work in getWorksByCategory(cat.id)" :key="work.id">
-                                    <article class="noise rounded-[2rem] backdrop-blur-md shadow-glass overflow-hidden hover:scale-[1.02] transition-all duration-300">
+                                    <article class="noise backdrop-blur-md shadow-glass overflow-hidden hover:scale-[1.02] transition-all duration-300">
                                         <!-- Work Image/Gradient -->
                                         <div class="relative h-48 flex items-center justify-center" :style="'background: ' + work.gradient">
                                             <span class="text-6xl" x-text="work.icon"></span>
@@ -824,9 +827,9 @@
                 </div>
 
                 <!-- Works Grid -->
-                <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-reveal>
+                <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3" data-reveal>
                     <template x-for="work in works.filter(w => activeCategory === 'all' || w.category === activeCategory)" :key="work.id">
-                        <article class="noise rounded-[2rem] backdrop-blur-md shadow-glass overflow-hidden hover:scale-[1.02] transition-all duration-300">
+                        <article class="noise backdrop-blur-md shadow-glass overflow-hidden hover:scale-[1.02] transition-all duration-300">
                             <!-- Work Image/Gradient -->
                             <div class="relative h-48 flex items-center justify-center" :style="'background: ' + work.gradient">
                                 <span class="text-6xl" x-text="work.icon"></span>
@@ -921,11 +924,12 @@
         </section>
 
         <section id="brief" class="py-10 sm:py-20" x-data="briefWizard()">
-            <div class="noise rounded-[2.5rem] p-6 sm:p-10 relative overflow-hidden" data-reveal>
+            <div class="noise p-6 sm:p-10 relative overflow-hidden" data-reveal>
                 <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[color:var(--fg)]/10 to-transparent"></div>
 
                 <div class="flex justify-between items-center mb-10 relative z-10">
                     <div>
+                        <span class="section-label">BRIEF WIZARD — مستكشف الذوق</span>
                         <h2 class="text-2xl sm:text-4xl font-black tracking-tight">مستكشف الذوق</h2>
                         <p class="mt-2 text-[color:var(--muted)]">صمم تجربتك.. اختر ما يمثل رؤيتك.</p>
                     </div>
@@ -1061,7 +1065,7 @@
 
             <div x-data="workGallery()" class="masonry">
                  <div class="masonry-item">
-                    <article class="noise rounded-[2rem] border border-[color:var(--border)] bg-[color:var(--card)] overflow-hidden">
+                    <article class="noise border border-[color:var(--border)] bg-[color:var(--card)] overflow-hidden">
                         <div class="p-6">
                             <h3 class="font-bold text-lg">Before / After</h3>
                              <div class="relative h-64 mt-4 rounded-2xl overflow-hidden ring-1 ring-white/10" x-data="beforeAfter()" @pointerdown="start($event)" @pointermove.window="move($event)" @pointerup.window="end()" @pointercancel.window="end()">
@@ -1077,7 +1081,7 @@
 
                  <template x-for="p in projects" :key="p.id">
                     <div class="masonry-item">
-                        <article class="noise rounded-[2rem] border border-[color:var(--border)] bg-[color:var(--card)] overflow-hidden hover:shadow-glow-violet transition-shadow duration-300">
+                        <article class="noise border border-[color:var(--border)] bg-[color:var(--card)] overflow-hidden hover:shadow-glow-violet transition-shadow duration-300">
                              <div class="h-48 w-full" :style="`background: ${p.bg}`"></div>
                              <div class="p-6">
                                  <h3 class="font-bold text-lg" x-text="p.title"></h3>
@@ -1315,7 +1319,7 @@
 
         <!-- Contact Section -->
         <section id="contact" class="py-10 sm:py-20">
-            <div class="noise rounded-[2.5rem] p-8 sm:p-12 text-center" data-reveal>
+            <div class="noise p-8 sm:p-12 text-center" data-reveal>
                 <h2 class="text-3xl sm:text-4xl font-black tracking-tight mb-4">جاهز تبدأ مشروعك؟</h2>
                 <p class="text-[color:var(--muted)] mb-8 max-w-xl mx-auto">تواصل معنا الآن واحصل على استشارة مجانية. فريقنا جاهز لتحويل أفكارك إلى واقع مبهر.</p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
