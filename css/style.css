@@ -234,6 +234,117 @@ html.idea section:has(#nebulaCanvas) .bg-\[color\:var\(--card\)\] {
 }
 
 /* ====================================== */
+/* 3D PARALLAX HERO EFFECT                */
+/* ====================================== */
+
+/* 3D Container with perspective */
+.hero-3d-container {
+  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Floating 3D Elements */
+.floating-3d-elements {
+  transform-style: preserve-3d;
+}
+
+.floating-element {
+  position: absolute;
+  will-change: transform;
+  transition: transform 0.05s linear;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  /* Enhanced glass effect for floating elements */
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Light mode floating elements */
+html.idea .floating-element {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* Subtle floating animation for elements */
+@keyframes float-gentle {
+  0%, 100% {
+    transform: translateY(0) translateZ(0);
+  }
+  50% {
+    transform: translateY(-10px) translateZ(10px);
+  }
+}
+
+.floating-element[data-parallax="float-1"] {
+  animation: float-gentle 6s ease-in-out infinite;
+  animation-delay: 0s;
+}
+
+.floating-element[data-parallax="float-2"] {
+  animation: float-gentle 7s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+.floating-element[data-parallax="float-3"] {
+  animation: float-gentle 8s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.floating-element[data-parallax="float-4"] {
+  animation: float-gentle 7.5s ease-in-out infinite;
+  animation-delay: 1.5s;
+}
+
+.floating-element[data-parallax="float-5"] {
+  animation: float-gentle 6.5s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.floating-element[data-parallax="float-6"] {
+  animation: float-gentle 9s ease-in-out infinite;
+  animation-delay: 2.5s;
+}
+
+/* Icon glow effects */
+.floating-element svg {
+  filter: drop-shadow(0 0 10px currentColor);
+  transition: filter 0.3s ease;
+}
+
+.floating-element:hover svg {
+  filter: drop-shadow(0 0 20px currentColor);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hero-3d-container {
+    perspective: 800px;
+  }
+
+  .floating-element {
+    /* Smaller elements on mobile */
+    transform: scale(0.8) !important;
+  }
+}
+
+/* Performance optimization */
+@media (prefers-reduced-motion: reduce) {
+  .floating-element {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .hero-3d-container {
+    perspective: none;
+  }
+}
+
+/* ====================================== */
 /* 4. PREMIUM TYPOGRAPHY                  */
 /* ====================================== */
 
