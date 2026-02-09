@@ -132,8 +132,8 @@
                 <!-- Interactive Nebula Canvas Background (z-index: 0) -->
                 <canvas id="nebulaCanvas" class="absolute inset-0 w-full h-full pointer-events-auto" style="z-index: 0;"></canvas>
 
-                <!-- Text Content Layer (z-index: 10) -->
-                <div class="relative px-6 sm:px-10 py-12 sm:py-20 text-center sm:text-right" style="z-index: 10;">
+                <!-- Text Content Layer (z-index: 20) - In front for legibility -->
+                <div class="relative px-6 sm:px-10 py-12 sm:py-20 text-center sm:text-right" style="z-index: 20;">
                     <div class="max-w-3xl relative" data-reveal>
                         <p class="inline-flex items-center gap-2 rounded-full bg-[color:var(--card)] ring-1 ring-[color:var(--border)] px-4 py-2 text-xs text-[color:var(--muted)] font-medium">
                             <span class="h-2 w-2 rounded-full bg-fikra-orange shadow-glow-orange animate-pulse"></span>
@@ -157,8 +157,8 @@
                     </div>
                 </div>
 
-                <!-- Floating 3D Elements Layer (z-index: 20) -->
-                <div class="floating-3d-elements pointer-events-none" style="position: absolute; inset: 0; z-index: 20;">
+                <!-- Floating 3D Elements Layer (z-index: 5) - Behind text for depth effect -->
+                <div class="floating-3d-elements pointer-events-none" style="position: absolute; inset: 0; z-index: 5;">
                     <!-- Element 1: Top Right - Sparkles Icon -->
                     <div class="floating-element noise backdrop-blur-md"
                          data-parallax="float-1"
