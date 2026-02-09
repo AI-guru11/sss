@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="dark light" />
-    <title>Safi Group — نصنع الفكرة.. لتبهر العالم</title>
+    <title>Safi Group — تخيل.. نُنفذ</title>
     <meta name="description" content="Safi Group — Creative hub with bento glass UI, briefing wizard, masonry work gallery, and Idea Light Mode." />
     <meta name="theme-color" content="#0A0A0A" />
 
@@ -127,32 +127,99 @@
     </header>
 
     <main id="top" class="mx-auto max-w-7xl px-4 sm:px-6">
-        <section class="pt-10 sm:pt-16 pb-10">
-            <div class="overflow-hidden relative">
-                <!-- Interactive Nebula Canvas Background -->
-                <canvas id="nebulaCanvas" class="absolute inset-0 w-full h-full pointer-events-auto"></canvas>
+        <section class="pt-10 sm:pt-16 pb-10" id="hero-section">
+            <div class="overflow-hidden relative hero-3d-container" style="perspective: 1200px;">
+                <!-- Interactive Nebula Canvas Background (z-index: 0) -->
+                <canvas id="nebulaCanvas" class="absolute inset-0 w-full h-full pointer-events-auto" style="z-index: 0;"></canvas>
 
-                <div class="relative px-6 sm:px-10 py-12 sm:py-20 text-center sm:text-right">
-                    <div class="max-w-3xl relative z-10" data-reveal>
+                <!-- Text Content Layer (z-index: 10) -->
+                <div class="relative px-6 sm:px-10 py-12 sm:py-20 text-center sm:text-right" style="z-index: 10;">
+                    <div class="max-w-3xl relative" data-reveal>
                         <p class="inline-flex items-center gap-2 rounded-full bg-[color:var(--card)] ring-1 ring-[color:var(--border)] px-4 py-2 text-xs text-[color:var(--muted)] font-medium">
                             <span class="h-2 w-2 rounded-full bg-fikra-orange shadow-glow-orange animate-pulse"></span>
-                            منصة وكالة إبداعية
+                            وكالة دعاية وإعلان
                         </p>
                         <h1 class="mt-6 text-5xl sm:text-7xl lg:text-8xl font-black leading-[1.05] tracking-tight">
-                            <span class="block"><span class="bg-clip-text text-transparent bg-gradient-to-r from-fikra-orange to-fikra-violet">نصنع الفكرة..</span></span>
-                            <span class="block text-[color:var(--fg)]">لتبهر العالم</span>
+                            <span class="block"><span class="bg-clip-text text-transparent bg-gradient-to-r from-fikra-orange to-fikra-violet">تخيل..</span></span>
+                            <span class="block text-[color:var(--fg)]">نُنفذ</span>
                         </h1>
                         <p class="mt-6 text-[color:var(--muted)] text-lg sm:text-xl leading-relaxed max-w-2xl">
                             تصميم، فعاليات، إعلانات — لكن بأسلوب “يُباع” قبل ما يُعرض.
                         </p>
                         <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center sm:justify-start">
                             <a href="#brief" class="relative overflow-hidden rounded-2xl px-8 py-4 text-base font-bold text-white bg-gradient-to-l from-fikra-violet to-fikra-orange shadow-glow-orange hover:scale-[1.02] transition-transform">
-                                  اكتشف ذوقك
+                                  ابدأ رحلتك معنا
                             </a>
                             <a href="#products" class="rounded-2xl px-8 py-4 text-base font-bold bg-[color:var(--card)] ring-1 ring-[color:var(--border)] hover:bg-[color:var(--fg)]/5 text-[color:var(--fg)] transition">
                                 المنتجات
                             </a>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Floating 3D Elements Layer (z-index: 20) -->
+                <div class="floating-3d-elements pointer-events-none" style="position: absolute; inset: 0; z-index: 20;">
+                    <!-- Element 1: Top Right - Sparkles Icon -->
+                    <div class="floating-element noise backdrop-blur-md"
+                         data-parallax="float-1"
+                         data-speed="0.3"
+                         style="position: absolute; top: 10%; right: 5%; width: 80px; height: 80px; display: grid; place-items: center;">
+                        <svg class="w-10 h-10 text-fikra-violet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 3v3m0 12v3m9-9h-3M6 12H3m15.364 6.364l-2.121-2.121M8.757 8.757L6.636 6.636m12.728 0l-2.121 2.121M8.757 15.243l-2.121 2.121"></path>
+                        </svg>
+                    </div>
+
+                    <!-- Element 2: Top Left - Zap Icon -->
+                    <div class="floating-element noise backdrop-blur-md"
+                         data-parallax="float-2"
+                         data-speed="0.5"
+                         style="position: absolute; top: 20%; left: 8%; width: 70px; height: 70px; display: grid; place-items: center;">
+                        <svg class="w-8 h-8 text-fikra-orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z"></path>
+                        </svg>
+                    </div>
+
+                    <!-- Element 3: Middle Right - Layers Icon -->
+                    <div class="floating-element noise backdrop-blur-md"
+                         data-parallax="float-3"
+                         data-speed="0.4"
+                         style="position: absolute; top: 45%; right: 12%; width: 90px; height: 90px; display: grid; place-items: center;">
+                        <svg class="w-10 h-10 text-fikra-violet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2l9 4.5v3L12 14l-9-4.5v-3L12 2zm0 0v12m9-7.5L12 11 3 6.5M3 13.5L12 18l9-4.5M3 18.5L12 23l9-4.5"></path>
+                        </svg>
+                    </div>
+
+                    <!-- Element 4: Bottom Left - Box Icon -->
+                    <div class="floating-element noise backdrop-blur-md"
+                         data-parallax="float-4"
+                         data-speed="0.35"
+                         style="position: absolute; bottom: 15%; left: 5%; width: 75px; height: 75px; display: grid; place-items: center;">
+                        <svg class="w-9 h-9 text-fikra-orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"></path>
+                            <path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"></path>
+                        </svg>
+                    </div>
+
+                    <!-- Element 5: Center Right - Target Icon -->
+                    <div class="floating-element noise backdrop-blur-md"
+                         data-parallax="float-5"
+                         data-speed="0.45"
+                         style="position: absolute; top: 35%; right: 3%; width: 65px; height: 65px; display: grid; place-items: center;">
+                        <svg class="w-8 h-8 text-fikra-violet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <circle cx="12" cy="12" r="6"></circle>
+                            <circle cx="12" cy="12" r="2"></circle>
+                        </svg>
+                    </div>
+
+                    <!-- Element 6: Top Center - Star Icon -->
+                    <div class="floating-element noise backdrop-blur-md"
+                         data-parallax="float-6"
+                         data-speed="0.25"
+                         style="position: absolute; top: 8%; left: 50%; transform: translateX(-50%); width: 60px; height: 60px; display: grid; place-items: center;">
+                        <svg class="w-7 h-7 text-fikra-orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                        </svg>
                     </div>
                 </div>
             </div>
