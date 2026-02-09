@@ -13,7 +13,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Alpine.js 3.x** for reactive UI components (x-data, x-show, x-for, @click directives)
 - **Alpine Focus Plugin** for focus management in modals
 - **PWA** with service worker for offline-first support
-- **Tajawal** Arabic font from Google Fonts
+- **Tajawal** Arabic font (self-hosted woff2 via `@font-face` in `css/style.css`)
 
 ## Development Commands
 
@@ -30,23 +30,29 @@ python -m http.server 5000 --bind 0.0.0.0
 
 ```
 /
-├── index.html              # Single-page app (~850 lines)
+├── index.html              # Main single-page app (~1384 lines)
+├── portfolio.html          # Standalone portfolio page (266 lines)
+├── services.html           # Standalone services page (234 lines)
 ├── manifest.json           # PWA manifest (RTL, Arabic, standalone)
-├── service-worker.js       # Offline-first caching (v11)
+├── service-worker.js       # Offline-first caching (v14)
 ├── CLAUDE.md               # This file
 │
 ├── css/
-│   └── style.css           # Theme system, glass effects, animations, slider system
+│   └── style.css           # Theme system, glass effects, animations, slider system (~2039 lines)
 │
 ├── js/
-│   └── app.js              # Alpine.js component functions
+│   ├── app.js              # Alpine.js component functions (12 components, 643 lines)
+│   ├── floating-glyphs.js  # Neon icon animation system for brief wizard (340 lines)
+│   └── nebula.js           # Breathing arcs background animation (220 lines)
 │
 ├── data/                   # Data-driven content layer
 │   ├── config.js           # Site branding, contact, location, social
 │   ├── products.js         # Product catalog (24 items, 7 categories)
 │   ├── portfolio.js        # Brief wizard + Our Works (15 projects, 6 categories)
 │   ├── services.js         # Main services (3 pillars, 24 sub-services) + brief wizard data
-│   └── partners.js         # Client/partner logos (8 orgs)
+│   ├── partners.js         # Client/partner logos (8 orgs)
+│   ├── testimonials.js     # Customer testimonials (6 items) + company stats (STATS_DATA)
+│   └── faq.js              # Frequently asked questions (8 items, 4 categories)
 │
 └── assets/
     ├── logo.webp           # Main brand logo
@@ -63,9 +69,11 @@ Content is separated from presentation. All dynamic data lives in `/data/*.js` f
 |------|---------|---------|
 | `config.js` | `SITE_CONFIG` | WhatsApp, email, brand info, location, social links |
 | `products.js` | `PRODUCTS_DATA` | Categories (7) + products (24) with prices |
-| `portfolio.js` | `PORTFOLIO_DATA` | Brief projects + Our Works (15 projects, 6 categories) + gallery + stats |
+| `portfolio.js` | `PORTFOLIO_DATA` | Brief projects (6) + Our Works (15 projects, 6 categories) + gallery (3) + stats |
 | `services.js` | `SERVICES_DATA` | Main services (3 pillars: Creative Design, Marketing, Advertising/Printing) + brief wizard categories/styles |
-| `partners.js` | `PARTNERS_DATA` | Partner organization icons and names |
+| `partners.js` | `PARTNERS_DATA` | Partner organization icons and names (8) |
+| `testimonials.js` | `TESTIMONIALS_DATA`, `STATS_DATA` | Customer testimonials (6) + company statistics (clients, projects, cities, years) |
+| `faq.js` | `FAQ_DATA` | FAQ items (8) with categories: delivery, design, payment, orders, quality |
 
 Data files export to `window` global scope and are accessed via Alpine.js getters:
 ```javascript
@@ -74,15 +82,22 @@ get products() { return window.PRODUCTS_DATA?.products || []; }
 
 ### Alpine.js Components (defined in `js/app.js`)
 
-| Function | Purpose |
-|----------|---------|
-| `fikraApp()` | Main app state: theme toggle, mobile menu, header scroll behavior |
-| `briefWizard()` | Multi-step client inquiry form with style matching |
-| `productsShop()` | Product catalog with category-based horizontal sliders, cart management, WhatsApp checkout. Dual-mode: slider view (all categories) + grid view (single category). RTL-aware scroll navigation. |
-| `workGallery()` | Portfolio projects modal gallery |
-| `transformationsData()` | Transformation section statistics |
-| `partnersCarousel()` | Infinite-scroll partner logos |
-| `beforeAfter()` | Drag slider for before/after comparisons |
+| # | Function | Purpose |
+|---|----------|---------|
+| 1 | `fikraApp()` | Main app state: theme toggle, mobile menu, header scroll behavior |
+| 2 | `briefWizard()` | Multi-step client inquiry form with style matching |
+| 3 | `productsShop()` | Product catalog with category-based horizontal sliders, cart management, WhatsApp checkout. Dual-mode: slider view (all categories) + grid view (single category). RTL-aware scroll navigation. |
+| 4 | `transformationsData()` | Transformation section statistics |
+| 5 | `workGallery()` | Portfolio projects modal gallery |
+| 6 | `partnersCarousel()` | Infinite-scroll partner logos |
+| 7 | `beforeAfter()` | Drag slider for before/after comparisons |
+| 8 | `testimonialsCarousel()` | Customer testimonials carousel with 5s autoplay, pause on hover, star ratings |
+| 9 | `faqAccordion()` | FAQ accordion with search/filter functionality |
+| 10 | `statsCounter()` | Animated statistics counter with IntersectionObserver trigger |
+| 11 | `priceCalculator()` | Dynamic pricing calculator (6 product types, size/finishing/quantity options, volume discounts) |
+| 12 | `whatsappWidget()` | Floating WhatsApp chat widget with quick messages, auto-open after 10s for new visitors |
+
+All 12 functions are exported to `window` scope at the bottom of `js/app.js`.
 
 **Inline Alpine.js Components (in `index.html`):**
 | Component | Purpose |
@@ -90,16 +105,32 @@ get products() { return window.PRODUCTS_DATA?.products || []; }
 | `#services` | Services section: displays 3 main service pillars with nested sub-services (24 total). Bento glass cards with gradients. |
 | `#our-works` | Our Works section: category-based horizontal sliders (same system as products). 15 projects across 6 categories. Dual-mode view. |
 
+### Animation System
+
+Two dedicated JS files handle decorative animations:
+
+| File | Class | Purpose |
+|------|-------|---------|
+| `js/floating-glyphs.js` | `FloatingGlyph` | Sequential neon icon animations for the brief wizard section. Fade in/out, floating vertical motion, rotation effects. |
+| `js/nebula.js` | `BreathingArc` | Scroll-linked breathing arcs background animation. Semicircular arcs with echo delay effect, positioned top-right. Theme-aware color rendering. |
+
 ### Theming System
 
 Two themes controlled via CSS variables:
 
 | Variable | Dark (`:root`) | Light (`html.idea`) |
 |----------|----------------|---------------------|
-| `--bg` | `#0A0A0A` | `#F8F6F3` |
-| `--fg` | `#FAFAFA` | `#1A1A1A` |
-| `--card` | `rgba(255,255,255,0.04)` | `rgba(0,0,0,0.03)` |
-| `--border` | `rgba(255,255,255,0.08)` | `rgba(0,0,0,0.08)` |
+| `--bg` | `#050505` | `#F3F4F6` |
+| `--bg2` | `#0a0a0a` | `#E5E7EB` |
+| `--fg` | `rgba(255,255,255,0.95)` | `#111827` |
+| `--muted` | `rgba(255,255,255,0.65)` | `#4B5563` |
+| `--card` | `rgba(255,255,255,0.03)` | `rgba(255,255,255,0.7)` |
+| `--border` | `rgba(255,255,255,0.1)` | `rgba(0,0,0,0.08)` |
+| `--grid` | `rgba(255,255,255,0.05)` | `rgba(0,0,0,0.04)` |
+| `--blob-cyan` | `rgba(129,216,208,0.15)` | `rgba(129,216,208,0.25)` |
+| `--blob-red` | `rgba(229,57,53,0.15)` | `rgba(229,57,53,0.25)` |
+| `--edge-line-strong` | `rgba(255,255,255,0.55)` | *(dark equivalent)* |
+| `--edge-line-soft` | `rgba(255,255,255,0.18)` | *(dark equivalent)* |
 
 - Theme persisted in `localStorage` as `fikra_theme`
 - Toggle via `toggleTheme()` method switches between `dark` and `idea` classes
@@ -112,7 +143,8 @@ SITE_CONFIG = {
   whatsapp: '966555862272',
   email: 'safigroup@gmail.com',
   brand: { name: 'مجموعة الصافي', tagline: 'SAFI GROUP', logo: 'assets/logo.webp' },
-  location: { city: 'محايل عسير', cityEn: 'Muhayl Asir, Saudi Arabia' }
+  location: { city: 'محايل عسير', cityEn: 'Muhayl Asir, Saudi Arabia', mapsUrl: '...' },
+  social: { twitter: '', instagram: '', snapchat: '', tiktok: '' }
 }
 ```
 
@@ -130,11 +162,13 @@ Cards use the `.noise` class which provides:
 No backend contact forms. All inquiries go via WhatsApp:
 - Brief Wizard sends formatted preferences message
 - Product cart checkout sends itemized order
+- Price Calculator sends detailed quote request
+- Floating WhatsApp widget offers quick-message shortcuts
 - Messages constructed with template strings and `encodeURIComponent()`
 
 ## Service Worker
 
-**Current version:** `v11` (in `CACHE_VERSION` constant)
+**Current version:** `v14` (in `CACHE_VERSION` constant)
 
 **Caching strategies:**
 | Request Type | Strategy |
@@ -143,7 +177,7 @@ No backend contact forms. All inquiries go via WhatsApp:
 | Same-origin assets | Stale-while-revalidate |
 | Cross-origin (CDN) | Cache-first with `no-cors` mode |
 
-**Cached assets:** All core HTML/CSS/JS, data files, icons, and logo. Product images cached dynamically on first load.
+**Cached assets:** All core HTML/CSS/JS, all 7 data files, icons, and logo. Product images cached dynamically on first load.
 
 **When deploying changes:** Increment `CACHE_VERSION` in `service-worker.js`.
 
@@ -154,6 +188,7 @@ No backend contact forms. All inquiries go via WhatsApp:
 3. **Service Worker** — Update `CACHE_VERSION` when deploying changes
 4. **Glass UI Pattern** — Cards use `.noise` class with `backdrop-blur`, CSS variable borders
 5. **Data Separation** — Content changes go in `/data/*.js`, not in HTML
+6. **No Backend** — All contact/order flows use WhatsApp deep links
 
 ## Workflow Protocol
 
@@ -170,6 +205,9 @@ Complete one functional module fully before moving to the next. Each Alpine.js c
 - To update Brief Wizard projects: Edit `data/portfolio.js` (briefProjects array)
 - To change contact info: Edit `data/config.js`
 - To update partners: Edit `data/partners.js`
+- To add testimonials: Edit `data/testimonials.js` (TESTIMONIALS_DATA array)
+- To update company stats: Edit `data/testimonials.js` (STATS_DATA object)
+- To add FAQ items: Edit `data/faq.js` (FAQ_DATA array, categories: delivery, design, payment, orders, quality)
 
 **Important:** When adding new categories to products or portfolio, update both the category definitions and the items array to maintain consistency.
 
@@ -244,3 +282,33 @@ viewAllCategory(id)        // Switches to grid view for category
 2. Choose design style (step 2)
 3. View matched portfolio examples (step 3)
 4. Enter contact info and send via WhatsApp
+
+### Testimonials Carousel
+- Auto-advances every 5 seconds, pauses on hover
+- Shows 3 visible testimonials at a time (rotating window)
+- Star rating display with `getStars()` helper
+- Data source: `TESTIMONIALS_DATA` from `data/testimonials.js`
+
+### Stats Counter
+- Animated count-up triggered by `IntersectionObserver` (threshold: 0.3)
+- Counts: 500+ clients, 1200+ projects, 15 cities, 8 years
+- 2-second animation with 60 steps
+- Data source: `STATS_DATA` from `data/testimonials.js`
+
+### Price Calculator
+- Supports 6 product types: business cards, flyers, brochures, stickers, roll-ups, banners
+- Options: size (standard/large/custom), finishing (matte/glossy/laminated), design add-on, urgent surcharge (25%)
+- Volume discounts: 5% at 250+, 10% at 500+, 15% at 1000+
+- Sends detailed quote via WhatsApp
+
+### FAQ Accordion
+- Search/filter across questions and answers
+- Single-open accordion behavior (opening one closes others)
+- 8 items across categories: delivery, design, payment, orders, quality
+- Data source: `FAQ_DATA` from `data/faq.js`
+
+### WhatsApp Floating Widget
+- Auto-opens after 10 seconds for new visitors (persisted in `localStorage` as `wa_widget_closed`)
+- 4 quick-message shortcuts for common inquiries
+- Custom message input field
+- Toggle open/close with state tracking
