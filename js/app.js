@@ -30,9 +30,9 @@ function fikraApp() {
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
 
-      // Initialize mesh gradient background
-      if (window.MeshGradient && document.getElementById('meshGradientCanvas')) {
-        window.meshGradientInstance = new window.MeshGradient('meshGradientCanvas');
+      // Initialize global premium crimson mesh gradient
+      if (window.MeshGradient && document.getElementById('premium-mesh-canvas')) {
+        window.meshGradientInstance = new window.MeshGradient('premium-mesh-canvas');
       }
     },
 
