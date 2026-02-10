@@ -384,41 +384,53 @@ html.idea #premium-mesh-canvas::before {
 
 /* Professional Hero Text Styling - Neon Mint & Coral */
 .hero-gradient-text {
-  /* "Imagine.." text - Full spectrum gradient */
+  /* "Imagine.." text - Vibrant Coral to Mint gradient */
+  display: inline-block;
   position: relative;
   font-weight: 900;
   letter-spacing: -0.02em;
+  background: linear-gradient(to left, #81D8D0 0%, #C96E6F 50%, #E53935 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
   filter:
-    drop-shadow(0 0 25px rgba(129, 216, 208, 0.6))
-    drop-shadow(0 0 35px rgba(229, 57, 53, 0.5))
-    drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9));
-  animation: hero-text-glow 3s ease-in-out infinite;
+    drop-shadow(0 0 30px rgba(129, 216, 208, 0.7))
+    drop-shadow(0 0 40px rgba(229, 57, 53, 0.6))
+    drop-shadow(0 3px 8px rgba(0, 0, 0, 0.95));
+  animation: hero-text-glow 3.5s ease-in-out infinite;
 }
 
 @keyframes hero-text-glow {
   0%, 100% {
     filter:
-      drop-shadow(0 0 25px rgba(129, 216, 208, 0.6))
-      drop-shadow(0 0 35px rgba(229, 57, 53, 0.5))
-      drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9));
+      drop-shadow(0 0 30px rgba(129, 216, 208, 0.7))
+      drop-shadow(0 0 40px rgba(229, 57, 53, 0.6))
+      drop-shadow(0 3px 8px rgba(0, 0, 0, 0.95));
   }
   50% {
     filter:
-      drop-shadow(0 0 35px rgba(129, 216, 208, 0.8))
-      drop-shadow(0 0 45px rgba(229, 57, 53, 0.7))
-      drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9));
+      drop-shadow(0 0 45px rgba(129, 216, 208, 0.9))
+      drop-shadow(0 0 55px rgba(229, 57, 53, 0.8))
+      drop-shadow(0 3px 8px rgba(0, 0, 0, 0.95));
   }
 }
 
 .hero-implement-text {
-  /* "We implement" text - Mint accent with professional look */
+  /* "We implement" text - Clean Mint gradient */
+  display: inline-block;
   position: relative;
   font-weight: 900;
   letter-spacing: -0.01em;
+  background: linear-gradient(to left, #81D8D0 0%, #A8E5E0 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
   filter:
-    drop-shadow(0 0 30px rgba(129, 216, 208, 0.7))
-    drop-shadow(0 0 50px rgba(129, 216, 208, 0.4))
-    drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9));
+    drop-shadow(0 0 35px rgba(129, 216, 208, 0.8))
+    drop-shadow(0 0 55px rgba(129, 216, 208, 0.5))
+    drop-shadow(0 3px 8px rgba(0, 0, 0, 0.95));
 }
 
 /* Neon glow shadow for CTA button */
@@ -452,17 +464,23 @@ html.idea .mesh-blob {
 
 /* Light mode hero text adjustments */
 html.idea .hero-gradient-text {
+  background: linear-gradient(to left, #5FA9A3 0%, #B85F5F 50%, #D32F2F 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
   filter:
-    drop-shadow(0 0 15px rgba(129, 216, 208, 0.5))
-    drop-shadow(0 0 25px rgba(229, 57, 53, 0.4))
-    drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+    drop-shadow(0 0 20px rgba(129, 216, 208, 0.6))
+    drop-shadow(0 0 30px rgba(229, 57, 53, 0.5))
+    drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
 }
 
 html.idea .hero-implement-text {
+  background: linear-gradient(to left, #5FA9A3 0%, #81D8D0 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
   filter:
-    drop-shadow(0 0 20px rgba(129, 216, 208, 0.6))
-    drop-shadow(0 0 35px rgba(129, 216, 208, 0.3))
-    drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+    drop-shadow(0 0 25px rgba(129, 216, 208, 0.7))
+    drop-shadow(0 0 40px rgba(129, 216, 208, 0.4))
+    drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
 }
 
 html.idea .shadow-glow-neon {
