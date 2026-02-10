@@ -403,6 +403,18 @@ body > main {
   #premium-mesh-canvas {
     height: 100vh;
   }
+
+  /* Increase visibility on mobile */
+  .mesh-blob {
+    opacity: 0.75;
+    filter: blur(90px);
+    backdrop-filter: blur(120px);
+  }
+
+  .orbital-halo {
+    opacity: 0.9;
+    filter: blur(25px);
+  }
 }
 
 /* ====================================== */
