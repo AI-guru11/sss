@@ -370,6 +370,20 @@ h2, h3 {
 }
 
 /* ====================================== */
+/* CONTENT VISIBILITY (off-screen perf)   */
+/* ====================================== */
+
+/* Defer rendering of heavy below-the-fold sections */
+#products,
+#our-works,
+#testimonials,
+#faq,
+#brief {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}
+
+/* ====================================== */
 /* 5. ANIMATIONS & INTERACTIONS           */
 /* ====================================== */
 

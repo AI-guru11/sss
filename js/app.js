@@ -19,13 +19,21 @@ function fikraApp() {
     headerShrink: 0,
 
     init() {
-      const saved = localStorage.getItem('fikra_theme');
+      let saved = null;
+      try { saved = localStorage.getItem('fikra_theme'); } catch (e) { /* storage unavailable */ }
       if (saved === 'idea') this.setTheme('idea');
       else this.setTheme('dark');
 
+      let ticking = false;
       const onScroll = () => {
-        const y = window.scrollY || 0;
-        this.headerShrink = Number(Math.max(0, Math.min(1, y / 120)).toFixed(3));
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            const y = window.scrollY || 0;
+            this.headerShrink = Number(Math.max(0, Math.min(1, y / 120)).toFixed(3));
+            ticking = false;
+          });
+          ticking = true;
+        }
       };
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
@@ -46,7 +54,7 @@ function fikraApp() {
         html.classList.remove('idea');
         html.classList.add('dark');
       }
-      localStorage.setItem('fikra_theme', mode);
+      try { localStorage.setItem('fikra_theme', mode); } catch (e) { /* storage unavailable */ }
     },
 
     toggleTheme() {
@@ -601,7 +609,9 @@ function whatsappWidget() {
     init() {
       // إظهار البوب أب بعد 10 ثواني للزوار الجدد
       setTimeout(() => {
-        if (!this.hasInteracted && !localStorage.getItem('wa_widget_closed')) {
+        let wasClosed = false;
+        try { wasClosed = localStorage.getItem('wa_widget_closed'); } catch (e) { /* storage unavailable */ }
+        if (!this.hasInteracted && !wasClosed) {
           this.isOpen = true;
         }
       }, 10000);
@@ -615,7 +625,7 @@ function whatsappWidget() {
     close() {
       this.isOpen = false;
       this.hasInteracted = true;
-      localStorage.setItem('wa_widget_closed', 'true');
+      try { localStorage.setItem('wa_widget_closed', 'true'); } catch (e) { /* storage unavailable */ }
     },
 
     sendMessage(text = null) {
