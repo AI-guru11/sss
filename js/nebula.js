@@ -1,220 +1,233 @@
 // ==============================================
-// Breathing Arcs Background Animation
-// Scroll-linked semicircular arcs with echo effect
+// Liquid Mesh Background Animation
+// Mint-themed fluid blobs with parallax scroll
 // ==============================================
 
-class BreathingArc {
-  constructor(canvas, theme, baseRadius, index) {
+class LiquidBlob {
+  constructor(canvas, config, index) {
     this.canvas = canvas;
-    this.theme = theme;
-    this.baseRadius = baseRadius;
     this.index = index;
-    this.reset();
+
+    // Base position (percentage of canvas)
+    this.basePctX = config.x;
+    this.basePctY = config.y;
+    this.radius = config.radius;
+    this.color = config.color;
+
+    // Non-linear movement parameters (unique per blob)
+    this.freqX = 0.0003 + index * 0.00012;
+    this.freqY = 0.00025 + index * 0.0001;
+    this.ampX = 80 + index * 25;
+    this.ampY = 60 + index * 20;
+    this.phaseX = index * 1.8;
+    this.phaseY = index * 2.4;
+
+    // Breathing scale
+    this.scaleFreq = 0.0004 + index * 0.00008;
+    this.scalePhase = index * 1.2;
+
+    this.x = 0;
+    this.y = 0;
+    this.scale = 1;
   }
 
-  reset() {
+  update(time, scrollOffset) {
     const rect = this.canvas.getBoundingClientRect();
 
-    // Position in top-right corner
-    this.centerX = rect.width - 100;
-    this.centerY = 100;
+    // Base position from percentage
+    const baseX = (this.basePctX / 100) * rect.width;
+    const baseY = (this.basePctY / 100) * rect.height;
 
-    // Arc parameters
-    this.radius = this.baseRadius + (this.index * 60); // Spacing between arcs
-    this.startAngle = Math.PI * 0.5; // Start from bottom
-    this.endAngle = Math.PI; // End at left (quarter circle in top-right)
+    // Non-linear organic movement via sin/cos
+    const moveX = Math.sin(time * this.freqX + this.phaseX) *
+                  Math.cos(time * this.freqX * 0.7 + this.phaseY) * this.ampX;
+    const moveY = Math.cos(time * this.freqY + this.phaseY) *
+                  Math.sin(time * this.freqY * 0.6 + this.phaseX) * this.ampY;
 
-    // Breathing cycle
-    this.breathCycle = 0;
-    this.breathDuration = 180; // 3 seconds at 60fps
-    this.echoDelay = 60; // 1 second delay for echo
-    this.isEcho = false;
+    // Subtle parallax shift from scroll
+    const parallaxY = scrollOffset * (0.03 + this.index * 0.015);
 
-    // Appearance
-    this.opacity = 0;
-    this.maxOpacity = 0.3;
-    this.thickness = 2;
+    this.x = baseX + moveX;
+    this.y = baseY + moveY + parallaxY;
+
+    // Breathing scale animation
+    this.scale = 1 + 0.12 * Math.sin(time * this.scaleFreq + this.scalePhase);
   }
 
-  update() {
-    this.breathCycle++;
+  draw(ctx, opacity) {
+    if (opacity <= 0.01) return;
 
-    // Breathing animation logic
-    const cyclePosition = this.breathCycle % this.breathDuration;
+    const r = this.radius * this.scale;
 
-    if (!this.isEcho) {
-      // Main arc: fade in and out
-      if (cyclePosition < 60) {
-        // Fade in (1 second)
-        this.opacity = (cyclePosition / 60) * this.maxOpacity;
-      } else if (cyclePosition < 120) {
-        // Stay visible (1 second)
-        this.opacity = this.maxOpacity;
-      } else {
-        // Fade out (1 second)
-        this.opacity = ((180 - cyclePosition) / 60) * this.maxOpacity;
-      }
-    } else {
-      // Echo arc: appears after delay, smaller and fainter
-      const echoStart = this.echoDelay;
-      const echoEnd = this.echoDelay + 60;
+    // Parse the color for alpha manipulation
+    ctx.save();
+    ctx.globalCompositeOperation = 'screen';
+    ctx.shadowBlur = 120;
+    ctx.shadowColor = this.color;
 
-      if (cyclePosition >= echoStart && cyclePosition < echoEnd) {
-        const echoProgress = (cyclePosition - echoStart) / 60;
-        this.opacity = Math.sin(echoProgress * Math.PI) * (this.maxOpacity * 0.5);
-      } else {
-        this.opacity = 0;
-      }
-    }
-  }
+    // Radial gradient for soft blob edge
+    const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, r);
+    gradient.addColorStop(0, this.colorWithAlpha(0.5 * opacity));
+    gradient.addColorStop(0.4, this.colorWithAlpha(0.3 * opacity));
+    gradient.addColorStop(0.7, this.colorWithAlpha(0.1 * opacity));
+    gradient.addColorStop(1, 'rgba(0,0,0,0)');
 
-  draw(ctx, theme, scrollOpacity) {
-    if (this.opacity <= 0) return;
-
-    // Apply scroll-based opacity reduction
-    const finalOpacity = this.opacity * scrollOpacity;
-    if (finalOpacity <= 0.01) return;
-
-    // Theme-aware colors
-    let strokeColor;
-    if (theme === 'dark') {
-      strokeColor = `rgba(34, 211, 238, ${finalOpacity})`; // Cyan
-    } else {
-      strokeColor = `rgba(251, 146, 60, ${finalOpacity})`; // Orange
-    }
-
-    // Glow effect
-    ctx.shadowBlur = 20;
-    ctx.shadowColor = strokeColor;
-    ctx.strokeStyle = strokeColor;
-    ctx.lineWidth = this.isEcho ? this.thickness * 0.7 : this.thickness;
-    ctx.lineCap = 'round';
-
-    // Draw arc
+    ctx.fillStyle = gradient;
     ctx.beginPath();
-    const radius = this.isEcho ? this.radius * 0.85 : this.radius;
-    ctx.arc(this.centerX, this.centerY, radius, this.startAngle, this.endAngle);
-    ctx.stroke();
+    ctx.arc(this.x, this.y, r, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
 
-    // Reset shadow
-    ctx.shadowBlur = 0;
+  colorWithAlpha(alpha) {
+    // Convert hex color to rgba
+    const hex = this.color.replace('#', '');
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
   }
 }
 
-class BreathingArcsCanvas {
-  constructor(canvasId) {
-    this.canvas = document.getElementById(canvasId);
-    if (!this.canvas) {
-      console.error('Canvas not found');
+class LiquidMesh {
+  constructor(containerId) {
+    this.container = document.getElementById(containerId);
+    if (!this.container) {
+      console.error('LiquidMesh: container not found');
       return;
     }
 
-    this.ctx = this.canvas.getContext('2d');
-    this.arcs = [];
-    this.theme = document.documentElement.classList.contains('idea') ? 'light' : 'dark';
-    this.scrollOpacity = 1;
+    // Create canvas element inside the container
+    this.canvas = document.createElement('canvas');
+    this.canvas.id = 'liquidMeshCanvas';
+    this.container.innerHTML = '';
+    this.container.appendChild(this.canvas);
 
-    // Arc configuration
-    this.arcCount = 3; // Main arcs
-    this.baseRadius = 80;
+    this.ctx = this.canvas.getContext('2d');
+    this.blobs = [];
+    this.theme = document.documentElement.classList.contains('idea') ? 'light' : 'dark';
+    this.scrollY = 0;
+    this.startTime = performance.now();
+    this.animId = null;
 
     this.init();
   }
 
   init() {
     this.resize();
-    this.createArcs();
+    this.createBlobs();
     this.bindEvents();
     this.animate();
   }
 
   resize() {
     const dpr = window.devicePixelRatio || 1;
-    const rect = this.canvas.getBoundingClientRect();
+    const rect = this.container.getBoundingClientRect();
 
     this.canvas.width = rect.width * dpr;
     this.canvas.height = rect.height * dpr;
-
     this.ctx.scale(dpr, dpr);
     this.canvas.style.width = rect.width + 'px';
     this.canvas.style.height = rect.height + 'px';
   }
 
-  createArcs() {
-    this.arcs = [];
-
-    // Create main arcs
-    for (let i = 0; i < this.arcCount; i++) {
-      const arc = new BreathingArc(this.canvas, this.theme, this.baseRadius, i);
-      arc.breathCycle = i * 60; // Stagger animations
-      this.arcs.push(arc);
-    }
-
-    // Create echo arcs
-    for (let i = 0; i < this.arcCount; i++) {
-      const echoArc = new BreathingArc(this.canvas, this.theme, this.baseRadius, i);
-      echoArc.isEcho = true;
-      echoArc.breathCycle = i * 60; // Match main arc timing
-      this.arcs.push(echoArc);
+  getColors() {
+    if (this.theme === 'dark') {
+      return [
+        '#1DE9B6', // Mint Glow (primary)
+        '#98FF98', // Mint Primary (lighter)
+        '#0D9668', // Deep Mint
+        '#FDB05E'  // Gold accent
+      ];
+    } else {
+      return [
+        '#00BFA5', // Mint Glow (light mode)
+        '#66BB6A', // Green-mint
+        '#26A69A', // Teal-mint
+        '#E8A040'  // Gold accent (light)
+      ];
     }
   }
 
+  createBlobs() {
+    this.blobs = [];
+    const colors = this.getColors();
+
+    // 4 large blobs for the liquid mesh effect
+    const configs = [
+      { x: 70, y: 25, radius: 320, color: colors[0] },  // Top-right, main mint
+      { x: 25, y: 70, radius: 280, color: colors[1] },  // Bottom-left, secondary mint
+      { x: 50, y: 45, radius: 350, color: colors[2] },  // Center, deep mint
+      { x: 80, y: 80, radius: 240, color: colors[3] }   // Bottom-right, gold accent
+    ];
+
+    configs.forEach((config, i) => {
+      this.blobs.push(new LiquidBlob(this.canvas, config, i));
+    });
+  }
+
   bindEvents() {
-    // Resize handler
     let resizeTimeout;
     window.addEventListener('resize', () => {
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(() => {
         this.resize();
-        this.createArcs();
+        this.createBlobs();
       }, 250);
     });
 
-    // Scroll handler for opacity fade
     window.addEventListener('scroll', () => {
-      this.updateScrollOpacity();
+      this.scrollY = window.scrollY;
     }, { passive: true });
 
     // Theme change detection
     const observer = new MutationObserver(() => {
-      this.theme = document.documentElement.classList.contains('idea') ? 'light' : 'dark';
+      const newTheme = document.documentElement.classList.contains('idea') ? 'light' : 'dark';
+      if (newTheme !== this.theme) {
+        this.theme = newTheme;
+        this.createBlobs();
+      }
     });
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
   }
 
-  updateScrollOpacity() {
-    // Get hero section height
-    const heroSection = this.canvas.closest('section');
-    if (!heroSection) return;
-
-    const heroHeight = heroSection.offsetHeight;
-    const scrollY = window.scrollY;
-
-    // Calculate opacity based on scroll (fade out as user scrolls down)
-    // Opacity 1 at top, 0 when scrolled past hero section
-    this.scrollOpacity = Math.max(0, 1 - (scrollY / heroHeight));
-  }
-
   animate() {
-    // Clear canvas
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    const time = performance.now() - this.startTime;
+    const rect = this.canvas.getBoundingClientRect();
 
-    // Update and draw arcs
-    this.arcs.forEach(arc => {
-      arc.update();
-      arc.draw(this.ctx, this.theme, this.scrollOpacity);
+    this.ctx.clearRect(0, 0, rect.width, rect.height);
+
+    // Calculate global opacity based on theme
+    const baseOpacity = this.theme === 'dark' ? 0.85 : 0.45;
+
+    // Update and draw each blob
+    this.blobs.forEach(blob => {
+      blob.update(time, this.scrollY);
+      blob.draw(this.ctx, baseOpacity);
     });
 
-    // Loop
-    requestAnimationFrame(() => this.animate());
+    this.animId = requestAnimationFrame(() => this.animate());
+  }
+
+  destroy() {
+    if (this.animId) {
+      cancelAnimationFrame(this.animId);
+    }
   }
 }
 
-// Initialize on DOM ready
+// Expose class
+window.LiquidMesh = LiquidMesh;
+
+// Auto-initialize when DOM is ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
-    new BreathingArcsCanvas('nebulaCanvas');
+    if (document.getElementById('premium-mesh-canvas') && !window.liquidMeshInstance) {
+      window.liquidMeshInstance = new LiquidMesh('premium-mesh-canvas');
+    }
   });
 } else {
-  new BreathingArcsCanvas('nebulaCanvas');
+  if (document.getElementById('premium-mesh-canvas') && !window.liquidMeshInstance) {
+    window.liquidMeshInstance = new LiquidMesh('premium-mesh-canvas');
+  }
 }
