@@ -18,9 +18,9 @@ html {
 /* 2. VARIABLES (THEME CONFIG)            */
 /* ====================================== */
 :root {
-  /* --- DARK MODE (DEFAULT) --- Premium AI Aesthetic */
-  --bg: #0A0D1D;  /* Deep navy base for premium AI look */
-  --bg2: #0F1220;
+  /* --- DARK MODE (DEFAULT) --- Deep Crimson Aesthetic */
+  --bg: #050505;  /* Pure black base for deep crimson contrast */
+  --bg2: #0a0a0a;
   --fg: rgba(255, 255, 255, 0.95);
   --muted: rgba(255, 255, 255, 0.65);
 
@@ -29,9 +29,9 @@ html {
   --border: rgba(255, 255, 255, 0.1);
   --grid: rgba(255, 255, 255, 0.05);
 
-  /* ألوان التدرجات للخلفية - Premium Purple/Pink */
-  --blob-purple: rgba(147, 51, 234, 0.2);
-  --blob-pink: rgba(236, 72, 153, 0.18);
+  /* ألوان التدرجات للخلفية - Deep Crimson & Dark Cherry */
+  --blob-crimson: rgba(139, 0, 0, 0.25);
+  --blob-cherry: rgba(74, 4, 4, 0.2);
 
   /* تأثيرات الحواف */
   --edge-line-strong: rgba(255, 255, 255, 0.55);
@@ -54,8 +54,8 @@ html.idea {
   --grid: rgba(0, 0, 0, 0.04);
 
   /* تقوية ألوان التدرجات لتظهر على الخلفية الفاتحة */
-  --blob-purple: rgba(147, 51, 234, 0.3);
-  --blob-pink: rgba(236, 72, 153, 0.28);
+  --blob-crimson: rgba(139, 0, 0, 0.35);
+  --blob-cherry: rgba(74, 4, 4, 0.3);
 
   /* حواف داكنة خفيفة */
   --edge-line-strong: rgba(0, 0, 0, 0.2);
@@ -180,27 +180,27 @@ footer .noise::after {
   height: 100vh;
   z-index: -10;  /* Lower z-index to ensure it stays behind all content */
   overflow: hidden;
-  background: #0A0D1D;  /* Deep navy for premium AI aesthetic */
+  background: #050505;  /* Pure black for deep crimson contrast */
   pointer-events: none;
 }
 
-/* Premium AI Mesh Blobs - Fluid Ambient Style */
+/* Deep Crimson Mesh Blobs - Cinematic Dark Red */
 .mesh-blob {
   position: absolute;
   border-radius: 50%;
   backdrop-filter: blur(140px);
   filter: blur(110px);
-  opacity: 0.6;  /* Slightly softer for ambient effect */
+  opacity: 0.7;  /* Rich crimson presence */
   will-change: transform;
   pointer-events: none;
   mix-blend-mode: screen;
 }
 
-/* Orbital Light Halos - Pulsing Elements */
+/* Orbital Light Halos - Crimson Glow */
 .orbital-halo {
   position: absolute;
   border-radius: 50%;
-  background: radial-gradient(circle at center, rgba(167, 139, 250, 0.3), rgba(196, 181, 253, 0.15) 40%, transparent 70%);
+  background: radial-gradient(circle at center, rgba(139, 0, 0, 0.35), rgba(92, 10, 10, 0.2) 40%, transparent 70%);
   filter: blur(30px);
   opacity: 0.8;
   pointer-events: none;
@@ -320,6 +320,7 @@ html.idea #premium-mesh-canvas::before {
 }
 
 /* Apply Lissajous animations to blobs */
+/* Center/Primary Blobs (1-4) - Dynamic Crimson Movement */
 .mesh-blob:nth-child(1) {
   animation: lissajous-1 35s ease-in-out infinite;
 }
@@ -339,6 +340,31 @@ html.idea #premium-mesh-canvas::before {
   animation-delay: -22s;
 }
 
+/* Edge Blobs (5-8) - Subtle Dark Frame Movement */
+.mesh-blob:nth-child(5) {
+  animation: lissajous-1 50s ease-in-out infinite;
+  animation-delay: -10s;
+  opacity: 0.4;
+}
+
+.mesh-blob:nth-child(6) {
+  animation: lissajous-2 45s ease-in-out infinite;
+  animation-delay: -20s;
+  opacity: 0.3;
+}
+
+.mesh-blob:nth-child(7) {
+  animation: lissajous-3 55s ease-in-out infinite;
+  animation-delay: -30s;
+  opacity: 0.3;
+}
+
+.mesh-blob:nth-child(8) {
+  animation: lissajous-4 48s ease-in-out infinite;
+  animation-delay: -40s;
+  opacity: 0.4;
+}
+
 /* Enhanced text contrast against mesh gradient */
 #hero-section h1 {
   text-shadow:
@@ -348,7 +374,7 @@ html.idea #premium-mesh-canvas::before {
 }
 
 #hero-section .bg-clip-text {
-  filter: drop-shadow(0 0 30px rgba(147, 51, 234, 0.6));
+  filter: drop-shadow(0 0 30px rgba(139, 0, 0, 0.7));
 }
 
 /* CTA Buttons - Enhanced visibility */
@@ -361,20 +387,20 @@ html.idea #premium-mesh-canvas::before {
     0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
-/* Light mode adjustments - Adapt purple/pink theme */
+/* Light mode adjustments - Deep Crimson theme */
 html.idea #premium-mesh-canvas {
   background: #F3F4F6;
 }
 
 html.idea .mesh-blob {
-  opacity: 0.4;
+  opacity: 0.45;
   filter: blur(130px);
   mix-blend-mode: multiply;
 }
 
 html.idea .orbital-halo {
   opacity: 0.5;
-  background: radial-gradient(circle at center, rgba(147, 51, 234, 0.25), rgba(196, 181, 253, 0.12) 40%, transparent 70%);
+  background: radial-gradient(circle at center, rgba(139, 0, 0, 0.3), rgba(92, 10, 10, 0.15) 40%, transparent 70%);
 }
 
 html.idea #hero-section h1 {
