@@ -11,13 +11,12 @@ class MeshGradient {
       return;
     }
 
-    // Deep Crimson & Dark Cherry palette with black edges
+    // Neon Mint & Coral horizontal gradient palette
     this.colors = [
-      { color: '#8B0000', name: 'crimson' },           // Crimson (vibrant centers)
-      { color: '#4A0404', name: 'dark-cherry' },       // Dark Cherry (rich depth)
-      { color: '#5C0A0A', name: 'dark-crimson' },      // Dark Crimson (medium tone)
-      { color: '#1A0202', name: 'black-red' },         // Black-Red (edge blobs)
-      { color: '#0D0101', name: 'deep-black' }         // Deep Black (darkest edges)
+      { color: '#81D8D0', name: 'neon-mint' },         // Neon Mint/Teal (right side)
+      { color: '#E53935', name: 'coral-red' },         // Coral Red (left side)
+      { color: '#5FA9A3', name: 'mint-shadow' },       // Darker Mint (right edge blobs)
+      { color: '#B82E2A', name: 'coral-shadow' }       // Darker Coral (left edge blobs)
     ];
 
     this.blobs = [];
@@ -36,19 +35,23 @@ class MeshGradient {
     // Remove any existing blobs
     this.container.innerHTML = '';
 
-    // Blob configurations for full-screen coverage with deep black edges
+    // Blob configurations for horizontal gradient (Coral Left / Mint Right)
     const blobConfigs = [
-      // Center/Primary Blobs (Crimson & Dark Cherry)
-      { x: 25, y: 20, size: 600, colorIndex: 0 },   // Top-left, Crimson
-      { x: 70, y: 15, size: 550, colorIndex: 1 },   // Top-right, Dark Cherry
-      { x: 35, y: 75, size: 580, colorIndex: 2 },   // Bottom-left, Dark Crimson
-      { x: 80, y: 80, size: 520, colorIndex: 1 },   // Bottom-right, Dark Cherry
+      // Center/Primary Blobs - Right side (Neon Mint)
+      { x: 70, y: 20, size: 600, colorIndex: 0 },   // Top-right, Neon Mint
+      { x: 65, y: 75, size: 550, colorIndex: 0 },   // Bottom-right, Neon Mint
 
-      // Edge Blobs (Deep Black Swabs)
-      { x: 5, y: 5, size: 400, colorIndex: 3 },     // Top-left corner, Black-Red
-      { x: 95, y: 5, size: 380, colorIndex: 4 },    // Top-right corner, Deep Black
-      { x: 5, y: 95, size: 420, colorIndex: 4 },    // Bottom-left corner, Deep Black
-      { x: 95, y: 95, size: 400, colorIndex: 3 }    // Bottom-right corner, Black-Red
+      // Center/Primary Blobs - Left side (Coral Red)
+      { x: 30, y: 15, size: 580, colorIndex: 1 },   // Top-left, Coral Red
+      { x: 35, y: 80, size: 520, colorIndex: 1 },   // Bottom-left, Coral Red
+
+      // Edge Blobs - Right side (Mint Shadow)
+      { x: 90, y: 8, size: 400, colorIndex: 2 },    // Top-right corner, Mint Shadow
+      { x: 92, y: 92, size: 380, colorIndex: 2 },   // Bottom-right corner, Mint Shadow
+
+      // Edge Blobs - Left side (Coral Shadow)
+      { x: 8, y: 10, size: 420, colorIndex: 3 },    // Top-left corner, Coral Shadow
+      { x: 10, y: 90, size: 400, colorIndex: 3 }    // Bottom-left corner, Coral Shadow
     ];
 
     blobConfigs.forEach((config, index) => {
@@ -78,8 +81,8 @@ class MeshGradient {
   applyBlobColor(blob, colorIndex) {
     const color = this.colors[colorIndex].color;
 
-    // Deep Crimson & Dark Cherry aesthetic with smooth gradients
-    // Darker edge blobs blend into background for cinematic depth
+    // Neon Mint & Coral horizontal gradient aesthetic
+    // Creates vibrant split with smooth blending
     blob.style.background = `radial-gradient(circle at center, ${color}, transparent 70%)`;
   }
 
