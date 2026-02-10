@@ -142,22 +142,19 @@ class MeshGradient {
   }
 }
 
-// Initialize on DOM ready
+// Expose the MeshGradient class immediately
+window.MeshGradient = MeshGradient;
+
+// Auto-initialize when DOM is ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
-    // Wait a bit to ensure the container is ready
-    setTimeout(() => {
-      if (document.getElementById('premium-mesh-canvas')) {
-        window.MeshGradient = MeshGradient;
-        // Will be initialized by fikraApp() in app.js
-      }
-    }, 100);
+    if (document.getElementById('premium-mesh-canvas') && !window.meshGradientInstance) {
+      window.meshGradientInstance = new MeshGradient('premium-mesh-canvas');
+    }
   });
 } else {
-  setTimeout(() => {
-    if (document.getElementById('premium-mesh-canvas')) {
-      window.MeshGradient = MeshGradient;
-      // Will be initialized by fikraApp() in app.js
-    }
-  }, 100);
+  // DOM already loaded
+  if (document.getElementById('premium-mesh-canvas') && !window.meshGradientInstance) {
+    window.meshGradientInstance = new MeshGradient('premium-mesh-canvas');
+  }
 }
