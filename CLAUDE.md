@@ -30,18 +30,18 @@ python -m http.server 5000 --bind 0.0.0.0
 
 ```
 /
-├── index.html              # Main single-page app (~1384 lines)
+├── index.html              # Main single-page app (~1399 lines)
 ├── portfolio.html          # Standalone portfolio page (266 lines)
 ├── services.html           # Standalone services page (234 lines)
 ├── manifest.json           # PWA manifest (RTL, Arabic, standalone)
-├── service-worker.js       # Offline-first caching (v14)
+├── service-worker.js       # Offline-first caching (v21)
 ├── CLAUDE.md               # This file
 │
 ├── css/
-│   └── style.css           # Theme system, glass effects, animations, slider system (~2039 lines)
+│   └── style.css           # Theme system, glass effects, animations, slider system (~2176 lines)
 │
 ├── js/
-│   ├── app.js              # Alpine.js component functions (12 components, 643 lines)
+│   ├── app.js              # Alpine.js component functions (12 components, 648 lines)
 │   ├── floating-glyphs.js  # Neon icon animation system for brief wizard (340 lines)
 │   └── nebula.js           # Breathing arcs background animation (220 lines)
 │
@@ -104,6 +104,7 @@ All 12 functions are exported to `window` scope at the bottom of `js/app.js`.
 |-----------|---------|
 | `#services` | Services section: displays 3 main service pillars with nested sub-services (24 total). Bento glass cards with gradients. |
 | `#our-works` | Our Works section: category-based horizontal sliders (same system as products). 15 projects across 6 categories. Dual-mode view. |
+| `footer` | Footer with social media links from `SITE_CONFIG.social`. Icons conditionally rendered via `x-show` when URLs are populated. |
 
 ### Animation System
 
@@ -168,7 +169,7 @@ No backend contact forms. All inquiries go via WhatsApp:
 
 ## Service Worker
 
-**Current version:** `v14` (in `CACHE_VERSION` constant)
+**Current version:** `v21` (in `CACHE_VERSION` constant)
 
 **Caching strategies:**
 | Request Type | Strategy |
@@ -204,6 +205,7 @@ Complete one functional module fully before moving to the next. Each Alpine.js c
 - To add/modify main services: Edit `data/services.js` (mainServices array - 3 pillars with sub-services)
 - To update Brief Wizard projects: Edit `data/portfolio.js` (briefProjects array)
 - To change contact info: Edit `data/config.js`
+- To add social media links: Edit `data/config.js` (social object — twitter, instagram, snapchat, tiktok URLs)
 - To update partners: Edit `data/partners.js`
 - To add testimonials: Edit `data/testimonials.js` (TESTIMONIALS_DATA array)
 - To update company stats: Edit `data/testimonials.js` (STATS_DATA object)
@@ -306,6 +308,13 @@ viewAllCategory(id)        // Switches to grid view for category
 - Single-open accordion behavior (opening one closes others)
 - 8 items across categories: delivery, design, payment, orders, quality
 - Data source: `FAQ_DATA` from `data/faq.js`
+
+### Footer Social Links
+- Reads from `SITE_CONFIG.social` (twitter, instagram, snapchat, tiktok)
+- Icons only render when their URL is non-empty (`x-show` conditional)
+- Entire social row hidden if all links are empty (`hasSocial` computed)
+- Brand name dynamically pulled from `SITE_CONFIG.brand.name`
+- Styled with `.footer-social-link` class (glass-consistent hover effects, theme-aware)
 
 ### WhatsApp Floating Widget
 - Auto-opens after 10 seconds for new visitors (persisted in `localStorage` as `wa_widget_closed`)
