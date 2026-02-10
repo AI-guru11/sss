@@ -17,12 +17,6 @@ function fikraApp() {
     theme: 'dark',
     mobileOpen: false,
     headerShrink: 0,
-    // 3D Parallax state
-    parallaxX: 0,
-    parallaxY: 0,
-    targetParallaxX: 0,
-    targetParallaxY: 0,
-    animationFrameId: null,
 
     init() {
       const saved = localStorage.getItem('fikra_theme');
@@ -36,91 +30,10 @@ function fikraApp() {
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
 
-      // Initialize 3D parallax effect
-      this.init3DParallax();
-    },
-
-    init3DParallax() {
-      // Check if device supports DeviceOrientation (mobile gyroscope)
-      if (window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === 'function') {
-        // iOS 13+ requires permission
-        DeviceOrientationEvent.requestPermission()
-          .then(response => {
-            if (response === 'granted') {
-              this.enableGyroscope();
-            } else {
-              this.enableMouseParallax();
-            }
-          })
-          .catch(() => {
-            this.enableMouseParallax();
-          });
-      } else if (window.DeviceOrientationEvent) {
-        // Android and other devices
-        this.enableGyroscope();
-      } else {
-        // Desktop fallback
-        this.enableMouseParallax();
+      // Initialize mesh gradient background
+      if (window.MeshGradient && document.getElementById('meshGradientCanvas')) {
+        window.meshGradientInstance = new window.MeshGradient('meshGradientCanvas');
       }
-
-      // Start animation loop
-      this.animate3DParallax();
-    },
-
-    enableGyroscope() {
-      window.addEventListener('deviceorientation', (e) => {
-        // beta: front-to-back tilt (-180 to 180)
-        // gamma: left-to-right tilt (-90 to 90)
-        const beta = e.beta || 0;
-        const gamma = e.gamma || 0;
-
-        // Normalize to -1 to 1 range
-        this.targetParallaxX = Math.max(-1, Math.min(1, gamma / 45));
-        this.targetParallaxY = Math.max(-1, Math.min(1, (beta - 45) / 45));
-      }, { passive: true });
-    },
-
-    enableMouseParallax() {
-      const heroSection = document.getElementById('hero-section');
-      if (!heroSection) return;
-
-      heroSection.addEventListener('mousemove', (e) => {
-        const rect = heroSection.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-
-        // Normalize to -1 to 1 range based on distance from center
-        this.targetParallaxX = (e.clientX - centerX) / (rect.width / 2);
-        this.targetParallaxY = (e.clientY - centerY) / (rect.height / 2);
-      }, { passive: true });
-
-      // Reset on mouse leave
-      heroSection.addEventListener('mouseleave', () => {
-        this.targetParallaxX = 0;
-        this.targetParallaxY = 0;
-      });
-    },
-
-    animate3DParallax() {
-      // Smooth interpolation (easing)
-      const easing = 0.08;
-      this.parallaxX += (this.targetParallaxX - this.parallaxX) * easing;
-      this.parallaxY += (this.targetParallaxY - this.parallaxY) * easing;
-
-      // Update all floating elements
-      const elements = document.querySelectorAll('[data-parallax]');
-      elements.forEach((el) => {
-        const speed = parseFloat(el.dataset.speed) || 0.3;
-        const x = this.parallaxX * 30 * speed; // Max 30px movement
-        const y = this.parallaxY * 30 * speed;
-        const rotateX = -this.parallaxY * 10 * speed; // Rotation effect
-        const rotateY = this.parallaxX * 10 * speed;
-
-        el.style.transform = `translate3d(${x}px, ${y}px, 0) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-      });
-
-      // Continue animation loop
-      this.animationFrameId = requestAnimationFrame(() => this.animate3DParallax());
     },
 
     setTheme(mode) {

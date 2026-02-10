@@ -168,77 +168,148 @@ footer .noise::after {
 /* ====================================== */
 /* 4. HERO SECTION (INTERACTIVE CANVAS)   */
 /* ====================================== */
-#nebulaCanvas {
-  opacity: 0.7;
-  transition: opacity 0.3s ease;
+/* DYNAMIC MESH GRADIENT HERO EFFECT     */
+/* ====================================== */
+
+/* Mesh Gradient Container */
+#meshGradientCanvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: #050505;
 }
 
-/* Floating Text Effect - Dark Mode - Enhanced for 3D parallax */
-section:has(#nebulaCanvas) h1 {
+/* Mesh Gradient Blobs */
+.mesh-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.6;
+  will-change: transform, opacity;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+/* Blob animations - Extremely slow organic movement */
+@keyframes mesh-drift-1 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(120px, -80px) scale(1.1);
+  }
+  66% {
+    transform: translate(-80px, 100px) scale(0.95);
+  }
+}
+
+@keyframes mesh-drift-2 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(-100px, 120px) scale(1.08);
+  }
+  66% {
+    transform: translate(140px, -60px) scale(0.92);
+  }
+}
+
+@keyframes mesh-drift-3 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(90px, 110px) scale(0.98);
+  }
+  66% {
+    transform: translate(-120px, -90px) scale(1.05);
+  }
+}
+
+@keyframes mesh-drift-4 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(-110px, -100px) scale(1.03);
+  }
+  66% {
+    transform: translate(100px, 80px) scale(0.97);
+  }
+}
+
+/* Apply animations to blobs */
+.mesh-blob:nth-child(1) {
+  animation: mesh-drift-1 45s ease-in-out infinite;
+}
+
+.mesh-blob:nth-child(2) {
+  animation: mesh-drift-2 50s ease-in-out infinite;
+  animation-delay: -10s;
+}
+
+.mesh-blob:nth-child(3) {
+  animation: mesh-drift-3 55s ease-in-out infinite;
+  animation-delay: -20s;
+}
+
+.mesh-blob:nth-child(4) {
+  animation: mesh-drift-4 48s ease-in-out infinite;
+  animation-delay: -30s;
+}
+
+/* Noise overlay for matte texture */
+#meshGradientCanvas::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.03) 0px,
+      transparent 1px,
+      transparent 2px,
+      rgba(255, 255, 255, 0.03) 3px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.03) 0px,
+      transparent 1px,
+      transparent 2px,
+      rgba(255, 255, 255, 0.03) 3px
+    ),
+    radial-gradient(
+      circle at 20% 50%,
+      rgba(255, 255, 255, 0.02) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 30%,
+      rgba(255, 255, 255, 0.02) 0%,
+      transparent 50%
+    );
+  opacity: 0.5;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+/* Enhanced text contrast against mesh gradient */
+#hero-section h1 {
   text-shadow:
     0 2px 4px rgba(0, 0, 0, 0.9),
     0 4px 12px rgba(0, 0, 0, 0.8),
-    0 8px 24px rgba(0, 0, 0, 0.6),
-    0 12px 40px rgba(0, 0, 0, 0.5),
-    0 0 60px rgba(0, 0, 0, 0.4);
+    0 8px 24px rgba(0, 0, 0, 0.6);
 }
 
-section:has(#nebulaCanvas) p {
-  text-shadow:
-    0 2px 6px rgba(0, 0, 0, 0.85),
-    0 4px 12px rgba(0, 0, 0, 0.7),
-    0 8px 20px rgba(0, 0, 0, 0.5);
+#hero-section .bg-clip-text {
+  filter: drop-shadow(0 0 30px rgba(229, 57, 53, 0.5));
 }
 
-/* Gradient text special handling - Enhanced contrast */
-section:has(#nebulaCanvas) .bg-clip-text {
-  text-shadow:
-    0 2px 8px rgba(229, 57, 53, 0.6),
-    0 4px 16px rgba(129, 216, 208, 0.5),
-    0 6px 24px rgba(0, 0, 0, 0.7);
-  filter: drop-shadow(0 0 30px rgba(229, 57, 53, 0.5)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
-}
-
-/* Light mode adjustments */
-html.idea section:has(#nebulaCanvas) #nebulaCanvas {
-  opacity: 0.6;
-}
-
-html.idea section:has(#nebulaCanvas) h1 {
-  text-shadow:
-    0 1px 2px rgba(255, 255, 255, 0.9),
-    0 2px 8px rgba(255, 255, 255, 0.8),
-    0 4px 16px rgba(255, 255, 255, 0.6),
-    0 8px 24px rgba(0, 0, 0, 0.15);
-}
-
-html.idea section:has(#nebulaCanvas) p {
-  text-shadow:
-    0 1px 3px rgba(255, 255, 255, 0.8),
-    0 2px 8px rgba(255, 255, 255, 0.6),
-    0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-html.idea section:has(#nebulaCanvas) .bg-clip-text {
-  filter: drop-shadow(0 0 16px rgba(251, 146, 60, 0.4));
-}
-
-/* Badge floating effect */
-section:has(#nebulaCanvas) .bg-\[color\:var\(--card\)\] {
-  background-color: rgba(0, 0, 0, 0.4) !important;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-}
-
-html.idea section:has(#nebulaCanvas) .bg-\[color\:var\(--card\)\] {
-  background-color: rgba(255, 255, 255, 0.8) !important;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-}
-
-/* CTA Buttons - Enhanced visibility and depth */
-section:has(#nebulaCanvas) a[href="#brief"],
-section:has(#nebulaCanvas) a[href="#products"] {
+/* CTA Buttons - Enhanced visibility */
+#hero-section a[href="#brief"],
+#hero-section a[href="#products"] {
   position: relative;
   z-index: 30;
   box-shadow:
@@ -246,124 +317,46 @@ section:has(#nebulaCanvas) a[href="#products"] {
     0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
-section:has(#nebulaCanvas) a[href="#brief"]:hover,
-section:has(#nebulaCanvas) a[href="#products"]:hover {
-  box-shadow:
-    0 6px 20px rgba(0, 0, 0, 0.5),
-    0 12px 40px rgba(0, 0, 0, 0.4);
+/* Light mode adjustments for mesh gradient */
+html.idea #meshGradientCanvas {
+  background: #F3F4F6;
 }
 
-/* ====================================== */
-/* 3D PARALLAX HERO EFFECT                */
-/* ====================================== */
-
-/* 3D Container with perspective */
-.hero-3d-container {
-  position: relative;
-  transform-style: preserve-3d;
-  will-change: transform;
-}
-
-/* Floating 3D Elements */
-.floating-3d-elements {
-  transform-style: preserve-3d;
-}
-
-.floating-element {
-  position: absolute;
-  will-change: transform;
-  transition: transform 0.05s linear;
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
-  /* Reduced opacity for better text legibility */
+html.idea .mesh-blob {
   opacity: 0.4;
-  /* Enhanced glass effect for floating elements */
-  background-color: rgba(255, 255, 255, 0.05) !important;
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  filter: blur(100px);
+  mix-blend-mode: multiply;
 }
 
-/* Light mode floating elements */
-html.idea .floating-element {
-  opacity: 0.5;
-  background-color: rgba(255, 255, 255, 0.85) !important;
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+html.idea #meshGradientCanvas::after {
+  opacity: 0.3;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.02) 0px,
+      transparent 1px,
+      transparent 2px,
+      rgba(0, 0, 0, 0.02) 3px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.02) 0px,
+      transparent 1px,
+      transparent 2px,
+      rgba(0, 0, 0, 0.02) 3px
+    );
 }
 
-/* Subtle floating animation for elements */
-@keyframes float-gentle {
-  0%, 100% {
-    transform: translateY(0) translateZ(0);
-  }
-  50% {
-    transform: translateY(-10px) translateZ(10px);
-  }
-}
-
-.floating-element[data-parallax="float-1"] {
-  animation: float-gentle 6s ease-in-out infinite;
-  animation-delay: 0s;
-}
-
-.floating-element[data-parallax="float-2"] {
-  animation: float-gentle 7s ease-in-out infinite;
-  animation-delay: 0.5s;
-}
-
-.floating-element[data-parallax="float-3"] {
-  animation: float-gentle 8s ease-in-out infinite;
-  animation-delay: 1s;
-}
-
-.floating-element[data-parallax="float-4"] {
-  animation: float-gentle 7.5s ease-in-out infinite;
-  animation-delay: 1.5s;
-}
-
-.floating-element[data-parallax="float-5"] {
-  animation: float-gentle 6.5s ease-in-out infinite;
-  animation-delay: 2s;
-}
-
-.floating-element[data-parallax="float-6"] {
-  animation: float-gentle 9s ease-in-out infinite;
-  animation-delay: 2.5s;
-}
-
-/* Icon glow effects */
-.floating-element svg {
-  filter: drop-shadow(0 0 10px currentColor);
-  transition: filter 0.3s ease;
-}
-
-.floating-element:hover svg {
-  filter: drop-shadow(0 0 20px currentColor);
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .hero-3d-container {
-    perspective: 800px;
-  }
-
-  .floating-element {
-    /* Smaller elements on mobile */
-    transform: scale(0.8) !important;
-  }
+html.idea #hero-section h1 {
+  text-shadow:
+    0 1px 2px rgba(255, 255, 255, 0.9),
+    0 2px 8px rgba(255, 255, 255, 0.6);
 }
 
 /* Performance optimization */
 @media (prefers-reduced-motion: reduce) {
-  .floating-element {
+  .mesh-blob {
     animation: none !important;
-    transition: none !important;
-  }
-
-  .hero-3d-container {
-    perspective: none;
   }
 }
 
