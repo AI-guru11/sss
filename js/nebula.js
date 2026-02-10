@@ -1,6 +1,6 @@
 // ==============================================
 // Liquid Mesh Background Animation
-// Mint-themed fluid blobs with parallax scroll
+// Coral #FF5F6D & Teal #00B894 fluid blobs
 // ==============================================
 
 class LiquidBlob {
@@ -134,17 +134,17 @@ class LiquidMesh {
   getColors() {
     if (this.theme === 'dark') {
       return [
-        '#1DE9B6', // Mint Glow (primary)
-        '#98FF98', // Mint Primary (lighter)
-        '#0D9668', // Deep Mint
-        '#FDB05E'  // Gold accent
+        '#00B894', // Teal (right side)
+        '#FF5F6D', // Coral (left side)
+        '#009B7D', // Deep Teal
+        '#CC4C58'  // Deep Coral
       ];
     } else {
       return [
-        '#00BFA5', // Mint Glow (light mode)
-        '#66BB6A', // Green-mint
-        '#26A69A', // Teal-mint
-        '#E8A040'  // Gold accent (light)
+        '#00896F', // Teal (light mode)
+        '#E54B5A', // Coral (light mode)
+        '#00A383', // Medium Teal
+        '#D44050'  // Medium Coral
       ];
     }
   }
@@ -153,12 +153,12 @@ class LiquidMesh {
     this.blobs = [];
     const colors = this.getColors();
 
-    // 4 large blobs for the liquid mesh effect
+    // 4 large blobs — Coral left, Teal right
     const configs = [
-      { x: 70, y: 25, radius: 320, color: colors[0] },  // Top-right, main mint
-      { x: 25, y: 70, radius: 280, color: colors[1] },  // Bottom-left, secondary mint
-      { x: 50, y: 45, radius: 350, color: colors[2] },  // Center, deep mint
-      { x: 80, y: 80, radius: 240, color: colors[3] }   // Bottom-right, gold accent
+      { x: 75, y: 25, radius: 320, color: colors[0] },  // Top-right, Teal
+      { x: 20, y: 30, radius: 300, color: colors[1] },  // Top-left, Coral
+      { x: 80, y: 75, radius: 280, color: colors[2] },  // Bottom-right, Deep Teal
+      { x: 25, y: 80, radius: 260, color: colors[3] }   // Bottom-left, Deep Coral
     ];
 
     configs.forEach((config, i) => {
@@ -197,8 +197,8 @@ class LiquidMesh {
 
     this.ctx.clearRect(0, 0, rect.width, rect.height);
 
-    // Calculate global opacity based on theme
-    const baseOpacity = this.theme === 'dark' ? 0.85 : 0.45;
+    // Dark: dim/subdued glow — Light: softer for readability
+    const baseOpacity = this.theme === 'dark' ? 0.40 : 0.28;
 
     // Update and draw each blob
     this.blobs.forEach(blob => {
