@@ -34,7 +34,7 @@ python -m http.server 5000 --bind 0.0.0.0
 ├── portfolio.html          # Standalone portfolio page (266 lines)
 ├── services.html           # Standalone services page (234 lines)
 ├── manifest.json           # PWA manifest (RTL, Arabic, standalone)
-├── service-worker.js       # Offline-first caching (v21)
+├── service-worker.js       # Offline-first caching (v22)
 ├── CLAUDE.md               # This file
 │
 ├── css/
@@ -169,7 +169,7 @@ No backend contact forms. All inquiries go via WhatsApp:
 
 ## Service Worker
 
-**Current version:** `v21` (in `CACHE_VERSION` constant)
+**Current version:** `v22` (in `CACHE_VERSION` constant)
 
 **Caching strategies:**
 | Request Type | Strategy |
