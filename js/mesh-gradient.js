@@ -11,12 +11,12 @@ class MeshGradient {
       return;
     }
 
-    // Deep Crimson Vision palette
+    // Premium AI Aesthetic palette (Purple & Soft Pink)
     this.colors = [
-      { color: '#4A0404', name: 'deep-cherry' },    // Deep Cherry
-      { color: '#8B0000', name: 'crimson' },        // Crimson
-      { color: '#1A0202', name: 'black-red' },      // Black-Red
-      { color: '#5C0A0A', name: 'dark-crimson' }    // Dark Crimson
+      { color: '#6B46C1', name: 'deep-purple' },      // Deep Purple
+      { color: '#9333EA', name: 'vibrant-purple' },   // Vibrant Purple
+      { color: '#EC4899', name: 'soft-pink' },        // Soft Pink
+      { color: '#8B5CF6', name: 'lavender-purple' }   // Lavender Purple
     ];
 
     this.blobs = [];
@@ -27,6 +27,7 @@ class MeshGradient {
 
   init() {
     this.createBlobs();
+    this.createOrbitalElements();
     this.bindEvents();
   }
 
@@ -36,10 +37,10 @@ class MeshGradient {
 
     // Blob configurations for full-screen coverage
     const blobConfigs = [
-      { x: 20, y: 15, size: 600, colorIndex: 0 },   // Top-left, Deep Cherry
-      { x: 75, y: 10, size: 550, colorIndex: 1 },   // Top-right, Crimson
-      { x: 30, y: 80, size: 580, colorIndex: 2 },   // Bottom-left, Black-Red
-      { x: 85, y: 85, size: 520, colorIndex: 3 }    // Bottom-right, Dark Crimson
+      { x: 20, y: 15, size: 600, colorIndex: 0 },   // Top-left, Deep Purple
+      { x: 75, y: 10, size: 550, colorIndex: 1 },   // Top-right, Vibrant Purple
+      { x: 30, y: 80, size: 580, colorIndex: 2 },   // Bottom-left, Soft Pink
+      { x: 85, y: 85, size: 520, colorIndex: 3 }    // Bottom-right, Lavender Purple
     ];
 
     blobConfigs.forEach((config, index) => {
@@ -69,9 +70,32 @@ class MeshGradient {
   applyBlobColor(blob, colorIndex) {
     const color = this.colors[colorIndex].color;
 
-    // Always use deep crimson colors for premium matte effect
-    // Hero section maintains dark crimson aesthetic in both themes
-    blob.style.background = `radial-gradient(circle at center, ${color}, transparent 65%)`;
+    // Premium AI aesthetic with Purple/Pink gradient blobs
+    // Softer edges for fluid ambient effect
+    blob.style.background = `radial-gradient(circle at center, ${color}, transparent 70%)`;
+  }
+
+  createOrbitalElements() {
+    // Create orbital light halos in corners
+    const orbitalConfigs = [
+      { x: 95, y: 5, size: 180, position: 'top-right' },
+      { x: 5, y: 95, size: 160, position: 'bottom-left' }
+    ];
+
+    orbitalConfigs.forEach((config, index) => {
+      const orbital = document.createElement('div');
+      orbital.className = 'orbital-halo';
+
+      orbital.style.left = `${config.x}%`;
+      orbital.style.top = `${config.y}%`;
+      orbital.style.width = `${config.size}px`;
+      orbital.style.height = `${config.size}px`;
+
+      // Add pulsing animation with staggered timing
+      orbital.style.animationDelay = `${index * 1.5}s`;
+
+      this.container.appendChild(orbital);
+    });
   }
 
   updateTheme() {
