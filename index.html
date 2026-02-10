@@ -65,15 +65,13 @@
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
-<body class="font-taj bg-[color:var(--bg)] text-[color:var(--fg)] selection:bg-fikra-orange/30 selection:text-white transition-colors duration-500"
+<body class="font-taj bg-transparent text-[color:var(--fg)] selection:bg-fikra-orange/30 selection:text-white transition-colors duration-500"
     x-data="fikraApp()" x-init="init()">
-    
-    <div aria-hidden="true" class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-        <div class="absolute inset-0 transition-colors duration-500" style="background: radial-gradient(1200px 600px at 80% 10%, var(--blob-cyan), transparent 60%), radial-gradient(1000px 500px at 20% 20%, var(--blob-red), transparent 55%), linear-gradient(to bottom, var(--bg), var(--bg2));"></div>
-        <div class="absolute inset-0 opacity-10 dark:opacity-20" style="background-image: linear-gradient(to right, var(--grid) 1px, transparent 1px), linear-gradient(to bottom, var(--grid) 1px, transparent 1px); background-size: 48px 48px; mask-image: radial-gradient(closest-side, rgba(0,0,0,.9), transparent 78%);"></div>
-    </div>
 
-    <header class="site-header sticky top-0 z-50 bg-[color:var(--bg)]/80 backdrop-blur-md border-b border-[color:var(--border)] transition-all duration-300"
+    <!-- Global Premium Crimson Mesh Background -->
+    <div id="premium-mesh-canvas" class="noise" aria-hidden="true"></div>
+
+    <header class="site-header sticky top-0 z-50 bg-transparent backdrop-blur-md border-b border-[color:var(--border)]/30 transition-all duration-300"
         :style="`--shrink:${headerShrink}`" :class="{'py-2': headerShrink > 0.5, 'py-4': headerShrink <= 0.5}">
         <div class="mx-auto max-w-7xl px-4 sm:px-6">
             <div class="header-row flex items-center justify-between">
@@ -129,11 +127,8 @@
     <main id="top" class="mx-auto max-w-7xl px-4 sm:px-6">
         <section class="pt-10 sm:pt-16 pb-10" id="hero-section">
             <div class="overflow-hidden relative">
-                <!-- Dynamic Mesh Gradient Background -->
-                <div id="meshGradientCanvas" class="absolute inset-0 w-full h-full pointer-events-none" style="z-index: 0;"></div>
-
-                <!-- Text Content Layer (z-index: 20) - In front for legibility -->
-                <div class="relative px-6 sm:px-10 py-12 sm:py-20 text-center sm:text-right" style="z-index: 20;">
+                <!-- Text Content Layer -->
+                <div class="relative px-6 sm:px-10 py-12 sm:py-20 text-center sm:text-right">
                     <div class="max-w-3xl relative space-y-10" data-reveal>
                         <h1 class="text-5xl sm:text-7xl lg:text-8xl font-black leading-[1.05] tracking-tight">
                             <span class="block"><span class="bg-clip-text text-transparent bg-gradient-to-r from-fikra-orange to-fikra-violet">تخيل..</span></span>
