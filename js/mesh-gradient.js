@@ -11,12 +11,13 @@ class MeshGradient {
       return;
     }
 
-    // Premium AI Aesthetic palette (Purple & Soft Pink)
+    // Deep Crimson & Dark Cherry palette with black edges
     this.colors = [
-      { color: '#6B46C1', name: 'deep-purple' },      // Deep Purple
-      { color: '#9333EA', name: 'vibrant-purple' },   // Vibrant Purple
-      { color: '#EC4899', name: 'soft-pink' },        // Soft Pink
-      { color: '#8B5CF6', name: 'lavender-purple' }   // Lavender Purple
+      { color: '#8B0000', name: 'crimson' },           // Crimson (vibrant centers)
+      { color: '#4A0404', name: 'dark-cherry' },       // Dark Cherry (rich depth)
+      { color: '#5C0A0A', name: 'dark-crimson' },      // Dark Crimson (medium tone)
+      { color: '#1A0202', name: 'black-red' },         // Black-Red (edge blobs)
+      { color: '#0D0101', name: 'deep-black' }         // Deep Black (darkest edges)
     ];
 
     this.blobs = [];
@@ -35,12 +36,19 @@ class MeshGradient {
     // Remove any existing blobs
     this.container.innerHTML = '';
 
-    // Blob configurations for full-screen coverage
+    // Blob configurations for full-screen coverage with deep black edges
     const blobConfigs = [
-      { x: 20, y: 15, size: 600, colorIndex: 0 },   // Top-left, Deep Purple
-      { x: 75, y: 10, size: 550, colorIndex: 1 },   // Top-right, Vibrant Purple
-      { x: 30, y: 80, size: 580, colorIndex: 2 },   // Bottom-left, Soft Pink
-      { x: 85, y: 85, size: 520, colorIndex: 3 }    // Bottom-right, Lavender Purple
+      // Center/Primary Blobs (Crimson & Dark Cherry)
+      { x: 25, y: 20, size: 600, colorIndex: 0 },   // Top-left, Crimson
+      { x: 70, y: 15, size: 550, colorIndex: 1 },   // Top-right, Dark Cherry
+      { x: 35, y: 75, size: 580, colorIndex: 2 },   // Bottom-left, Dark Crimson
+      { x: 80, y: 80, size: 520, colorIndex: 1 },   // Bottom-right, Dark Cherry
+
+      // Edge Blobs (Deep Black Swabs)
+      { x: 5, y: 5, size: 400, colorIndex: 3 },     // Top-left corner, Black-Red
+      { x: 95, y: 5, size: 380, colorIndex: 4 },    // Top-right corner, Deep Black
+      { x: 5, y: 95, size: 420, colorIndex: 4 },    // Bottom-left corner, Deep Black
+      { x: 95, y: 95, size: 400, colorIndex: 3 }    // Bottom-right corner, Black-Red
     ];
 
     blobConfigs.forEach((config, index) => {
@@ -70,8 +78,8 @@ class MeshGradient {
   applyBlobColor(blob, colorIndex) {
     const color = this.colors[colorIndex].color;
 
-    // Premium AI aesthetic with Purple/Pink gradient blobs
-    // Softer edges for fluid ambient effect
+    // Deep Crimson & Dark Cherry aesthetic with smooth gradients
+    // Darker edge blobs blend into background for cinematic depth
     blob.style.background = `radial-gradient(circle at center, ${color}, transparent 70%)`;
   }
 
@@ -132,9 +140,13 @@ class MeshGradient {
     const isMobile = window.innerWidth < 768;
 
     this.blobs.forEach(({ element }, index) => {
-      const baseSize = isMobile ? 300 : 450;
-      const sizeVariation = [50, 0, 30, -30];
-      const newSize = baseSize + sizeVariation[index];
+      const baseSize = isMobile ? 250 : 400;
+      // Size variations for 8 blobs: [4 center blobs, 4 edge blobs]
+      const sizeVariation = [
+        50, 0, 30, -20,    // Center blobs (larger, vibrant)
+        -50, -70, -40, -60  // Edge blobs (smaller, darker)
+      ];
+      const newSize = baseSize + (sizeVariation[index] || 0);
 
       element.style.width = `${newSize}px`;
       element.style.height = `${newSize}px`;
