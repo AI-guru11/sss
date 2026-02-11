@@ -18,61 +18,60 @@ html {
 /* 2. VARIABLES (THEME CONFIG)            */
 /* ====================================== */
 :root {
-  /* --- DARK MODE (DEFAULT) --- Coral & Teal + Golden Rim */
+  /* --- DARK MODE (DEFAULT) --- Red & Mint Green + Clean Glass */
   --bg: #050505;
   --bg2: #0a0a0a;
   --fg: rgba(255, 255, 255, 0.95);
-  --muted: rgba(255, 255, 255, 0.65);
+  --muted: rgba(255, 255, 255, 0.60);
 
-  /* البطاقات في الوضع الليلي: شفافة بيضاء خفيفة */
-  --card: rgba(255, 255, 255, 0.03);
-  --border: rgba(255, 255, 255, 0.1);
-  --grid: rgba(255, 255, 255, 0.05);
+  --card: rgba(255, 255, 255, 0.04);
+  --border: rgba(255, 255, 255, 0.08);
+  --grid: rgba(255, 255, 255, 0.04);
 
-  /* Liquid Mesh palette — Coral #FF5F6D / Teal #00B894 */
-  --mint-deep: #080808;
-  --mint-primary: #00B894;
-  --mint-glow: #00B894;
-  --blob-cyan: rgba(0, 184, 148, 0.18);
-  --blob-red: rgba(255, 95, 109, 0.12);
+  /* Red → Mint gradient palette */
+  --mint-deep: #060606;
+  --mint-primary: #00E5A0;
+  --mint-glow: #00E5A0;
+  --blob-cyan: rgba(0, 229, 160, 0.15);
+  --blob-red: rgba(229, 57, 53, 0.12);
 
-  /* Golden Rim Light — Coral edge */
-  --gold-bright: #FF5F6D;
-  --rose-gold: #FF8A80;
-  --rim-glow: rgba(255, 95, 109, 0.25);
+  /* Red accent */
+  --accent-red: #E53935;
+  --accent-red-light: #EF5350;
+  --rim-glow: rgba(229, 57, 53, 0.20);
 
-  /* تأثيرات الحواف */
-  --edge-line-strong: rgba(0, 184, 148, 0.45);
-  --edge-line-soft: rgba(255, 95, 109, 0.15);
+  /* Edge effects */
+  --edge-line-strong: rgba(0, 229, 160, 0.40);
+  --edge-line-soft: rgba(229, 57, 53, 0.12);
 }
 
 html.idea {
-  /* --- LIGHT MODE --- Coral & Teal adapted */
-  --bg: #F3F4F6;
-  --bg2: #E5E7EB;
+  /* --- LIGHT MODE --- Red & Mint adapted for readability */
+  --bg: #FAFAFA;
+  --bg2: #F0F0F0;
 
   --fg: #111827;
-  --muted: #4B5563;
+  --muted: #6B7280;
 
-  --card: rgba(255, 255, 255, 0.7);
-  --border: rgba(0, 0, 0, 0.08);
-  --grid: rgba(0, 0, 0, 0.04);
+  --card: rgba(255, 255, 255, 0.75);
+  --border: rgba(0, 0, 0, 0.07);
+  --grid: rgba(0, 0, 0, 0.03);
 
-  /* Liquid Mesh palette (light) */
-  --mint-deep: #F5F5F5;
-  --mint-primary: #00896F;
-  --mint-glow: #00896F;
-  --blob-cyan: rgba(0, 184, 148, 0.22);
-  --blob-red: rgba(255, 95, 109, 0.16);
+  /* Red → Mint (light mode) */
+  --mint-deep: #F7F7F7;
+  --mint-primary: #00C88C;
+  --mint-glow: #00C88C;
+  --blob-cyan: rgba(0, 200, 140, 0.18);
+  --blob-red: rgba(229, 57, 53, 0.12);
 
-  /* Rim Light (light) — Coral adapted */
-  --gold-bright: #E54B5A;
-  --rose-gold: #D44050;
-  --rim-glow: rgba(229, 75, 90, 0.22);
+  /* Red accent (light) */
+  --accent-red: #D32F2F;
+  --accent-red-light: #E53935;
+  --rim-glow: rgba(211, 47, 47, 0.18);
 
-  /* حواف خفيفة */
-  --edge-line-strong: rgba(0, 137, 111, 0.35);
-  --edge-line-soft: rgba(229, 75, 90, 0.12);
+  /* Edge effects (light) */
+  --edge-line-strong: rgba(0, 200, 140, 0.30);
+  --edge-line-soft: rgba(211, 47, 47, 0.10);
 }
 
 /* ====================================== */
@@ -110,24 +109,24 @@ html.idea .noise {
     inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
-/* Premium hover glow - Coral/Teal Rim emphasis */
+/* Premium hover glow */
 .noise:hover {
   box-shadow:
-    0 0 20px rgba(0, 184, 148, 0.1),
-    0 1px 3px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    0 0 24px rgba(0, 229, 160, 0.08),
+    0 2px 6px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
   transform: translateY(-2px);
 }
 
 .noise:hover::after {
   opacity: 1;
-  filter: drop-shadow(0 0 10px var(--rim-glow));
+  filter: drop-shadow(0 0 8px var(--rim-glow));
 }
 
 html.idea .noise:hover {
   box-shadow:
-    0 0 20px rgba(0, 137, 111, 0.1),
-    0 2px 8px rgba(0, 0, 0, 0.08),
+    0 0 20px rgba(0, 200, 140, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.06),
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
@@ -160,23 +159,23 @@ html.idea .noise:before {
   z-index: 1;
 }
 
-/* Golden Rim Light - Premium Metallic Edge */
+/* Gradient Rim Edge */
 .noise::after {
   content: "";
   position: absolute;
   inset: -1px;
   pointer-events: none;
-  border-radius: 25px; /* Slightly larger than card to form rim */
+  border-radius: 25px;
   background:
-    linear-gradient(135deg, var(--rose-gold) 0%, var(--gold-bright) 15%, transparent 50%);
+    linear-gradient(135deg, var(--accent-red-light) 0%, var(--accent-red) 15%, transparent 50%);
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
-  padding: 1.5px; /* Metallic edge thickness */
-  filter: drop-shadow(0 0 6px var(--rim-glow));
-  opacity: .75;
+  padding: 1.5px;
+  filter: drop-shadow(0 0 5px var(--rim-glow));
+  opacity: .6;
   mix-blend-mode: normal;
   z-index: 10;
 }
@@ -271,12 +270,12 @@ html.idea #premium-mesh-canvas::before {
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
 }
 
-/* Coral & Teal glow shadow for CTA button */
+/* Red & Mint glow shadow for CTA button */
 .shadow-glow-neon {
   box-shadow:
-    0 0 20px rgba(0, 184, 148, 0.3),
-    0 0 40px rgba(255, 95, 109, 0.15),
-    0 4px 16px rgba(0, 0, 0, 0.4);
+    0 0 20px rgba(0, 229, 160, 0.25),
+    0 0 40px rgba(229, 57, 53, 0.12),
+    0 4px 16px rgba(0, 0, 0, 0.35);
 }
 
 /* CTA Buttons - Enhanced visibility */
@@ -289,41 +288,39 @@ html.idea #premium-mesh-canvas::before {
     0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
-/* Light mode adjustments - Mint & Gold theme */
 html.idea #premium-mesh-canvas {
   background: var(--mint-deep);
 }
 
-/* Light mode hero text adjustments */
 html.idea .hero-gradient-text {
   color: #111827;
   -webkit-text-fill-color: #111827;
   text-fill-color: #111827;
-  -webkit-text-stroke: 0.75px var(--mint-glow);
-  text-stroke: 0.75px var(--mint-glow);
-  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.15));
+  -webkit-text-stroke: 0.5px var(--mint-glow);
+  text-stroke: 0.5px var(--mint-glow);
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.10));
 }
 
 html.idea .hero-implement-text {
   color: #111827;
   -webkit-text-fill-color: #111827;
   text-fill-color: #111827;
-  -webkit-text-stroke: 0.75px var(--mint-glow);
-  text-stroke: 0.75px var(--mint-glow);
-  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.15));
+  -webkit-text-stroke: 0.5px var(--mint-glow);
+  text-stroke: 0.5px var(--mint-glow);
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.10));
 }
 
 html.idea .shadow-glow-neon {
   box-shadow:
-    0 0 15px rgba(0, 137, 111, 0.2),
-    0 0 30px rgba(229, 75, 90, 0.1),
-    0 4px 16px rgba(0, 0, 0, 0.12);
+    0 0 15px rgba(0, 200, 140, 0.15),
+    0 0 30px rgba(211, 47, 47, 0.08),
+    0 4px 16px rgba(0, 0, 0, 0.10);
 }
 
 html.idea #hero-section h1 {
   text-shadow:
-    0 1px 2px rgba(255, 255, 255, 0.9),
-    0 2px 8px rgba(255, 255, 255, 0.6);
+    0 1px 2px rgba(0, 0, 0, 0.06),
+    0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 /* Z-Index Layering Fix - Ensure content stays above background */
@@ -345,8 +342,7 @@ body > main {
 /* ====================================== */
 
 /* Section Labels (Small Uppercase Category Indicators) */
-.section-label,
-.premium-label {
+.section-label {
   display: inline-block;
   font-size: 11px;
   font-weight: 700;
@@ -457,7 +453,7 @@ h2, h3 {
 }
 
 .category-view-all:hover {
-  background: linear-gradient(135deg, var(--mint-glow), var(--gold-bright));
+  background: linear-gradient(135deg, var(--mint-glow), var(--accent-red));
   color: white;
   border-color: transparent;
   transform: translateX(-4px);
@@ -542,7 +538,7 @@ h2, h3 {
 }
 
 .slider-arrow:hover {
-  background: linear-gradient(135deg, var(--mint-glow), var(--gold-bright));
+  background: linear-gradient(135deg, var(--mint-glow), var(--accent-red));
   border-color: transparent;
   color: white;
   transform: translateY(-50%) scale(1.1);
@@ -579,7 +575,7 @@ html.idea .slider-arrow {
 }
 
 html.idea .slider-arrow:hover {
-  background: linear-gradient(135deg, var(--mint-glow), var(--gold-bright));
+  background: linear-gradient(135deg, var(--mint-glow), var(--accent-red));
 }
 
 /* Products Grid Container (Fallback for "View All") */
@@ -670,18 +666,18 @@ html.idea .slider-arrow:hover {
 }
 
 .product-card:hover {
-  transform: translateY(-8px) scale(1.02);
+  transform: translateY(-6px) scale(1.02);
   box-shadow:
-    0 20px 40px -10px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(0, 184, 148, 0.2);
-  border-color: rgba(0, 184, 148, 0.3);
+    0 20px 40px -10px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(0, 229, 160, 0.15);
+  border-color: rgba(0, 229, 160, 0.25);
 }
 
 html.idea .product-card:hover {
   box-shadow:
-    0 20px 40px -10px rgba(0, 0, 0, 0.15),
-    0 0 0 1px rgba(229, 75, 90, 0.2);
-  border-color: rgba(229, 75, 90, 0.3);
+    0 20px 40px -10px rgba(0, 0, 0, 0.12),
+    0 0 0 1px rgba(0, 200, 140, 0.15);
+  border-color: rgba(0, 200, 140, 0.25);
 }
 
 /* Product Image Container */
@@ -689,7 +685,7 @@ html.idea .product-card:hover {
   position: relative;
   height: 160px;
   overflow: hidden;
-  background: linear-gradient(135deg, var(--card) 0%, rgba(0, 184, 148, 0.1) 100%);
+  background: linear-gradient(135deg, var(--card) 0%, rgba(0, 229, 160, 0.08) 100%);
 }
 
 @media (min-width: 640px) {
@@ -717,7 +713,7 @@ html.idea .product-card:hover {
   width: 100%;
   height: 100%;
   font-size: 3.5rem;
-  background: linear-gradient(135deg, rgba(0, 184, 148, 0.1) 0%, rgba(229, 57, 53, 0.1) 100%);
+  background: linear-gradient(135deg, rgba(0, 229, 160, 0.08) 0%, rgba(229, 57, 53, 0.08) 100%);
   transition: all 0.4s ease;
 }
 
@@ -739,15 +735,15 @@ html.idea .product-card:hover {
 }
 
 .product-badge-new {
-  background: linear-gradient(135deg, var(--gold-bright), #FF8A80);
-  color: #1a1a1a;
-  box-shadow: 0 2px 10px rgba(255, 95, 109, 0.4);
+  background: linear-gradient(135deg, var(--accent-red), var(--accent-red-light));
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(229, 57, 53, 0.30);
 }
 
 .product-badge-best {
-  background: linear-gradient(135deg, var(--mint-glow), #00D9A5);
+  background: linear-gradient(135deg, var(--mint-glow), #00FFB4);
   color: #0A0A0A;
-  box-shadow: 0 2px 10px rgba(0, 184, 148, 0.4);
+  box-shadow: 0 2px 10px rgba(0, 229, 160, 0.30);
 }
 
 /* Out of Stock Overlay */
@@ -762,7 +758,7 @@ html.idea .product-card:hover {
 }
 
 .product-out-of-stock span {
-  background: rgba(255, 95, 109, 0.9);
+  background: rgba(229, 57, 53, 0.90);
   color: #1a1a1a;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
@@ -855,7 +851,7 @@ html.idea .product-card:hover {
 .product-price {
   font-size: 1.1rem;
   font-weight: 800;
-  background: linear-gradient(135deg, var(--mint-glow), var(--gold-bright));
+  background: linear-gradient(135deg, var(--mint-glow), var(--accent-red));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -870,8 +866,8 @@ html.idea .product-card:hover {
 .product-discount {
   font-size: 0.6rem;
   font-weight: 700;
-  background: rgba(255, 95, 109, 0.15);
-  color: var(--gold-bright);
+  background: rgba(229, 57, 53, 0.12);
+  color: var(--accent-red);
   padding: 0.125rem 0.375rem;
   border-radius: 0.25rem;
 }
@@ -915,13 +911,13 @@ html.idea .product-card:hover {
 }
 
 .product-action-btn-primary {
-  background: linear-gradient(135deg, var(--mint-glow), #00D9A5);
+  background: linear-gradient(135deg, var(--mint-glow), #00FFB4);
   color: #0A0A0A;
 }
 
 .product-action-btn-primary:hover {
   transform: scale(1.05);
-  box-shadow: 0 4px 15px rgba(0, 184, 148, 0.4);
+  box-shadow: 0 4px 15px rgba(0, 229, 160, 0.30);
 }
 
 .product-action-btn-secondary {
@@ -1013,7 +1009,7 @@ html.idea .product-card:hover {
 }
 
 .category-filter-btn.active {
-  background: linear-gradient(135deg, var(--mint-glow), var(--gold-bright));
+  background: linear-gradient(135deg, var(--mint-glow), var(--accent-red));
   color: white;
   border-color: transparent;
   box-shadow: 0 4px 15px var(--rim-glow);
@@ -1081,15 +1077,15 @@ html.idea .product-card:hover {
 }
 
 .product-modal-close:hover {
-  background: var(--gold-bright);
+  background: var(--accent-red);
   color: white;
-  border-color: var(--gold-bright);
+  border-color: var(--accent-red);
 }
 
 .product-modal-image {
   width: 100%;
   height: 250px;
-  background: linear-gradient(135deg, var(--card) 0%, rgba(0, 184, 148, 0.15) 100%);
+  background: linear-gradient(135deg, var(--card) 0%, rgba(0, 229, 160, 0.12) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1166,7 +1162,7 @@ html.idea .product-card:hover {
 .product-modal-price {
   font-size: 2rem;
   font-weight: 800;
-  background: linear-gradient(135deg, var(--mint-glow), var(--gold-bright));
+  background: linear-gradient(135deg, var(--mint-glow), var(--accent-red));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1188,13 +1184,13 @@ html.idea .product-card:hover {
 }
 
 .product-modal-btn-primary {
-  background: linear-gradient(135deg, var(--mint-glow), #00D9A5);
+  background: linear-gradient(135deg, var(--mint-glow), #00FFB4);
   color: #0A0A0A;
 }
 
 .product-modal-btn-primary:hover {
   transform: scale(1.05);
-  box-shadow: 0 4px 20px rgba(0, 184, 148, 0.4);
+  box-shadow: 0 4px 20px rgba(0, 229, 160, 0.30);
 }
 
 .product-modal-btn-whatsapp {
@@ -1223,27 +1219,6 @@ html.idea .product-card:hover {
   opacity: 1;
 }
 
-.image-placeholder {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    var(--card) 0%,
-    rgba(0, 184, 148, 0.1) 50%,
-    var(--card) 100%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
-}
 
 /* ====================================== */
 /* 10. CART FLOATING BUTTON               */
@@ -1261,24 +1236,24 @@ html.idea .product-card:hover {
   align-items: center;
   gap: 0.75rem;
   padding: 1rem 1.5rem;
-  background: linear-gradient(135deg, var(--mint-glow), var(--gold-bright));
+  background: linear-gradient(135deg, var(--mint-glow), var(--accent-red));
   border-radius: 9999px;
   color: white;
   font-weight: 700;
   cursor: pointer;
   border: none;
-  box-shadow: 0 10px 30px rgba(255, 95, 109, 0.4);
+  box-shadow: 0 10px 30px rgba(229, 57, 53, 0.30);
   transition: all 0.3s ease;
 }
 
 .cart-floating-btn:hover {
   transform: scale(1.05) translateY(-2px);
-  box-shadow: 0 15px 40px rgba(255, 95, 109, 0.5);
+  box-shadow: 0 15px 40px rgba(229, 57, 53, 0.35);
 }
 
 .cart-count {
   background: white;
-  color: var(--gold-bright);
+  color: var(--accent-red);
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 50%;
@@ -1299,7 +1274,6 @@ html.idea .product-card:hover {
 ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
 html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
 
-.scrollbar-hide::-webkit-scrollbar { display: none; }
 
 [x-cloak] { display: none !important; }
 
@@ -1318,34 +1292,6 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
   overflow: hidden;
 }
 
-/* View Mode Toggle */
-.view-toggle {
-  display: flex;
-  gap: 0.25rem;
-  padding: 0.25rem;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 0.75rem;
-}
-
-.view-toggle-btn {
-  padding: 0.5rem 0.75rem;
-  border-radius: 0.5rem;
-  color: var(--muted);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border: none;
-  background: transparent;
-}
-
-.view-toggle-btn.active {
-  background: var(--fg);
-  color: var(--bg);
-}
-
-.view-toggle-btn:hover:not(.active) {
-  color: var(--fg);
-}
 
 /* ====================================== */
 /* 12. TESTIMONIALS CAROUSEL              */
@@ -1386,12 +1332,12 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
   width: 4rem;
   height: 4rem;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--mint-glow), var(--gold-bright));
+  background: linear-gradient(135deg, var(--mint-glow), var(--accent-red));
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
-  box-shadow: 0 4px 15px rgba(0, 184, 148, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 229, 160, 0.20);
 }
 
 .testimonial-stars {
@@ -1432,7 +1378,7 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
 }
 
 .testimonial-nav-btn:hover {
-  background: linear-gradient(135deg, var(--mint-glow), var(--gold-bright));
+  background: linear-gradient(135deg, var(--mint-glow), var(--accent-red));
   border-color: transparent;
   color: white;
 }
@@ -1456,7 +1402,7 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
 .testimonial-dot.active {
   width: 1.5rem;
   border-radius: 0.25rem;
-  background: linear-gradient(135deg, var(--mint-glow), var(--gold-bright));
+  background: linear-gradient(135deg, var(--mint-glow), var(--accent-red));
 }
 
 /* ====================================== */
@@ -1482,7 +1428,7 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
 
 .faq-search-input:focus {
   border-color: var(--mint-glow);
-  box-shadow: 0 0 0 3px rgba(0, 184, 148, 0.2);
+  box-shadow: 0 0 0 3px rgba(0, 229, 160, 0.15);
 }
 
 .faq-search-input::placeholder {
@@ -1507,12 +1453,12 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
 }
 
 .faq-item:hover {
-  border-color: rgba(0, 184, 148, 0.3);
+  border-color: rgba(0, 229, 160, 0.20);
 }
 
 .faq-item.open {
   border-color: var(--mint-glow);
-  box-shadow: 0 4px 20px rgba(0, 184, 148, 0.15);
+  box-shadow: 0 4px 20px rgba(0, 229, 160, 0.12);
 }
 
 .faq-question {
@@ -1560,7 +1506,7 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
 }
 
 .faq-item.open .faq-toggle {
-  background: linear-gradient(135deg, var(--mint-glow), var(--gold-bright));
+  background: linear-gradient(135deg, var(--mint-glow), var(--accent-red));
   transform: rotate(180deg);
 }
 
@@ -1606,7 +1552,7 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--mint-glow), var(--gold-bright));
+  background: linear-gradient(90deg, var(--mint-glow), var(--accent-red));
   transform: scaleX(0);
   transition: transform 0.4s ease;
 }
@@ -1623,7 +1569,7 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
 .stat-value {
   font-size: 2.5rem;
   font-weight: 800;
-  background: linear-gradient(135deg, var(--mint-glow), var(--gold-bright));
+  background: linear-gradient(135deg, var(--mint-glow), var(--accent-red));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1675,7 +1621,7 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
 .calculator-select:focus,
 .calculator-input:focus {
   border-color: var(--mint-glow);
-  box-shadow: 0 0 0 3px rgba(0, 184, 148, 0.2);
+  box-shadow: 0 0 0 3px rgba(0, 229, 160, 0.15);
 }
 
 .calculator-options {
@@ -1700,7 +1646,7 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
 }
 
 .calculator-option.active {
-  background: linear-gradient(135deg, var(--mint-glow), #00D9A5);
+  background: linear-gradient(135deg, var(--mint-glow), #00FFB4);
   border-color: transparent;
   color: #0A0A0A;
   font-weight: 600;
@@ -1724,7 +1670,7 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
 
 .calculator-checkbox.active {
   border-color: var(--mint-glow);
-  background: rgba(0, 184, 148, 0.1);
+  background: rgba(0, 229, 160, 0.08);
 }
 
 .calculator-checkbox-box {
@@ -1744,7 +1690,7 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
 }
 
 .calculator-total {
-  background: linear-gradient(135deg, rgba(0, 184, 148, 0.1), rgba(229, 57, 53, 0.1));
+  background: linear-gradient(135deg, rgba(0, 229, 160, 0.08), rgba(229, 57, 53, 0.08));
   border: 1px solid var(--border);
   border-radius: 1rem;
   padding: 1.5rem;
@@ -1754,7 +1700,7 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
 .calculator-price {
   font-size: 2.5rem;
   font-weight: 800;
-  background: linear-gradient(135deg, var(--mint-glow), var(--gold-bright));
+  background: linear-gradient(135deg, var(--mint-glow), var(--accent-red));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -2030,14 +1976,14 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
 
 /* Hover State: Full color + scale + glow */
 .partner-capsule:hover {
-  filter: grayscale(0) drop-shadow(0 0 16px rgba(0, 184, 148, 0.7));
+  filter: grayscale(0) drop-shadow(0 0 16px rgba(0, 229, 160, 0.50));
   opacity: 1;
   transform: scale(1.1);
   background: rgba(255, 255, 255, 0.08);
   box-shadow:
-    0 0 0 1px rgba(0, 184, 148, 0.4),
-    0 6px 24px rgba(0, 184, 148, 0.3),
-    0 0 40px rgba(0, 184, 148, 0.2);
+    0 0 0 1px rgba(0, 229, 160, 0.30),
+    0 6px 24px rgba(0, 229, 160, 0.20),
+    0 0 40px rgba(0, 229, 160, 0.15);
   /* Add margin to prevent clipping of glow */
   margin: 0.25rem 0;
 }
@@ -2050,11 +1996,11 @@ html.idea .partner-capsule {
 
 html.idea .partner-capsule:hover {
   background: rgba(0, 0, 0, 0.05);
-  filter: grayscale(0) drop-shadow(0 0 16px rgba(255, 95, 109, 0.6));
+  filter: grayscale(0) drop-shadow(0 0 16px rgba(229, 57, 53, 0.45));
   box-shadow:
-    0 0 0 1px rgba(255, 95, 109, 0.4),
-    0 6px 24px rgba(255, 95, 109, 0.3),
-    0 0 40px rgba(255, 95, 109, 0.2);
+    0 0 0 1px rgba(229, 57, 53, 0.30),
+    0 6px 24px rgba(229, 57, 53, 0.20),
+    0 0 40px rgba(229, 57, 53, 0.15);
   /* Add margin to prevent clipping of glow */
   margin: 0.25rem 0;
 }

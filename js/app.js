@@ -103,7 +103,6 @@ function productsShop() {
   return {
     cart: [],
     activeCategory: 'all',
-    viewMode: 'grid', // 'grid' or 'list'
     selectedProduct: null,
     modalOpen: false,
     isAnimating: false,
@@ -183,11 +182,6 @@ function productsShop() {
       setTimeout(() => {
         this.isAnimating = false;
       }, 300);
-    },
-
-    // تغيير طريقة العرض
-    setViewMode(mode) {
-      this.viewMode = mode;
     },
 
     // حساب نسبة الخصم

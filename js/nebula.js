@@ -1,6 +1,6 @@
 // ==============================================
 // Liquid Mesh Background Animation
-// Coral #FF5F6D & Teal #00B894 fluid blobs
+// Red #E53935 & Mint #00E5A0 fluid blobs
 // ==============================================
 
 class LiquidBlob {
@@ -134,17 +134,17 @@ class LiquidMesh {
   getColors() {
     if (this.theme === 'dark') {
       return [
-        '#00B894', // Teal (right side)
-        '#FF5F6D', // Coral (left side)
-        '#009B7D', // Deep Teal
-        '#CC4C58'  // Deep Coral
+        '#00E5A0', // Mint (right side)
+        '#E53935', // Red (left side)
+        '#00C88C', // Deep Mint
+        '#C62828'  // Deep Red
       ];
     } else {
       return [
-        '#00896F', // Teal (light mode)
-        '#E54B5A', // Coral (light mode)
-        '#00A383', // Medium Teal
-        '#D44050'  // Medium Coral
+        '#00C88C', // Mint (light mode)
+        '#D32F2F', // Red (light mode)
+        '#00B37A', // Medium Mint
+        '#B71C1C'  // Medium Red
       ];
     }
   }
@@ -153,12 +153,12 @@ class LiquidMesh {
     this.blobs = [];
     const colors = this.getColors();
 
-    // 4 large blobs — Coral left, Teal right
+    // 4 large blobs — Red left, Mint right
     const configs = [
-      { x: 75, y: 25, radius: 320, color: colors[0] },  // Top-right, Teal
-      { x: 20, y: 30, radius: 300, color: colors[1] },  // Top-left, Coral
-      { x: 80, y: 75, radius: 280, color: colors[2] },  // Bottom-right, Deep Teal
-      { x: 25, y: 80, radius: 260, color: colors[3] }   // Bottom-left, Deep Coral
+      { x: 75, y: 25, radius: 320, color: colors[0] },  // Top-right, Mint
+      { x: 20, y: 30, radius: 300, color: colors[1] },  // Top-left, Red
+      { x: 80, y: 75, radius: 280, color: colors[2] },  // Bottom-right, Deep Mint
+      { x: 25, y: 80, radius: 260, color: colors[3] }   // Bottom-left, Deep Red
     ];
 
     configs.forEach((config, i) => {
