@@ -15,7 +15,7 @@ const SERVICES_DATA = {
       title: 'تصميم إبداعي',
       titleEn: 'Creative Design',
       icon: '🎨',
-      gradient: 'from-indigo-900 via-purple-900 to-slate-900',
+      gradient: 'from-emerald-900 via-teal-900 to-slate-900',
       description: 'تصاميم تعكس هويتك وتميزك في السوق',
       services: [
         { name: 'الهوية البصرية', icon: '✨', desc: 'شعارات وأنظمة بصرية متكاملة' },
@@ -71,12 +71,12 @@ const SERVICES_DATA = {
     {
       title: 'Speed/الكفاءة والسرعة',
       description: 'نعمل بوضوح وكفاءة: ننتقل بك من الفكرة إلى النموذج، ثم التسليم.',
-      color: 'fikra-orange' // fikra-orange | fikra-violet | gray-400
+      color: 'fikra-red' // fikra-red | fikra-mint | gray-400
     },
     {
       title: 'Craft - دقة التنفيذ',
       description: 'يكمن السر في التفاصيل: نعتني بضبط العناصر وأدق التفاصيل.',
-      color: 'fikra-violet'
+      color: 'fikra-mint'
     },
     {
       title: 'Results/النتائج',
@@ -94,7 +94,7 @@ const SERVICES_DATA = {
       icon: '🏠',
       bgIcon: '🏗️',
       gradient: 'from-[#2c2c2c] via-[#1a1a1a] to-black',
-      hoverColor: 'fikra-orange'
+      hoverColor: 'fikra-red'
     },
     {
       id: 'branding',
@@ -102,8 +102,8 @@ const SERVICES_DATA = {
       description: 'شعارات، هوية شركات، مطبوعات.',
       icon: '✨',
       bgIcon: '🎨',
-      gradient: 'from-indigo-900 via-purple-900 to-slate-900',
-      hoverColor: 'fikra-violet'
+      gradient: 'from-emerald-900 via-teal-900 to-slate-900',
+      hoverColor: 'fikra-mint'
     },
     {
       id: 'events',
@@ -123,7 +123,7 @@ const SERVICES_DATA = {
       title: 'مودرن / بسيط',
       description: 'خطوط نظيفة، مساحات بيضاء.',
       icon: '☁️',
-      color: 'fikra-violet'
+      color: 'fikra-mint'
     },
     {
       id: 'classic',
@@ -137,7 +137,7 @@ const SERVICES_DATA = {
       title: 'نيون / جريء',
       description: 'إضاءة عالية، طابع شبابي.',
       icon: '⚡',
-      color: 'fikra-orange'
+      color: 'fikra-red'
     }
   ]
 };

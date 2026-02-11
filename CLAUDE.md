@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Safi Group (مجموعة الصافي)** — A creative agency portfolio website featuring a modern bento glass UI design with Arabic RTL layout. This is a static PWA (Progressive Web App) for an advertising and marketing agency based in Muhayl Asir, Saudi Arabia.
+**Safi Group (مجموعة الصافي)** — A creative agency portfolio website featuring a modern Anima-inspired bento glass UI design with Arabic RTL layout. The design uses a Red (#E53935) to Mint Green (#00E5A0) gradient palette with refined glassmorphism effects. This is a static PWA (Progressive Web App) for an advertising and marketing agency based in Muhayl Asir, Saudi Arabia.
 
 ## Tech Stack
 
@@ -34,7 +34,7 @@ python -m http.server 5000 --bind 0.0.0.0
 ├── portfolio.html          # Standalone portfolio page (266 lines)
 ├── services.html           # Standalone services page (234 lines)
 ├── manifest.json           # PWA manifest (RTL, Arabic, standalone)
-├── service-worker.js       # Offline-first caching (v22)
+├── service-worker.js       # Offline-first caching (v23)
 ├── CLAUDE.md               # This file
 │
 ├── css/
@@ -43,7 +43,7 @@ python -m http.server 5000 --bind 0.0.0.0
 ├── js/
 │   ├── app.js              # Alpine.js component functions (12 components, 648 lines)
 │   ├── floating-glyphs.js  # Neon icon animation system for brief wizard (340 lines)
-│   └── nebula.js           # Breathing arcs background animation (220 lines)
+│   └── nebula.js           # Liquid mesh background animation — Red & Mint blobs (234 lines)
 │
 ├── data/                   # Data-driven content layer
 │   ├── config.js           # Site branding, contact, location, social
@@ -113,7 +113,7 @@ Two dedicated JS files handle decorative animations:
 | File | Class | Purpose |
 |------|-------|---------|
 | `js/floating-glyphs.js` | `FloatingGlyph` | Sequential neon icon animations for the brief wizard section. Fade in/out, floating vertical motion, rotation effects. |
-| `js/nebula.js` | `BreathingArc` | Scroll-linked breathing arcs background animation. Semicircular arcs with echo delay effect, positioned top-right. Theme-aware color rendering. |
+| `js/nebula.js` | `LiquidMesh` | Liquid mesh background animation with 4 organic blobs (Red #E53935 & Mint #00E5A0). Scroll-linked parallax, breathing scale, theme-aware rendering. |
 
 ### Theming System
 
@@ -121,17 +121,20 @@ Two themes controlled via CSS variables:
 
 | Variable | Dark (`:root`) | Light (`html.idea`) |
 |----------|----------------|---------------------|
-| `--bg` | `#050505` | `#F3F4F6` |
-| `--bg2` | `#0a0a0a` | `#E5E7EB` |
+| `--bg` | `#050505` | `#FAFAFA` |
+| `--bg2` | `#0a0a0a` | `#F0F0F0` |
 | `--fg` | `rgba(255,255,255,0.95)` | `#111827` |
-| `--muted` | `rgba(255,255,255,0.65)` | `#4B5563` |
-| `--card` | `rgba(255,255,255,0.03)` | `rgba(255,255,255,0.7)` |
-| `--border` | `rgba(255,255,255,0.1)` | `rgba(0,0,0,0.08)` |
-| `--grid` | `rgba(255,255,255,0.05)` | `rgba(0,0,0,0.04)` |
-| `--blob-cyan` | `rgba(129,216,208,0.15)` | `rgba(129,216,208,0.25)` |
-| `--blob-red` | `rgba(229,57,53,0.15)` | `rgba(229,57,53,0.25)` |
-| `--edge-line-strong` | `rgba(255,255,255,0.55)` | *(dark equivalent)* |
-| `--edge-line-soft` | `rgba(255,255,255,0.18)` | *(dark equivalent)* |
+| `--muted` | `rgba(255,255,255,0.60)` | `#6B7280` |
+| `--card` | `rgba(255,255,255,0.04)` | `rgba(255,255,255,0.75)` |
+| `--border` | `rgba(255,255,255,0.08)` | `rgba(0,0,0,0.07)` |
+| `--grid` | `rgba(255,255,255,0.04)` | `rgba(0,0,0,0.03)` |
+| `--blob-cyan` | `rgba(0,229,160,0.15)` | `rgba(0,200,140,0.18)` |
+| `--blob-red` | `rgba(229,57,53,0.12)` | `rgba(229,57,53,0.12)` |
+| `--accent-red` | `#E53935` | `#D32F2F` |
+| `--accent-red-light` | `#EF5350` | `#E53935` |
+| `--mint-primary` | `#00E5A0` | `#00C88C` |
+| `--edge-line-strong` | `rgba(0,229,160,0.40)` | `rgba(0,200,140,0.30)` |
+| `--edge-line-soft` | `rgba(229,57,53,0.12)` | `rgba(211,47,47,0.10)` |
 
 - Theme persisted in `localStorage` as `fikra_theme`
 - Toggle via `toggleTheme()` method switches between `dark` and `idea` classes
@@ -169,7 +172,7 @@ No backend contact forms. All inquiries go via WhatsApp:
 
 ## Service Worker
 
-**Current version:** `v22` (in `CACHE_VERSION` constant)
+**Current version:** `v23` (in `CACHE_VERSION` constant)
 
 **Caching strategies:**
 | Request Type | Strategy |
