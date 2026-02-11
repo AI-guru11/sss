@@ -24,8 +24,9 @@
                 extend: {
                     fontFamily: { taj: ['Tajawal', 'sans-serif'] },
                     colors: {
-                        'fikra-red': '#E53935',
-                        'fikra-mint': '#00E5A0',
+                        'brand-red': '#E31E24',
+                        'brand-red-light': '#EF4444',
+                        'brand-red-dark': '#B91C1C',
                     },
                     boxShadow: {
                         'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.30)',
@@ -147,7 +148,7 @@
             <div class="mb-12 flex flex-wrap items-center justify-center gap-3" data-reveal>
                 <button
                     @click="activeFilter = 'all'"
-                    :class="activeFilter === 'all' ? 'bg-gradient-to-l from-fikra-mint to-fikra-red text-white border-transparent shadow-glow-mint' : 'bg-[color:var(--card)] text-[color:var(--muted)] border-[color:var(--border)]'"
+                    :class="activeFilter === 'all' ? 'bg-gradient-to-l from-brand-red-light to-brand-red text-white border-transparent shadow-glow-red' : 'bg-[color:var(--card)] text-[color:var(--muted)] border-[color:var(--border)]'"
                     class="px-6 py-3 rounded-2xl border font-bold transition-all hover:scale-105">
                     <span>الكل</span>
                     <span class="mr-2 text-sm opacity-80">(<span x-text="works.length"></span>)</span>
@@ -155,7 +156,7 @@
                 <template x-for="cat in categories" :key="cat.id">
                     <button
                         @click="activeFilter = cat.id"
-                        :class="activeFilter === cat.id ? 'bg-gradient-to-l from-fikra-mint to-fikra-red text-white border-transparent shadow-glow-mint' : 'bg-[color:var(--card)] text-[color:var(--muted)] border-[color:var(--border)]'"
+                        :class="activeFilter === cat.id ? 'bg-gradient-to-l from-brand-red-light to-brand-red text-white border-transparent shadow-glow-red' : 'bg-[color:var(--card)] text-[color:var(--muted)] border-[color:var(--border)]'"
                         class="px-6 py-3 rounded-2xl border font-bold transition-all hover:scale-105 flex items-center gap-2">
                         <span x-text="cat.icon"></span>
                         <span x-text="cat.name"></span>
@@ -205,7 +206,7 @@
                 <p class="text-lg text-[color:var(--muted)] mb-8 max-w-2xl mx-auto">
                     دعنا نحول رؤيتك إلى واقع مذهل — تواصل معنا اليوم
                 </p>
-                <a href="index.html#brief" class="inline-flex items-center gap-3 rounded-2xl px-8 py-4 text-lg font-bold bg-gradient-to-l from-fikra-mint to-fikra-red text-white shadow-glow-mint transition-transform hover:scale-105">
+                <a href="index.html#brief" class="inline-flex items-center gap-3 rounded-2xl px-8 py-4 text-lg font-bold bg-gradient-to-l from-brand-red-light to-brand-red text-white shadow-glow-red transition-transform hover:scale-105">
                     <span>ابدأ الآن</span>
                     <svg class="w-6 h-6 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
@@ -250,7 +251,7 @@
     <!-- Footer -->
     <footer class="py-10 border-t border-[color:var(--border)]">
         <div class="text-center space-y-4">
-            <a href="index.html" class="inline-flex items-center gap-2 text-fikra-mint hover:text-fikra-red transition font-bold">
+            <a href="index.html" class="inline-flex items-center gap-2 text-brand-red hover:text-brand-red-light transition font-bold">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                 </svg>

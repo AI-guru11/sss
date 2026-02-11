@@ -26,13 +26,20 @@
                 extend: {
                     fontFamily: { taj: ['Tajawal', 'sans-serif'] },
                     colors: {
-                        'fikra-red': '#E53935',
-                        'fikra-mint': '#00E5A0',
+                        'brand-red': '#E31E24',
+                        'brand-red-light': '#EF4444',
+                        'brand-red-dark': '#B91C1C',
                     },
                     boxShadow: {
                         'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.30)',
-                        'glow-red': '0 0 20px rgba(229, 57, 53, 0.20)',
-                        'glow-mint': '0 0 20px rgba(0, 229, 160, 0.20)',
+                        'glass-lg': '0 16px 48px 0 rgba(0, 0, 0, 0.35)',
+                        'glow-red': '0 0 24px rgba(227, 30, 36, 0.30)',
+                        'glow-red-lg': '0 0 48px rgba(227, 30, 36, 0.25)',
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
+                        'glass': '16px',
+                        'glass-lg': '24px',
                     },
                     animation: {
                         'infinite-scroll': 'infinite-scroll 40s linear infinite',
@@ -67,7 +74,7 @@
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
-<body class="font-taj text-[color:var(--fg)] selection:bg-fikra-red/30 selection:text-white transition-colors duration-500"
+<body class="font-taj text-[color:var(--fg)] selection:bg-brand-red/30 selection:text-white transition-colors duration-500"
     style="background: var(--bg);"
     x-data="fikraApp()" x-init="init()">
 
@@ -146,7 +153,7 @@
                             </span>
                         </h1>
                         <div class="flex flex-col sm:flex-row gap-4 justify-center sm:justify-start">
-                            <a href="#brief" class="relative overflow-hidden rounded-2xl px-8 py-4 text-base font-bold text-white bg-gradient-to-l from-[#00E5A0] to-[#E53935] shadow-glow-neon hover:scale-[1.02] transition-transform">
+                            <a href="#brief" class="relative overflow-hidden rounded-2xl px-8 py-4 text-base font-bold text-white bg-gradient-to-l from-brand-red-light to-brand-red shadow-glow-neon hover:scale-[1.02] transition-transform">
                                   ابدأ رحلتك معنا
                             </a>
                             <a href="#products" class="noise relative overflow-hidden backdrop-blur-md rounded-2xl px-8 py-4 text-base font-bold text-white bg-white/5 border border-white/10 hover:bg-white/10 hover:scale-105 hover:border-white/20 transition-all duration-300 shadow-lg">
@@ -215,7 +222,7 @@
                                     <span><span class="font-extrabold text-[color:var(--fg)]">Speed/الكفاءة والسرعة:</span> نعمل بوضوح وكفاءة: ننتقل بك من الفكرة إلى النموذج، ثم التسليم.</span>
                                 </li>
                                 <li class="flex gap-4">
-                                    <span class="mt-1 h-2.5 w-2.5 rounded-full bg-fikra-mint shadow-glow-mint flex-shrink-0"></span>
+                                    <span class="mt-1 h-2.5 w-2.5 rounded-full bg-brand-red shadow-glow-red flex-shrink-0"></span>
                                     <span><span class="font-extrabold text-[color:var(--fg)]">Craft - دقة التنفيذ:</span> يكمن السر في التفاصيل: نعتني بضبط العناصر وأدق التفاصيل.</span>
                                 </li>
                                 <li class="flex gap-4">
@@ -224,7 +231,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="w-full sm:w-[45%] rounded-3xl bg-gradient-to-l from-fikra-red/10 via-fikra-mint/5 to-transparent ring-1 ring-[color:var(--border)] p-6 self-stretch flex flex-col justify-between">
+                        <div class="w-full sm:w-[45%] rounded-3xl bg-gradient-to-l from-brand-red/10 via-brand-red/5 to-transparent ring-1 ring-[color:var(--border)] p-6 self-stretch flex flex-col justify-between">
                             <div>
                                 <div class="text-xs font-bold text-[color:var(--muted)] uppercase tracking-wider mb-2">تواصل معنا</div>
                                 <div class="text-sm text-[color:var(--fg)] leading-relaxed opacity-90">
@@ -248,7 +255,7 @@
                 <article class="noise lg:col-span-4 rounded-[2rem] backdrop-blur-md shadow-glass p-8 flex flex-col justify-center text-center" data-reveal>
                     <h3 class="text-2xl font-black">جاهز نبدأ؟</h3>
                     <p class="mt-2 text-sm text-[color:var(--muted)]">جرب "مستكشف الذوق" الخاص بنا.</p>
-                    <a href="#brief" class="mt-6 inline-flex w-full items-center justify-center rounded-2xl px-4 py-4 text-base font-bold bg-gradient-to-l from-fikra-mint to-fikra-red text-white shadow-glow-mint transition-transform hover:scale-[1.02]">
+                    <a href="#brief" class="mt-6 inline-flex w-full items-center justify-center rounded-2xl px-4 py-4 text-base font-bold bg-gradient-to-l from-brand-red-light to-brand-red text-white shadow-glow-red transition-transform hover:scale-[1.02]">
                         جربه الآن
                     </a>
                 </article>
@@ -636,7 +643,7 @@
             <div class="mb-12 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4" data-reveal>
                 <div>
                     <h2 class="text-3xl sm:text-5xl font-black tracking-tight">
-                        <span class="text-fikra-mint">خدماتنا</span>
+                        <span class="text-brand-red">خدماتنا</span>
                     </h2>
                     <p class="mt-2 text-[color:var(--muted)]">حلول إبداعية متكاملة تلبي جميع احتياجاتك التسويقية والإعلانية</p>
                 </div>
@@ -678,7 +685,7 @@
                         </div>
 
                         <!-- CTA Button -->
-                        <a href="#brief" class="mt-6 w-full inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-bold bg-gradient-to-l from-fikra-mint to-fikra-red text-white shadow-glow-mint transition-transform hover:scale-[1.05]">
+                        <a href="#brief" class="mt-6 w-full inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-bold bg-gradient-to-l from-brand-red-light to-brand-red text-white shadow-glow-red transition-transform hover:scale-[1.05]">
                             <span>ابدأ مشروعك</span>
                             <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
@@ -855,7 +862,7 @@
 
         <section id="transformations" class="py-10 sm:py-20" x-data="transformationsData()">
             <div class="mb-10 px-4 sm:px-6 mx-auto max-w-7xl" data-reveal>
-                <h2 class="text-3xl sm:text-5xl font-black tracking-tight">لمسة <span class="text-fikra-mint">الصافي</span></h2>
+                <h2 class="text-3xl sm:text-5xl font-black tracking-tight">لمسة <span class="text-brand-red">الصافي</span></h2>
                 <p class="mt-2 text-[color:var(--muted)]">لا نتحدث عن الجودة فقط، بل نجعلك تراها.</p>
             </div>
 
@@ -878,7 +885,7 @@
                             </template>
                         </div>
 
-                        <a href="#brief" class="inline-flex items-center gap-2 text-fikra-mint font-bold hover:gap-4 transition-all">
+                        <a href="#brief" class="inline-flex items-center gap-2 text-brand-red font-bold hover:gap-4 transition-all">
                             ابدأ رحلة التغيير لعلامتك
                             <svg class="w-5 h-5 rtl:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                         </a>
@@ -892,7 +899,7 @@
                          data-reveal>
                         
                         <div class="absolute inset-0 w-full h-full">
-                            <div class="w-full h-full bg-gradient-to-br from-fikra-mint via-emerald-900 to-slate-900 flex items-center justify-center">
+                            <div class="w-full h-full bg-gradient-to-br from-brand-red via-brand-red-dark to-slate-900 flex items-center justify-center">
                                 <div class="text-center">
                                     <h4 class="text-4xl font-black text-white drop-shadow-lg tracking-wider">AFTER</h4>
                                     <p class="text-white/80 font-bold mt-2">تصميم عصري وجذاب</p>
@@ -915,7 +922,7 @@
                         <div class="absolute top-4 left-4 bg-black/60 backdrop-blur-md text-gray-300 text-xs font-bold px-3 py-1 rounded-lg pointer-events-none z-10">قبل 🏚️</div>
 
                         <div class="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize shadow-[0_0_20px_rgba(0,0,0,0.5)] z-20" :style="`left: ${pos}%`">
-                            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-fikra-mint">
+                            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-brand-red">
                                 <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8L22 12L18 16"/><path d="M6 8L2 12L6 16"/></svg>
                             </div>
                         </div>
@@ -965,7 +972,7 @@
                             <div class="absolute -left-6 -top-6 text-9xl opacity-10 rotate-12 group-hover:rotate-45 transition-transform duration-700 select-none">🎨</div>
                             <div class="absolute inset-0 p-6 flex flex-col justify-end bg-gradient-to-t from-black/80 via-transparent to-transparent">
                                 <div class="w-14 h-14 mb-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 flex items-center justify-center text-3xl shadow-lg group-hover:bg-white/20 transition-colors">✨</div>
-                                <h3 class="text-2xl font-black text-white mb-1 group-hover:text-fikra-mint transition-colors">هوية بصرية</h3>
+                                <h3 class="text-2xl font-black text-white mb-1 group-hover:text-brand-red transition-colors">هوية بصرية</h3>
                                 <p class="text-sm text-gray-300 font-medium leading-relaxed">شعارات، هوية شركات، مطبوعات.</p>
                             </div>
                         </button>
@@ -985,16 +992,16 @@
 
                 <div x-show="step===2" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 translate-y-8" x-transition:enter-end="opacity-100 translate-y-0">
                     <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
-                        <span class="w-2 h-8 rounded-full bg-fikra-mint"></span>
+                        <span class="w-2 h-8 rounded-full bg-brand-red"></span>
                         أي نمط يميل إليه ذوقك أكثر؟
                     </h3>
                     <div class="grid gap-4 sm:grid-cols-3">
                         <button @click="setStyle('modern')" class="group p-6 rounded-3xl bg-[color:var(--fg)]/5 border border-[color:var(--border)] hover:bg-[color:var(--fg)]/10 hover:border-[color:var(--fg)]/30 text-right transition-all">
                             <div class="flex justify-between items-start mb-4">
                                 <span class="text-4xl filter grayscale group-hover:grayscale-0 transition-all">☁️</span>
-                                <div class="w-6 h-6 rounded-full border-2 border-[color:var(--border)] group-hover:border-fikra-mint group-hover:bg-fikra-mint transition-colors"></div>
+                                <div class="w-6 h-6 rounded-full border-2 border-[color:var(--border)] group-hover:border-brand-red group-hover:bg-brand-red transition-colors"></div>
                             </div>
-                            <div class="font-bold text-lg text-[color:var(--fg)] group-hover:text-fikra-mint transition-colors">مودرن / بسيط</div>
+                            <div class="font-bold text-lg text-[color:var(--fg)] group-hover:text-brand-red transition-colors">مودرن / بسيط</div>
                             <div class="text-sm text-[color:var(--muted)] mt-2">خطوط نظيفة، مساحات بيضاء.</div>
                         </button>
 
@@ -1048,7 +1055,7 @@
                             <input x-model="contact.name" type="text" placeholder="الاسم الكريم" class="w-full p-4 rounded-xl bg-[color:var(--bg)] border border-[color:var(--border)] outline-none focus:border-fikra-red focus:bg-[color:var(--card)] transition text-[color:var(--fg)] placeholder-[color:var(--muted)]">
                             <input x-model="contact.phone" type="tel" placeholder="رقم الجوال" class="w-full p-4 rounded-xl bg-[color:var(--bg)] border border-[color:var(--border)] outline-none focus:border-fikra-red focus:bg-[color:var(--card)] transition text-[color:var(--fg)] placeholder-[color:var(--muted)]">
                         </div>
-                        <button @click="sendRequest()" class="w-full py-4 rounded-xl bg-gradient-to-l from-fikra-red to-fikra-mint text-white font-bold text-lg shadow-glow-red hover:scale-[1.01] transition-transform flex items-center justify-center gap-2">
+                        <button @click="sendRequest()" class="w-full py-4 rounded-xl bg-gradient-to-l from-brand-red to-brand-red-light text-white font-bold text-lg shadow-glow-red hover:scale-[1.01] transition-transform flex items-center justify-center gap-2">
                             <span>•</span> أرسل طلب استشارة مجانية
                         </button>
                     </div>
@@ -1071,7 +1078,7 @@
                             <h3 class="font-bold text-lg">Before / After</h3>
                              <div class="relative h-64 mt-4 rounded-2xl overflow-hidden ring-1 ring-white/10" x-data="beforeAfter()" @pointerdown="start($event)" @pointermove.window="move($event)" @pointerup.window="end()" @pointercancel.window="end()">
                                 <div class="absolute inset-0 bg-gray-700 flex items-center justify-center">Old Brand</div>
-                                <div class="absolute inset-0 bg-fikra-mint flex items-center justify-center text-black font-bold" :style="`clip-path: inset(0 0 0 ${pos}%)`">New Brand</div>
+                                <div class="absolute inset-0 bg-brand-red flex items-center justify-center text-black font-bold" :style="`clip-path: inset(0 0 0 ${pos}%)`">New Brand</div>
                                 <div class="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize" :style="`left: ${pos}%`">
                                     <div class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center text-black text-xs font-bold">•</div>
                                 </div>
@@ -1082,7 +1089,7 @@
 
                  <template x-for="p in projects" :key="p.id">
                     <div class="masonry-item">
-                        <article class="noise border border-[color:var(--border)] bg-[color:var(--card)] overflow-hidden hover:shadow-glow-mint transition-shadow duration-300">
+                        <article class="noise border border-[color:var(--border)] bg-[color:var(--card)] overflow-hidden hover:shadow-glow-red transition-shadow duration-300">
                              <div class="h-48 w-full" :style="`background: ${p.bg}`"></div>
                              <div class="p-6">
                                  <h3 class="font-bold text-lg" x-text="p.title"></h3>
@@ -1124,7 +1131,7 @@
         <!-- Testimonials Section -->
         <section id="testimonials" class="py-10 sm:py-20 testimonials-section" x-data="testimonialsCarousel()" x-init="init()">
             <div class="mb-10" data-reveal>
-                <h2 class="text-3xl sm:text-5xl font-black tracking-tight">ماذا يقول <span class="text-fikra-mint">عملاؤنا</span></h2>
+                <h2 class="text-3xl sm:text-5xl font-black tracking-tight">ماذا يقول <span class="text-brand-red">عملاؤنا</span></h2>
                 <p class="mt-2 text-[color:var(--muted)]">آراء حقيقية من عملاء سعداء.</p>
             </div>
 
@@ -1140,7 +1147,7 @@
                             <p class="text-sm text-[color:var(--muted)]" x-text="current.role"></p>
                             <div class="flex items-center gap-2 mt-1">
                                 <span class="text-xs text-[color:var(--muted)]" x-text="current.location"></span>
-                                <span class="text-xs px-2 py-0.5 bg-fikra-mint/20 text-fikra-mint rounded-full" x-text="current.project"></span>
+                                <span class="text-xs px-2 py-0.5 bg-brand-red/20 text-brand-red rounded-full" x-text="current.project"></span>
                             </div>
                         </div>
                         <div class="testimonial-stars">
@@ -1264,7 +1271,7 @@
                                 </template>
                             </div>
                         </div>
-                        <button class="w-full py-4 rounded-xl bg-gradient-to-l from-fikra-red to-fikra-mint text-white font-bold text-lg shadow-glow-red hover:scale-[1.01] transition-transform" @click="orderViaWhatsApp()">
+                        <button class="w-full py-4 rounded-xl bg-gradient-to-l from-brand-red to-brand-red-light text-white font-bold text-lg shadow-glow-red hover:scale-[1.01] transition-transform" @click="orderViaWhatsApp()">
                             طلب عرض سعر عبر واتساب
                         </button>
                     </div>
@@ -1275,7 +1282,7 @@
         <!-- FAQ Section -->
         <section id="faq" class="py-10 sm:py-20" x-data="faqAccordion()">
             <div class="mb-10" data-reveal>
-                <h2 class="text-3xl sm:text-5xl font-black tracking-tight">الأسئلة <span class="text-fikra-mint">الشائعة</span></h2>
+                <h2 class="text-3xl sm:text-5xl font-black tracking-tight">الأسئلة <span class="text-brand-red">الشائعة</span></h2>
                 <p class="mt-2 text-[color:var(--muted)]">كل ما تريد معرفته عن خدماتنا.</p>
             </div>
 
