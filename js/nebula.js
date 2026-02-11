@@ -14,11 +14,11 @@ class LiquidBlob {
     this.radius = config.radius;
     this.color = config.color;
 
-    // Non-linear movement parameters (unique per blob)
+    // Non-linear movement parameters (unique per blob) - reduced by 20%
     this.freqX = 0.0003 + index * 0.00012;
     this.freqY = 0.00025 + index * 0.0001;
-    this.ampX = 80 + index * 25;
-    this.ampY = 60 + index * 20;
+    this.ampX = (80 + index * 25) * 0.8;
+    this.ampY = (60 + index * 20) * 0.8;
     this.phaseX = index * 1.8;
     this.phaseY = index * 2.4;
 
@@ -50,8 +50,8 @@ class LiquidBlob {
     this.x = baseX + moveX;
     this.y = baseY + moveY + parallaxY;
 
-    // Breathing scale animation
-    this.scale = 1 + 0.12 * Math.sin(time * this.scaleFreq + this.scalePhase);
+    // Breathing scale animation - reduced by 20%
+    this.scale = 1 + (0.12 * 0.8) * Math.sin(time * this.scaleFreq + this.scalePhase);
   }
 
   draw(ctx, opacity) {
@@ -197,8 +197,8 @@ class LiquidMesh {
 
     this.ctx.clearRect(0, 0, rect.width, rect.height);
 
-    // Dark: dim/subdued glow — Light: softer for readability
-    const baseOpacity = this.theme === 'dark' ? 0.40 : 0.28;
+    // Dark: dim/subdued glow — Light: softer for readability - reduced by 20%
+    const baseOpacity = this.theme === 'dark' ? 0.32 : 0.22;
 
     // Update and draw each blob
     this.blobs.forEach(blob => {
