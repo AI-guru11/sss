@@ -1,6 +1,6 @@
 // ==============================================
 // Liquid Mesh Background Animation
-// Red #E53935 & Mint #00E5A0 fluid blobs
+// Safi Group Red #E31E24 - No Green
 // ==============================================
 
 class LiquidBlob {
@@ -134,17 +134,17 @@ class LiquidMesh {
   getColors() {
     if (this.theme === 'dark') {
       return [
-        '#00E5A0', // Mint (right side)
-        '#E53935', // Red (left side)
-        '#00C88C', // Deep Mint
-        '#C62828'  // Deep Red
+        '#E31E24', // Brand Red (primary)
+        '#EF4444', // Light Red (secondary)
+        '#B91C1C', // Dark Red (tertiary)
+        '#DC2626'  // Medium Red (quaternary)
       ];
     } else {
       return [
-        '#00C88C', // Mint (light mode)
-        '#D32F2F', // Red (light mode)
-        '#00B37A', // Medium Mint
-        '#B71C1C'  // Medium Red
+        '#DC2626', // Brand Red (light mode)
+        '#EF4444', // Light Red (light mode)
+        '#B91C1C', // Dark Red (light mode)
+        '#991B1B'  // Deeper Red (light mode)
       ];
     }
   }
@@ -153,12 +153,12 @@ class LiquidMesh {
     this.blobs = [];
     const colors = this.getColors();
 
-    // 4 large blobs — Red left, Mint right
+    // 4 large blobs — Red gradients only
     const configs = [
-      { x: 75, y: 25, radius: 320, color: colors[0] },  // Top-right, Mint
-      { x: 20, y: 30, radius: 300, color: colors[1] },  // Top-left, Red
-      { x: 80, y: 75, radius: 280, color: colors[2] },  // Bottom-right, Deep Mint
-      { x: 25, y: 80, radius: 260, color: colors[3] }   // Bottom-left, Deep Red
+      { x: 75, y: 25, radius: 320, color: colors[0] },  // Top-right, Brand Red
+      { x: 20, y: 30, radius: 300, color: colors[1] },  // Top-left, Light Red
+      { x: 80, y: 75, radius: 280, color: colors[2] },  // Bottom-right, Dark Red
+      { x: 25, y: 80, radius: 260, color: colors[3] }   // Bottom-left, Medium Red
     ];
 
     configs.forEach((config, i) => {
