@@ -3,7 +3,7 @@
   Goal: stable offline-first behavior without changing the UI.
 */
 
-const CACHE_VERSION = 'v24';
+const CACHE_VERSION = 'v25';
 const CACHE_NAME = `safi-pwa-${CACHE_VERSION}`;
 
 // Core assets (same-origin)
@@ -13,7 +13,6 @@ const CORE_ASSETS = [
   './index.html',
   './css/style.css',
   './js/app.js',
-  './js/nebula.js',
   './js/floating-glyphs.js',
   './manifest.json',
   './assets/icons/icon-192.webp',
