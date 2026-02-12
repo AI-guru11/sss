@@ -33,7 +33,7 @@ html {
   --brand-red: #E31E24;
   --brand-red-light: #EF4444;
   --brand-red-dark: #B91C1C;
-  --rim-glow: rgba(227, 30, 36, 0.30);
+  --rim-glow: rgba(227, 30, 36, 0.15);
 
   /* Liquid mesh blobs - Red only */
   --blob-red-primary: rgba(227, 30, 36, 0.15);
@@ -43,8 +43,8 @@ html {
   --edge-line-strong: rgba(227, 30, 36, 0.40);
   --edge-line-soft: rgba(227, 30, 36, 0.15);
 
-  /* Glass glow - Red accent */
-  --glass-glow: rgba(227, 30, 36, 0.25);
+  /* Glass glow - Red accent (reduced intensity) */
+  --glass-glow: rgba(227, 30, 36, 0.12);
 }
 
 html.idea {
@@ -64,7 +64,7 @@ html.idea {
   --brand-red: #DC2626;
   --brand-red-light: #EF4444;
   --brand-red-dark: #991B1B;
-  --rim-glow: rgba(220, 38, 38, 0.25);
+  --rim-glow: rgba(220, 38, 38, 0.12);
 
   /* Liquid mesh blobs - Red only */
   --blob-red-primary: rgba(220, 38, 38, 0.12);
@@ -74,8 +74,8 @@ html.idea {
   --edge-line-strong: rgba(220, 38, 38, 0.35);
   --edge-line-soft: rgba(220, 38, 38, 0.12);
 
-  /* Glass glow - Red accent */
-  --glass-glow: rgba(220, 38, 38, 0.20);
+  /* Glass glow - Red accent (reduced intensity) */
+  --glass-glow: rgba(220, 38, 38, 0.10);
 }
 
 /* ====================================== */
@@ -251,7 +251,7 @@ html.idea #premium-mesh-canvas::before {
     0 8px 24px rgba(0, 0, 0, 0.6);
 }
 
-/* Professional Hero Text Styling - White with Red Glow */
+/* Professional Hero Text Styling - White with subtle Red accent */
 .hero-gradient-text {
   display: inline-block;
   position: relative;
@@ -260,8 +260,8 @@ html.idea #premium-mesh-canvas::before {
   color: #ffffff;
   -webkit-text-fill-color: #ffffff;
   text-fill-color: #ffffff;
-  -webkit-text-stroke: 0.75px rgba(227, 30, 36, 0.6);
-  text-stroke: 0.75px rgba(227, 30, 36, 0.6);
+  -webkit-text-stroke: 0.5px rgba(227, 30, 36, 0.3);
+  text-stroke: 0.5px rgba(227, 30, 36, 0.3);
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
 }
 
@@ -273,17 +273,17 @@ html.idea #premium-mesh-canvas::before {
   color: #ffffff;
   -webkit-text-fill-color: #ffffff;
   text-fill-color: #ffffff;
-  -webkit-text-stroke: 0.75px rgba(227, 30, 36, 0.6);
-  text-stroke: 0.75px rgba(227, 30, 36, 0.6);
+  -webkit-text-stroke: 0.5px rgba(227, 30, 36, 0.3);
+  text-stroke: 0.5px rgba(227, 30, 36, 0.3);
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
 }
 
-/* Red glow shadow for CTA button - Red only */
+/* Red glow shadow for CTA button - Red only (subtle) */
 .shadow-glow-neon {
   box-shadow:
-    0 0 24px rgba(227, 30, 36, 0.35),
-    0 0 48px rgba(227, 30, 36, 0.20),
-    0 4px 16px rgba(0, 0, 0, 0.40);
+    0 0 16px rgba(227, 30, 36, 0.15),
+    0 0 32px rgba(227, 30, 36, 0.08),
+    0 4px 16px rgba(0, 0, 0, 0.30);
 }
 
 /* CTA Buttons - Enhanced visibility */
@@ -304,8 +304,8 @@ html.idea .hero-gradient-text {
   color: #111827;
   -webkit-text-fill-color: #111827;
   text-fill-color: #111827;
-  -webkit-text-stroke: 0.5px rgba(220, 38, 38, 0.5);
-  text-stroke: 0.5px rgba(220, 38, 38, 0.5);
+  -webkit-text-stroke: 0.5px rgba(220, 38, 38, 0.25);
+  text-stroke: 0.5px rgba(220, 38, 38, 0.25);
   filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.10));
 }
 
@@ -313,16 +313,16 @@ html.idea .hero-implement-text {
   color: #111827;
   -webkit-text-fill-color: #111827;
   text-fill-color: #111827;
-  -webkit-text-stroke: 0.5px rgba(220, 38, 38, 0.5);
-  text-stroke: 0.5px rgba(220, 38, 38, 0.5);
+  -webkit-text-stroke: 0.5px rgba(220, 38, 38, 0.25);
+  text-stroke: 0.5px rgba(220, 38, 38, 0.25);
   filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.10));
 }
 
 html.idea .shadow-glow-neon {
   box-shadow:
-    0 0 20px rgba(220, 38, 38, 0.25),
-    0 0 40px rgba(220, 38, 38, 0.12),
-    0 4px 16px rgba(0, 0, 0, 0.12);
+    0 0 12px rgba(220, 38, 38, 0.12),
+    0 0 24px rgba(220, 38, 38, 0.06),
+    0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
 html.idea #hero-section h1 {
@@ -586,7 +586,7 @@ html.idea .slider-arrow {
 
 html.idea .slider-arrow:hover {
   background: linear-gradient(135deg, var(--brand-red), var(--brand-red-light));
-  box-shadow: 0 6px 24px rgba(220, 38, 38, 0.30);
+  box-shadow: 0 6px 24px rgba(220, 38, 38, 0.15);
 }
 
 /* Products Grid Container (Fallback for "View All") */
@@ -754,7 +754,7 @@ html.idea .product-card:hover {
 .product-badge-best {
   background: linear-gradient(135deg, var(--brand-red-dark), var(--brand-red));
   color: #fff;
-  box-shadow: 0 2px 10px rgba(227, 30, 36, 0.35);
+  box-shadow: 0 2px 10px rgba(227, 30, 36, 0.18);
 }
 
 /* Out of Stock Overlay */
@@ -1261,7 +1261,7 @@ html.idea .product-card:hover {
 
 .cart-floating-btn:hover {
   transform: scale(1.05) translateY(-2px);
-  box-shadow: 0 15px 40px rgba(227, 30, 36, 0.40);
+  box-shadow: 0 15px 40px rgba(227, 30, 36, 0.20);
 }
 
 .cart-count {
@@ -1988,16 +1988,16 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
   white-space: nowrap;
 }
 
-/* Hover State: Full color + scale + glow - Red accent */
+/* Hover State: Full color + scale + subtle glow - Red accent */
 .partner-capsule:hover {
-  filter: grayscale(0) drop-shadow(0 0 16px rgba(227, 30, 36, 0.50));
+  filter: grayscale(0) drop-shadow(0 0 12px rgba(227, 30, 36, 0.25));
   opacity: 1;
   transform: scale(1.1);
   background: rgba(255, 255, 255, 0.08);
   box-shadow:
-    0 0 0 1px rgba(227, 30, 36, 0.30),
+    0 0 0 1px rgba(227, 30, 36, 0.20),
     0 6px 24px var(--glass-glow),
-    0 0 40px rgba(227, 30, 36, 0.15);
+    0 0 32px rgba(227, 30, 36, 0.08);
   /* Add margin to prevent clipping of glow */
   margin: 0.25rem 0;
 }
@@ -2010,11 +2010,11 @@ html.idea .partner-capsule {
 
 html.idea .partner-capsule:hover {
   background: rgba(0, 0, 0, 0.05);
-  filter: grayscale(0) drop-shadow(0 0 16px rgba(220, 38, 38, 0.45));
+  filter: grayscale(0) drop-shadow(0 0 12px rgba(220, 38, 38, 0.22));
   box-shadow:
-    0 0 0 1px rgba(220, 38, 38, 0.30),
-    0 6px 24px rgba(220, 38, 38, 0.25),
-    0 0 40px rgba(220, 38, 38, 0.15);
+    0 0 0 1px rgba(220, 38, 38, 0.18),
+    0 6px 24px rgba(220, 38, 38, 0.12),
+    0 0 32px rgba(220, 38, 38, 0.08);
   /* Add margin to prevent clipping of glow */
   margin: 0.25rem 0;
 }
