@@ -18,64 +18,78 @@ html {
 /* 2. VARIABLES (THEME CONFIG)            */
 /* ====================================== */
 :root {
-  /* --- DARK MODE (DEFAULT) --- Red Only / No Green */
-  --bg: #0f0f0f;
-  --bg2: #1a1a1a;
+  /* --- DARK MODE (DEFAULT) --- AI Agency: Deep Charcoal + Red & Mint */
+  --bg: #080809;
+  --bg2: #0B0B0D;
   --fg: rgba(255, 255, 255, 0.95);
   --muted: rgba(255, 255, 255, 0.60);
 
-  /* Glass layers - enhanced transparency */
-  --card: rgba(255, 255, 255, 0.05);
-  --border: rgba(255, 255, 255, 0.10);
+  /* Glass layers - premium transparency */
+  --card: rgba(18, 18, 20, 0.7);
+  --border: rgba(255, 255, 255, 0.08);
   --grid: rgba(255, 255, 255, 0.04);
 
   /* Brand Red palette - Safi Group */
-  --brand-red: #E31E24;
-  --brand-red-light: #EF4444;
-  --brand-red-dark: #B91C1C;
-  --rim-glow: rgba(227, 30, 36, 0.30);
+  --brand-red: #E53935;
+  --brand-red-light: #EF5350;
+  --brand-red-dark: #C62828;
+  --rim-glow: rgba(229, 57, 53, 0.30);
 
-  /* Liquid mesh blobs - Red only */
-  --blob-red-primary: rgba(227, 30, 36, 0.15);
-  --blob-red-secondary: rgba(239, 68, 68, 0.12);
+  /* Mint accent */
+  --mint-primary: #81D8D0;
+  --mint-glow: rgba(129, 216, 208, 0.15);
 
-  /* Edge effects - Red gradient only */
-  --edge-line-strong: rgba(227, 30, 36, 0.40);
-  --edge-line-soft: rgba(227, 30, 36, 0.15);
+  /* Ambient glow layers (replaces JS canvas) */
+  --glow-red: rgba(229, 57, 53, 0.12);
+  --glow-mint: rgba(129, 216, 208, 0.12);
+
+  /* Edge effects - Red & Mint gradient */
+  --edge-line-strong: rgba(229, 57, 53, 0.40);
+  --edge-line-soft: rgba(129, 216, 208, 0.12);
 
   /* Glass glow - Red accent */
-  --glass-glow: rgba(227, 30, 36, 0.25);
+  --glass-glow: rgba(229, 57, 53, 0.25);
+
+  /* Interactive gradient */
+  --accent-gradient: linear-gradient(135deg, #E53935, #81D8D0);
 }
 
 html.idea {
-  /* --- LIGHT MODE --- Red Only / No Green */
-  --bg: #FFFFFF;
-  --bg2: #F5F5F5;
+  /* --- LIGHT MODE --- AI Agency: Clean white + Red & Mint */
+  --bg: #FAFAFA;
+  --bg2: #F0F0F0;
 
   --fg: #111827;
   --muted: #6B7280;
 
   /* Glass layers - light mode */
-  --card: rgba(0, 0, 0, 0.03);
-  --border: rgba(0, 0, 0, 0.08);
+  --card: rgba(255, 255, 255, 0.75);
+  --border: rgba(0, 0, 0, 0.07);
   --grid: rgba(0, 0, 0, 0.03);
 
   /* Brand Red palette - Safi Group (light mode) */
-  --brand-red: #DC2626;
-  --brand-red-light: #EF4444;
-  --brand-red-dark: #991B1B;
-  --rim-glow: rgba(220, 38, 38, 0.25);
+  --brand-red: #D32F2F;
+  --brand-red-light: #E53935;
+  --brand-red-dark: #B71C1C;
+  --rim-glow: rgba(211, 47, 47, 0.25);
 
-  /* Liquid mesh blobs - Red only */
-  --blob-red-primary: rgba(220, 38, 38, 0.12);
-  --blob-red-secondary: rgba(239, 68, 68, 0.10);
+  /* Mint accent */
+  --mint-primary: #00C88C;
+  --mint-glow: rgba(0, 200, 140, 0.12);
 
-  /* Edge effects - Red gradient only */
-  --edge-line-strong: rgba(220, 38, 38, 0.35);
-  --edge-line-soft: rgba(220, 38, 38, 0.12);
+  /* Ambient glow layers */
+  --glow-red: rgba(229, 57, 53, 0.08);
+  --glow-mint: rgba(0, 200, 140, 0.08);
+
+  /* Edge effects - Red & Mint gradient */
+  --edge-line-strong: rgba(211, 47, 47, 0.30);
+  --edge-line-soft: rgba(0, 200, 140, 0.10);
 
   /* Glass glow - Red accent */
-  --glass-glow: rgba(220, 38, 38, 0.20);
+  --glass-glow: rgba(211, 47, 47, 0.20);
+
+  /* Interactive gradient */
+  --accent-gradient: linear-gradient(135deg, #D32F2F, #00C88C);
 }
 
 /* ====================================== */
@@ -87,42 +101,45 @@ html.idea {
   background-color: var(--card);
   border-radius: 24px; /* Premium rounded-3xl */
 
-  /* Enhanced glassmorphism blur */
+  /* Optimized glassmorphism blur (16px for mobile perf) */
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
 
-  /* Thin semi-transparent border */
-  border: 1px solid var(--border);
+  /* Super-thin border */
+  border: 0.5px solid var(--border);
 
-  /* Glass depth shadow - red accent */
+  /* Glass depth shadow */
   box-shadow:
-    0 4px 24px rgba(0, 0, 0, 0.12),
-    0 2px 8px rgba(0, 0, 0, 0.08),
+    0 4px 24px rgba(0, 0, 0, 0.15),
+    0 2px 8px rgba(0, 0, 0, 0.10),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
 
-  transition: box-shadow 0.3s ease, transform 0.2s ease, backdrop-filter 0.3s ease;
+  /* GPU acceleration */
+  will-change: transform, opacity;
+  transform: translateZ(0);
+
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
 }
 
 /* Light mode glass adjustment */
 html.idea .noise {
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
   box-shadow:
     0 4px 24px rgba(0, 0, 0, 0.06),
     0 2px 8px rgba(0, 0, 0, 0.04),
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
-/* Premium hover glow - Red accent only */
+/* Premium hover glow - Neon Pulse: Mint glow + Red accent */
 .noise:hover {
-  backdrop-filter: blur(20px) saturate(200%);
-  -webkit-backdrop-filter: blur(20px) saturate(200%);
   box-shadow:
+    0 0 25px rgba(129, 216, 208, 0.15),
     0 8px 32px var(--glass-glow),
     0 4px 16px rgba(0, 0, 0, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  transform: translateY(-2px);
-  border-color: rgba(227, 30, 36, 0.25);
+  transform: translateY(-2px) translateZ(0);
+  border-color: rgba(129, 216, 208, 0.25);
 }
 
 .noise:hover::after {
@@ -132,10 +149,11 @@ html.idea .noise {
 
 html.idea .noise:hover {
   box-shadow:
-    0 8px 32px rgba(220, 38, 38, 0.15),
+    0 0 25px rgba(0, 200, 140, 0.12),
+    0 8px 32px rgba(211, 47, 47, 0.15),
     0 4px 16px rgba(0, 0, 0, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  border-color: rgba(220, 38, 38, 0.30);
+  border-color: rgba(0, 200, 140, 0.25);
 }
 
 /* Texture Overlay */
@@ -167,7 +185,7 @@ html.idea .noise:before {
   z-index: 1;
 }
 
-/* Gradient Rim Edge - Red only */
+/* Gradient Rim Edge - Red to Mint */
 .noise::after {
   content: "";
   position: absolute;
@@ -175,15 +193,15 @@ html.idea .noise:before {
   pointer-events: none;
   border-radius: 25px;
   background:
-    linear-gradient(135deg, var(--brand-red) 0%, var(--brand-red-light) 20%, transparent 60%);
+    linear-gradient(135deg, var(--brand-red) 0%, var(--mint-primary) 60%, transparent 90%);
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
-  padding: 1.5px;
+  padding: 1px;
   filter: drop-shadow(0 0 6px var(--edge-line-soft));
-  opacity: .5;
+  opacity: .4;
   mix-blend-mode: normal;
   z-index: 10;
 }
@@ -195,11 +213,11 @@ footer .noise::after {
 }
 
 /* ====================================== */
-/* 4. HERO SECTION & LIQUID MESH BG      */
+/* 4. HERO SECTION & AMBIENT GLOW BG     */
 /* ====================================== */
 
-/* Global Full-Screen Mesh Container */
-#premium-mesh-canvas {
+/* CSS-Only Ambient Glow Background (replaces JS canvas for performance) */
+#ambient-glow-bg {
   position: fixed;
   top: 0;
   left: 0;
@@ -207,43 +225,57 @@ footer .noise::after {
   height: 100vh;
   z-index: -10;
   overflow: hidden;
-  background: var(--mint-deep);
+  background: var(--bg);
   pointer-events: none;
 }
 
-/* Liquid Mesh Canvas - fills #premium-mesh-canvas */
-#liquidMeshCanvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-/* Film Grain Texture Overlay - Prevents color banding and adds depth */
-#premium-mesh-canvas::before {
+/* Two radial glow layers — Red top-left, Mint bottom-right */
+#ambient-glow-bg::before {
   content: "";
   position: absolute;
+  top: -20%;
+  left: -10%;
+  width: 70%;
+  height: 70%;
+  background: radial-gradient(ellipse at center, var(--glow-red) 0%, transparent 70%);
+  pointer-events: none;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+#ambient-glow-bg::after {
+  content: "";
+  position: absolute;
+  bottom: -20%;
+  right: -10%;
+  width: 70%;
+  height: 70%;
+  background: radial-gradient(ellipse at center, var(--glow-mint) 0%, transparent 70%);
+  pointer-events: none;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Film Grain Texture Overlay */
+#ambient-glow-bg > *,
+body::after {
+  content: "";
+  position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 10;
+  z-index: -9;
   background-image:
-    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.03) 4px),
-    repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.03) 4px);
-  opacity: 0.4;
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, 0.02) 2px, rgba(255, 255, 255, 0.02) 4px),
+    repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255, 255, 255, 0.02) 2px, rgba(255, 255, 255, 0.02) 4px);
+  opacity: 0.3;
   mix-blend-mode: overlay;
 }
 
-html.idea #premium-mesh-canvas::before {
-  background-image:
-    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.02) 2px, rgba(0, 0, 0, 0.02) 4px),
-    repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0, 0, 0, 0.02) 2px, rgba(0, 0, 0, 0.02) 4px);
-  opacity: 0.3;
+html.idea #ambient-glow-bg {
+  background: var(--bg);
 }
 
-/* (Lissajous & mesh-blob animations removed - handled by LiquidMesh canvas) */
-
-/* Enhanced text contrast against mesh gradient */
+/* Enhanced text contrast against ambient glow */
 #hero-section h1 {
   text-shadow:
     0 2px 4px rgba(0, 0, 0, 0.9),
@@ -260,8 +292,8 @@ html.idea #premium-mesh-canvas::before {
   color: #ffffff;
   -webkit-text-fill-color: #ffffff;
   text-fill-color: #ffffff;
-  -webkit-text-stroke: 0.75px rgba(227, 30, 36, 0.6);
-  text-stroke: 0.75px rgba(227, 30, 36, 0.6);
+  -webkit-text-stroke: 0.75px rgba(229, 57, 53, 0.6);
+  text-stroke: 0.75px rgba(229, 57, 53, 0.6);
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
 }
 
@@ -273,16 +305,16 @@ html.idea #premium-mesh-canvas::before {
   color: #ffffff;
   -webkit-text-fill-color: #ffffff;
   text-fill-color: #ffffff;
-  -webkit-text-stroke: 0.75px rgba(227, 30, 36, 0.6);
-  text-stroke: 0.75px rgba(227, 30, 36, 0.6);
+  -webkit-text-stroke: 0.75px rgba(229, 57, 53, 0.6);
+  text-stroke: 0.75px rgba(229, 57, 53, 0.6);
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
 }
 
-/* Red glow shadow for CTA button - Red only */
+/* Red-to-Mint neon glow shadow for CTA button */
 .shadow-glow-neon {
   box-shadow:
-    0 0 24px rgba(227, 30, 36, 0.35),
-    0 0 48px rgba(227, 30, 36, 0.20),
+    0 0 24px rgba(229, 57, 53, 0.35),
+    0 0 48px rgba(129, 216, 208, 0.15),
     0 4px 16px rgba(0, 0, 0, 0.40);
 }
 
@@ -296,16 +328,12 @@ html.idea #premium-mesh-canvas::before {
     0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
-html.idea #premium-mesh-canvas {
-  background: var(--mint-deep);
-}
-
 html.idea .hero-gradient-text {
   color: #111827;
   -webkit-text-fill-color: #111827;
   text-fill-color: #111827;
-  -webkit-text-stroke: 0.5px rgba(220, 38, 38, 0.5);
-  text-stroke: 0.5px rgba(220, 38, 38, 0.5);
+  -webkit-text-stroke: 0.5px rgba(211, 47, 47, 0.5);
+  text-stroke: 0.5px rgba(211, 47, 47, 0.5);
   filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.10));
 }
 
@@ -313,15 +341,15 @@ html.idea .hero-implement-text {
   color: #111827;
   -webkit-text-fill-color: #111827;
   text-fill-color: #111827;
-  -webkit-text-stroke: 0.5px rgba(220, 38, 38, 0.5);
-  text-stroke: 0.5px rgba(220, 38, 38, 0.5);
+  -webkit-text-stroke: 0.5px rgba(211, 47, 47, 0.5);
+  text-stroke: 0.5px rgba(211, 47, 47, 0.5);
   filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.10));
 }
 
 html.idea .shadow-glow-neon {
   box-shadow:
-    0 0 20px rgba(220, 38, 38, 0.25),
-    0 0 40px rgba(220, 38, 38, 0.12),
+    0 0 20px rgba(211, 47, 47, 0.25),
+    0 0 40px rgba(0, 200, 140, 0.10),
     0 4px 16px rgba(0, 0, 0, 0.12);
 }
 
@@ -340,8 +368,12 @@ body > main {
 
 /* Performance optimization */
 @media (prefers-reduced-motion: reduce) {
-  #liquidMeshCanvas {
+  #ambient-glow-bg::before,
+  #ambient-glow-bg::after {
     display: none;
+  }
+  .partners-glass-scroll {
+    animation: none !important;
   }
 }
 
@@ -393,8 +425,22 @@ h2, h3 {
 
 [data-reveal] {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) translateZ(0);
   transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+/* GPU acceleration for animated elements */
+.product-card,
+.stat-card,
+.testimonial-card,
+.faq-item,
+.partner-capsule,
+.slider-arrow,
+.wa-widget-btn,
+.cart-floating-btn {
+  will-change: transform, opacity;
+  transform: translateZ(0);
 }
 
 /* ====================================== */
@@ -461,7 +507,7 @@ h2, h3 {
 }
 
 .category-view-all:hover {
-  background: linear-gradient(135deg, var(--brand-red), var(--brand-red-light));
+  background: linear-gradient(135deg, #E53935, #81D8D0);
   color: white;
   border-color: transparent;
   transform: translateX(-4px);
@@ -547,7 +593,7 @@ h2, h3 {
 }
 
 .slider-arrow:hover {
-  background: linear-gradient(135deg, var(--brand-red), var(--brand-red-light));
+  background: linear-gradient(135deg, #E53935, #81D8D0);
   border-color: transparent;
   color: white;
   transform: translateY(-50%) scale(1.1);
@@ -585,8 +631,8 @@ html.idea .slider-arrow {
 }
 
 html.idea .slider-arrow:hover {
-  background: linear-gradient(135deg, var(--brand-red), var(--brand-red-light));
-  box-shadow: 0 6px 24px rgba(220, 38, 38, 0.30);
+  background: linear-gradient(135deg, #D32F2F, #00C88C);
+  box-shadow: 0 6px 24px rgba(211, 47, 47, 0.30);
 }
 
 /* Products Grid Container (Fallback for "View All") */
@@ -746,7 +792,7 @@ html.idea .product-card:hover {
 }
 
 .product-badge-new {
-  background: linear-gradient(135deg, var(--brand-red), var(--brand-red-light));
+  background: linear-gradient(135deg, #E53935, #81D8D0);
   color: #fff;
   box-shadow: 0 2px 10px var(--glass-glow);
 }
@@ -754,7 +800,7 @@ html.idea .product-card:hover {
 .product-badge-best {
   background: linear-gradient(135deg, var(--brand-red-dark), var(--brand-red));
   color: #fff;
-  box-shadow: 0 2px 10px rgba(227, 30, 36, 0.35);
+  box-shadow: 0 2px 10px rgba(229, 57, 53, 0.35);
 }
 
 /* Out of Stock Overlay */
@@ -862,7 +908,7 @@ html.idea .product-card:hover {
 .product-price {
   font-size: 1.1rem;
   font-weight: 800;
-  background: linear-gradient(135deg, var(--brand-red), var(--brand-red-light));
+  background: linear-gradient(135deg, #E53935, #81D8D0);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -922,7 +968,7 @@ html.idea .product-card:hover {
 }
 
 .product-action-btn-primary {
-  background: linear-gradient(135deg, var(--brand-red), var(--brand-red-light));
+  background: linear-gradient(135deg, #E53935, #81D8D0);
   color: #ffffff;
 }
 
@@ -1021,7 +1067,7 @@ html.idea .product-card:hover {
 }
 
 .category-filter-btn.active {
-  background: linear-gradient(135deg, var(--brand-red), var(--brand-red-light));
+  background: linear-gradient(135deg, #E53935, #81D8D0);
   color: white;
   border-color: transparent;
   box-shadow: 0 4px 15px var(--glass-glow);
@@ -1175,7 +1221,7 @@ html.idea .product-card:hover {
 .product-modal-price {
   font-size: 2rem;
   font-weight: 800;
-  background: linear-gradient(135deg, var(--brand-red), var(--brand-red-light));
+  background: linear-gradient(135deg, #E53935, #81D8D0);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1197,7 +1243,7 @@ html.idea .product-card:hover {
 }
 
 .product-modal-btn-primary {
-  background: linear-gradient(135deg, var(--brand-red), var(--brand-red-light));
+  background: linear-gradient(135deg, #E53935, #81D8D0);
   color: #ffffff;
 }
 
@@ -1249,7 +1295,7 @@ html.idea .product-card:hover {
   align-items: center;
   gap: 0.75rem;
   padding: 1rem 1.5rem;
-  background: linear-gradient(135deg, var(--brand-red), var(--brand-red-light));
+  background: linear-gradient(135deg, #E53935, #81D8D0);
   border-radius: 9999px;
   color: white;
   font-weight: 700;
@@ -1261,7 +1307,7 @@ html.idea .product-card:hover {
 
 .cart-floating-btn:hover {
   transform: scale(1.05) translateY(-2px);
-  box-shadow: 0 15px 40px rgba(227, 30, 36, 0.40);
+  box-shadow: 0 15px 40px rgba(229, 57, 53, 0.40);
 }
 
 .cart-count {
@@ -1345,7 +1391,7 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
   width: 4rem;
   height: 4rem;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--brand-red), var(--brand-red-light));
+  background: linear-gradient(135deg, #E53935, #81D8D0);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1391,7 +1437,7 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
 }
 
 .testimonial-nav-btn:hover {
-  background: linear-gradient(135deg, var(--brand-red), var(--brand-red-light));
+  background: linear-gradient(135deg, #E53935, #81D8D0);
   border-color: transparent;
   color: white;
   box-shadow: 0 4px 15px var(--glass-glow);
@@ -1416,7 +1462,7 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
 .testimonial-dot.active {
   width: 1.5rem;
   border-radius: 0.25rem;
-  background: linear-gradient(135deg, var(--brand-red), var(--brand-red-light));
+  background: linear-gradient(135deg, #E53935, #81D8D0);
 }
 
 /* ====================================== */
@@ -1520,7 +1566,7 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
 }
 
 .faq-item.open .faq-toggle {
-  background: linear-gradient(135deg, var(--brand-red), var(--brand-red-light));
+  background: linear-gradient(135deg, #E53935, #81D8D0);
   transform: rotate(180deg);
 }
 
@@ -1566,7 +1612,7 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--brand-red), var(--brand-red-light));
+  background: linear-gradient(90deg, #E53935, #81D8D0);
   transform: scaleX(0);
   transition: transform 0.4s ease;
 }
@@ -1583,7 +1629,7 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
 .stat-value {
   font-size: 2.5rem;
   font-weight: 800;
-  background: linear-gradient(135deg, var(--brand-red), var(--brand-red-light));
+  background: linear-gradient(135deg, #E53935, #81D8D0);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1660,7 +1706,7 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
 }
 
 .calculator-option.active {
-  background: linear-gradient(135deg, var(--brand-red), var(--brand-red-light));
+  background: linear-gradient(135deg, #E53935, #81D8D0);
   border-color: transparent;
   color: #ffffff;
   font-weight: 600;
@@ -1714,7 +1760,7 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
 .calculator-price {
   font-size: 2.5rem;
   font-weight: 800;
-  background: linear-gradient(135deg, var(--brand-red), var(--brand-red-light));
+  background: linear-gradient(135deg, #E53935, #81D8D0);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1988,17 +2034,16 @@ html.idea ::-webkit-scrollbar-thumb { background: #ccc; }
   white-space: nowrap;
 }
 
-/* Hover State: Full color + scale + glow - Red accent */
+/* Hover State: Full color + scale + glow - Red & Mint accent */
 .partner-capsule:hover {
-  filter: grayscale(0) drop-shadow(0 0 16px rgba(227, 30, 36, 0.50));
+  filter: grayscale(0) drop-shadow(0 0 16px rgba(129, 216, 208, 0.40));
   opacity: 1;
   transform: scale(1.1);
   background: rgba(255, 255, 255, 0.08);
   box-shadow:
-    0 0 0 1px rgba(227, 30, 36, 0.30),
+    0 0 0 1px rgba(129, 216, 208, 0.30),
     0 6px 24px var(--glass-glow),
-    0 0 40px rgba(227, 30, 36, 0.15);
-  /* Add margin to prevent clipping of glow */
+    0 0 40px rgba(129, 216, 208, 0.15);
   margin: 0.25rem 0;
 }
 
@@ -2010,12 +2055,11 @@ html.idea .partner-capsule {
 
 html.idea .partner-capsule:hover {
   background: rgba(0, 0, 0, 0.05);
-  filter: grayscale(0) drop-shadow(0 0 16px rgba(220, 38, 38, 0.45));
+  filter: grayscale(0) drop-shadow(0 0 16px rgba(0, 200, 140, 0.35));
   box-shadow:
-    0 0 0 1px rgba(220, 38, 38, 0.30),
-    0 6px 24px rgba(220, 38, 38, 0.25),
-    0 0 40px rgba(220, 38, 38, 0.15);
-  /* Add margin to prevent clipping of glow */
+    0 0 0 1px rgba(0, 200, 140, 0.30),
+    0 6px 24px rgba(211, 47, 47, 0.20),
+    0 0 40px rgba(0, 200, 140, 0.12);
   margin: 0.25rem 0;
 }
 

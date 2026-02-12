@@ -7,7 +7,7 @@
     <meta name="color-scheme" content="dark light" />
     <title>Safi Group — تخيل.. نُنفذ</title>
     <meta name="description" content="Safi Group — Creative hub with bento glass UI, briefing wizard, masonry work gallery, and Idea Light Mode." />
-    <meta name="theme-color" content="#0A0A0A" />
+    <meta name="theme-color" content="#080809" />
 
     <link rel="icon" type="image/webp" href="assets/icons/icon-192.webp" />
     <link rel="apple-touch-icon" href="assets/icons/icon-192.webp" />
@@ -26,20 +26,23 @@
                 extend: {
                     fontFamily: { taj: ['Tajawal', 'sans-serif'] },
                     colors: {
-                        'brand-red': '#E31E24',
-                        'brand-red-light': '#EF4444',
-                        'brand-red-dark': '#B91C1C',
+                        'brand-red': '#E53935',
+                        'brand-red-light': '#EF5350',
+                        'brand-red-dark': '#C62828',
+                        'mint': '#81D8D0',
+                        'mint-dark': '#00C88C',
                     },
                     boxShadow: {
                         'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.30)',
                         'glass-lg': '0 16px 48px 0 rgba(0, 0, 0, 0.35)',
-                        'glow-red': '0 0 24px rgba(227, 30, 36, 0.30)',
-                        'glow-red-lg': '0 0 48px rgba(227, 30, 36, 0.25)',
+                        'glow-red': '0 0 24px rgba(229, 57, 53, 0.30)',
+                        'glow-red-lg': '0 0 48px rgba(229, 57, 53, 0.25)',
+                        'glow-mint': '0 0 24px rgba(129, 216, 208, 0.25)',
                     },
                     backdropBlur: {
                         'xs': '2px',
                         'glass': '16px',
-                        'glass-lg': '24px',
+                        'glass-lg': '16px',
                     },
                     animation: {
                         'infinite-scroll': 'infinite-scroll 40s linear infinite',
@@ -68,7 +71,7 @@
 
     <!-- منطق التطبيق -->
     <script src="js/app.js"></script>
-    <script src="js/nebula.js"></script>
+    <!-- nebula.js removed: replaced with CSS-only ambient glow for performance -->
     <script src="js/floating-glyphs.js"></script>
     <script defer src="https://unpkg.com/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -78,8 +81,8 @@
     style="background: var(--bg);"
     x-data="fikraApp()" x-init="init()">
 
-    <!-- Global Premium Crimson Mesh Background -->
-    <div id="premium-mesh-canvas" aria-hidden="true"></div>
+    <!-- Global Ambient Glow Background (CSS-only, replaces JS canvas for performance) -->
+    <div id="ambient-glow-bg" aria-hidden="true"></div>
 
     <header class="site-header sticky top-0 z-50 bg-transparent backdrop-blur-md border-b border-[color:var(--border)]/30 transition-all duration-300"
         :style="`--shrink:${headerShrink}`" :class="{'py-2': headerShrink > 0.5, 'py-4': headerShrink <= 0.5}">
@@ -153,7 +156,7 @@
                             </span>
                         </h1>
                         <div class="flex flex-col sm:flex-row gap-4 justify-center sm:justify-start">
-                            <a href="#brief" class="relative overflow-hidden rounded-2xl px-8 py-4 text-base font-bold text-white bg-gradient-to-l from-brand-red-light to-brand-red shadow-glow-neon hover:scale-[1.02] transition-transform">
+                            <a href="#brief" class="relative overflow-hidden rounded-2xl px-8 py-4 text-base font-bold text-white bg-gradient-to-l from-mint to-brand-red shadow-glow-neon hover:scale-[1.02] transition-transform">
                                   ابدأ رحلتك معنا
                             </a>
                             <a href="#products" class="noise relative overflow-hidden backdrop-blur-md rounded-2xl px-8 py-4 text-base font-bold text-white bg-white/5 border border-white/10 hover:bg-white/10 hover:scale-105 hover:border-white/20 transition-all duration-300 shadow-lg">
@@ -255,7 +258,7 @@
                 <article class="noise lg:col-span-4 rounded-[2rem] backdrop-blur-md shadow-glass p-8 flex flex-col justify-center text-center" data-reveal>
                     <h3 class="text-2xl font-black">جاهز نبدأ؟</h3>
                     <p class="mt-2 text-sm text-[color:var(--muted)]">جرب "مستكشف الذوق" الخاص بنا.</p>
-                    <a href="#brief" class="mt-6 inline-flex w-full items-center justify-center rounded-2xl px-4 py-4 text-base font-bold bg-gradient-to-l from-brand-red-light to-brand-red text-white shadow-glow-red transition-transform hover:scale-[1.02]">
+                    <a href="#brief" class="mt-6 inline-flex w-full items-center justify-center rounded-2xl px-4 py-4 text-base font-bold bg-gradient-to-l from-mint to-brand-red text-white shadow-glow-red transition-transform hover:scale-[1.02]">
                         جربه الآن
                     </a>
                 </article>
@@ -685,7 +688,7 @@
                         </div>
 
                         <!-- CTA Button -->
-                        <a href="#brief" class="mt-6 w-full inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-bold bg-gradient-to-l from-brand-red-light to-brand-red text-white shadow-glow-red transition-transform hover:scale-[1.05]">
+                        <a href="#brief" class="mt-6 w-full inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-bold bg-gradient-to-l from-mint to-brand-red text-white shadow-glow-red transition-transform hover:scale-[1.05]">
                             <span>ابدأ مشروعك</span>
                             <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
@@ -1055,7 +1058,7 @@
                             <input x-model="contact.name" type="text" placeholder="الاسم الكريم" class="w-full p-4 rounded-xl bg-[color:var(--bg)] border border-[color:var(--border)] outline-none focus:border-fikra-red focus:bg-[color:var(--card)] transition text-[color:var(--fg)] placeholder-[color:var(--muted)]">
                             <input x-model="contact.phone" type="tel" placeholder="رقم الجوال" class="w-full p-4 rounded-xl bg-[color:var(--bg)] border border-[color:var(--border)] outline-none focus:border-fikra-red focus:bg-[color:var(--card)] transition text-[color:var(--fg)] placeholder-[color:var(--muted)]">
                         </div>
-                        <button @click="sendRequest()" class="w-full py-4 rounded-xl bg-gradient-to-l from-brand-red to-brand-red-light text-white font-bold text-lg shadow-glow-red hover:scale-[1.01] transition-transform flex items-center justify-center gap-2">
+                        <button @click="sendRequest()" class="w-full py-4 rounded-xl bg-gradient-to-l from-mint to-brand-red text-white font-bold text-lg shadow-glow-red hover:scale-[1.01] transition-transform flex items-center justify-center gap-2">
                             <span>•</span> أرسل طلب استشارة مجانية
                         </button>
                     </div>
@@ -1271,7 +1274,7 @@
                                 </template>
                             </div>
                         </div>
-                        <button class="w-full py-4 rounded-xl bg-gradient-to-l from-brand-red to-brand-red-light text-white font-bold text-lg shadow-glow-red hover:scale-[1.01] transition-transform" @click="orderViaWhatsApp()">
+                        <button class="w-full py-4 rounded-xl bg-gradient-to-l from-mint to-brand-red text-white font-bold text-lg shadow-glow-red hover:scale-[1.01] transition-transform" @click="orderViaWhatsApp()">
                             طلب عرض سعر عبر واتساب
                         </button>
                     </div>

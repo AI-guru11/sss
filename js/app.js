@@ -38,10 +38,7 @@ function fikraApp() {
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
 
-      // Initialize global premium mesh gradient (if not already initialized)
-      if (window.MeshGradient && document.getElementById('premium-mesh-canvas') && !window.meshGradientInstance) {
-        window.meshGradientInstance = new window.MeshGradient('premium-mesh-canvas');
-      }
+      // Canvas mesh gradient removed — CSS-only ambient glow for performance
     },
 
     setTheme(mode) {

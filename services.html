@@ -7,7 +7,7 @@
     <meta name="color-scheme" content="dark light" />
     <title>خدماتنا — Safi Group</title>
     <meta name="description" content="حلول إبداعية متكاملة من التصميم إلى التسويق والطباعة — خدمات مجموعة الصافي الشاملة" />
-    <meta name="theme-color" content="#0A0A0A" />
+    <meta name="theme-color" content="#080809" />
 
     <link rel="icon" type="image/webp" href="assets/icons/icon-192.webp" />
     <link rel="apple-touch-icon" href="assets/icons/icon-192.webp" />
@@ -24,14 +24,16 @@
                 extend: {
                     fontFamily: { taj: ['Tajawal', 'sans-serif'] },
                     colors: {
-                        'brand-red': '#E31E24',
-                        'brand-red-light': '#EF4444',
-                        'brand-red-dark': '#B91C1C',
+                        'brand-red': '#E53935',
+                        'brand-red-light': '#EF5350',
+                        'brand-red-dark': '#C62828',
+                        'mint': '#81D8D0',
+                        'mint-dark': '#00C88C',
                     },
                     boxShadow: {
                         'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.30)',
                         'glow-red': '0 0 20px rgba(229, 57, 53, 0.20)',
-                        'glow-mint': '0 0 20px rgba(0, 229, 160, 0.20)',
+                        'glow-mint': '0 0 20px rgba(129, 216, 208, 0.20)',
                     }
                 }
             }
@@ -55,7 +57,7 @@
 
     <!-- Background -->
     <div aria-hidden="true" class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-        <div class="absolute inset-0 transition-colors duration-500" style="background: radial-gradient(1200px 600px at 80% 10%, var(--blob-cyan), transparent 60%), radial-gradient(1000px 500px at 20% 20%, var(--blob-red), transparent 55%), linear-gradient(to bottom, var(--bg), var(--bg2));"></div>
+        <div class="absolute inset-0 transition-colors duration-500" style="background: radial-gradient(1200px 600px at 80% 10%, var(--glow-mint), transparent 60%), radial-gradient(1000px 500px at 20% 20%, var(--glow-red), transparent 55%), linear-gradient(to bottom, var(--bg), var(--bg2));"></div>
         <div class="absolute inset-0 opacity-10 dark:opacity-20" style="background-image: linear-gradient(to right, var(--grid) 1px, transparent 1px), linear-gradient(to bottom, var(--grid) 1px, transparent 1px); background-size: 48px 48px; mask-image: radial-gradient(closest-side, rgba(0,0,0,.9), transparent 78%);"></div>
     </div>
 
@@ -174,7 +176,7 @@
                 <p class="text-lg text-[color:var(--muted)] mb-8 max-w-2xl mx-auto">
                     ابدأ رحلتك معنا اليوم واكتشف كيف يمكننا تحويل أفكارك إلى واقع مبهر
                 </p>
-                <a href="index.html#brief" class="inline-flex items-center gap-3 rounded-2xl px-8 py-4 text-lg font-bold bg-gradient-to-l from-brand-red-light to-brand-red text-white shadow-glow-red transition-transform hover:scale-105">
+                <a href="index.html#brief" class="inline-flex items-center gap-3 rounded-2xl px-8 py-4 text-lg font-bold bg-gradient-to-l from-mint to-brand-red text-white shadow-glow-red transition-transform hover:scale-105">
                     <span>ابدأ مشروعك الآن</span>
                     <svg class="w-6 h-6 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
