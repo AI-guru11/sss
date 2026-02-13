@@ -9,6 +9,7 @@ pyvenv.cfg
 
 # ملفات الإعدادات والمفاتيح السرية
 .env
+js/airtable-config.js
 
 # ملفات بايثون المؤقتة
 __pycache__/
