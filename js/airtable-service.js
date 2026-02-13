@@ -3,13 +3,28 @@
 // خدمة الاتصال بقاعدة بيانات Airtable
 // ==============================================
 
-// ⚠️ SECURITY: Fill these constants with your actual credentials
-const AIRTABLE_PAT = 'PASTE_YOUR_PAT_HERE';  // Personal Access Token
-const BASE_ID = 'PASTE_YOUR_BASE_ID_HERE';    // Base ID from Airtable URL
+// ⚠️ SECURITY: Credentials loaded from js/airtable-config.js (not committed to git)
+// See js/airtable-config.example.js for setup instructions
+
+// Get credentials from external config file
+function getCredentials() {
+  if (window.AIRTABLE_CONFIG_CREDENTIALS) {
+    return window.AIRTABLE_CONFIG_CREDENTIALS;
+  }
+  return {
+    pat: 'PASTE_YOUR_PAT_HERE',
+    baseId: 'PASTE_YOUR_BASE_ID',
+    tableId: 'PASTE_YOUR_TABLE_ID'
+  };
+}
+
+const credentials = getCredentials();
+const AIRTABLE_PAT = credentials.pat;
+const BASE_ID = credentials.baseId;
 
 // Airtable API Configuration
 const AIRTABLE_CONFIG = {
-  tableName: 'Products',  // Default table name - adjust if needed
+  tableName: credentials.tableId,  // Table ID (more reliable than table name)
   apiUrl: `https://api.airtable.com/v0/${BASE_ID}`,
   headers: {
     'Authorization': `Bearer ${AIRTABLE_PAT}`,
