@@ -94,7 +94,7 @@ function briefWizard() {
 }
 
 // ==============================================
-// 3. PRODUCTS SHOP (ENHANCED VERSION WITH SLIDER)
+// 3. PRODUCTS SHOP (ENHANCED VERSION WITH SLIDER + AIRTABLE)
 // ==============================================
 function productsShop() {
   return {
@@ -104,13 +104,29 @@ function productsShop() {
     modalOpen: false,
     isAnimating: false,
 
-    // استيراد البيانات من ملف products.js
-    get categories() {
+    // Airtable Integration
+    isLoading: true,
+    loadingError: false,
+    airtableProducts: [],
+    airtableCategories: [],
+    useAirtable: false,
+
+    // استيراد البيانات من ملف products.js (fallback)
+    get localCategories() {
       return window.PRODUCTS_DATA?.categories || [];
     },
 
-    get products() {
+    get localProducts() {
       return window.PRODUCTS_DATA?.products || [];
+    },
+
+    // Dynamic data source (Airtable or local fallback)
+    get categories() {
+      return this.useAirtable ? this.airtableCategories : this.localCategories;
+    },
+
+    get products() {
+      return this.useAirtable ? this.airtableProducts : this.localProducts;
     },
 
     get imagesPath() {
@@ -245,9 +261,53 @@ function productsShop() {
       window.open(`https://wa.me/${SITE_CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`, '_blank');
     },
 
-    // تهيئة lazy loading للصور
-    init() {
+    // تهيئة lazy loading للصور + تحميل من Airtable
+    async init() {
+      await this.loadProducts();
       this.initLazyLoading();
+    },
+
+    // تحميل المنتجات من Airtable أو الاعتماد على البيانات المحلية
+    async loadProducts() {
+      this.isLoading = true;
+      this.loadingError = false;
+
+      try {
+        // محاولة جلب البيانات من Airtable
+        if (window.AirtableService) {
+          const airtableData = await window.AirtableService.fetchProducts();
+
+          if (airtableData && airtableData.length > 0) {
+            // نجح: استخدام بيانات Airtable
+            this.airtableProducts = airtableData;
+            this.airtableCategories = window.AirtableService.extractCategories(airtableData);
+            this.useAirtable = true;
+            console.log('✅ Using Airtable data:', airtableData.length, 'products');
+          } else {
+            // Airtable أرجع فارغاً: الرجوع للبيانات المحلية
+            this.useLocalFallback();
+          }
+        } else {
+          // خدمة Airtable غير متوفرة
+          console.warn('⚠️ AirtableService not found. Using local data.');
+          this.useLocalFallback();
+        }
+      } catch (error) {
+        console.error('❌ Airtable loading error:', error);
+        this.loadingError = true;
+        this.useLocalFallback();
+      } finally {
+        this.isLoading = false;
+
+        // إعادة تهيئة lazy loading بعد تحميل البيانات
+        setTimeout(() => this.initLazyLoading(), 100);
+      }
+    },
+
+    // الرجوع للبيانات المحلية
+    useLocalFallback() {
+      this.useAirtable = false;
+      console.log('📦 Using local fallback data from data/products.js');
     },
 
     // Lazy Loading للصور
