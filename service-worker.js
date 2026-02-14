@@ -3,7 +3,7 @@
   Goal: stable offline-first behavior without changing the UI.
 */
 
-const CACHE_VERSION = 'v25';
+const CACHE_VERSION = 'v26'; // UPDATED: Mobile layout fixes - iOS Safari viewport, z-index, safe-area-inset
 const CACHE_NAME = `safi-pwa-${CACHE_VERSION}`;
 
 // Core assets (same-origin)
