@@ -7,7 +7,7 @@
     <meta name="color-scheme" content="dark light" />
     <title>Safi Group — تخيل.. نُنفذ</title>
     <meta name="description" content="Safi Group — Creative hub with bento glass UI, briefing wizard, masonry work gallery, and Idea Light Mode." />
-    <meta name="theme-color" content="#0A0A0A" />
+    <meta name="theme-color" content="#080809" />
 
     <link rel="icon" type="image/webp" href="assets/icons/icon-192.webp" />
     <link rel="apple-touch-icon" href="assets/icons/icon-192.webp" />
@@ -18,7 +18,8 @@
     <link rel="preconnect" href="https://unpkg.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS with pinned version -->
+    <script src="https://cdn.tailwindcss.com?v=3.4.1" crossorigin="anonymous"></script>
     <script>
         tailwind.config = {
             darkMode: 'class', // Important for dark: classes
@@ -26,13 +27,23 @@
                 extend: {
                     fontFamily: { taj: ['Tajawal', 'sans-serif'] },
                     colors: {
-                        'fikra-red': '#E53935',
-                        'fikra-mint': '#00E5A0',
+                        'brand-red': '#E53935',
+                        'brand-red-light': '#EF5350',
+                        'brand-red-dark': '#C62828',
+                        'mint': '#81D8D0',
+                        'mint-dark': '#00C88C',
                     },
                     boxShadow: {
                         'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.30)',
-                        'glow-red': '0 0 20px rgba(229, 57, 53, 0.20)',
-                        'glow-mint': '0 0 20px rgba(0, 229, 160, 0.20)',
+                        'glass-lg': '0 16px 48px 0 rgba(0, 0, 0, 0.35)',
+                        'glow-red': '0 0 24px rgba(229, 57, 53, 0.30)',
+                        'glow-red-lg': '0 0 48px rgba(229, 57, 53, 0.25)',
+                        'glow-mint': '0 0 24px rgba(129, 216, 208, 0.25)',
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
+                        'glass': '16px',
+                        'glass-lg': '16px',
                     },
                     animation: {
                         'infinite-scroll': 'infinite-scroll 40s linear infinite',
@@ -59,20 +70,27 @@
     <script src="data/testimonials.js"></script>
     <script src="data/faq.js"></script>
 
+    <!-- أدوات الحماية والأمان -->
+    <script src="js/security.js"></script>
+
     <!-- منطق التطبيق -->
+    <script src="js/airtable-config.js"></script>
+    <script src="js/airtable-service.js"></script>
     <script src="js/app.js"></script>
-    <script src="js/nebula.js"></script>
+    <!-- nebula.js removed: replaced with CSS-only ambient glow for performance -->
     <script src="js/floating-glyphs.js"></script>
-    <script defer src="https://unpkg.com/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <!-- Alpine.js with pinned versions -->
+    <script defer src="https://unpkg.com/@alpinejs/focus@3.13.3/dist/cdn.min.js" crossorigin="anonymous"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.13.3/dist/cdn.min.js" crossorigin="anonymous"></script>
 </head>
 
-<body class="font-taj text-[color:var(--fg)] selection:bg-fikra-red/30 selection:text-white transition-colors duration-500"
+<body class="font-taj text-[color:var(--fg)] selection:bg-brand-red/30 selection:text-white transition-colors duration-500"
     style="background: var(--bg);"
     x-data="fikraApp()" x-init="init()">
 
-    <!-- Global Premium Crimson Mesh Background -->
-    <div id="premium-mesh-canvas" aria-hidden="true"></div>
+    <!-- Global Ambient Glow Background (CSS-only, replaces JS canvas for performance) -->
+    <div id="ambient-glow-bg" aria-hidden="true"></div>
 
     <header class="site-header sticky top-0 z-50 bg-transparent backdrop-blur-md border-b border-[color:var(--border)]/30 transition-all duration-300"
         :style="`--shrink:${headerShrink}`" :class="{'py-2': headerShrink > 0.5, 'py-4': headerShrink <= 0.5}">
@@ -146,7 +164,7 @@
                             </span>
                         </h1>
                         <div class="flex flex-col sm:flex-row gap-4 justify-center sm:justify-start">
-                            <a href="#brief" class="relative overflow-hidden rounded-2xl px-8 py-4 text-base font-bold text-white bg-gradient-to-l from-[#00E5A0] to-[#E53935] shadow-glow-neon hover:scale-[1.02] transition-transform">
+                            <a href="#brief" class="relative overflow-hidden rounded-2xl px-8 py-4 text-base font-bold text-white bg-gradient-to-l from-mint to-brand-red shadow-glow-neon hover:scale-[1.02] transition-transform">
                                   ابدأ رحلتك معنا
                             </a>
                             <a href="#products" class="noise relative overflow-hidden backdrop-blur-md rounded-2xl px-8 py-4 text-base font-bold text-white bg-white/5 border border-white/10 hover:bg-white/10 hover:scale-105 hover:border-white/20 transition-all duration-300 shadow-lg">
@@ -215,7 +233,7 @@
                                     <span><span class="font-extrabold text-[color:var(--fg)]">Speed/الكفاءة والسرعة:</span> نعمل بوضوح وكفاءة: ننتقل بك من الفكرة إلى النموذج، ثم التسليم.</span>
                                 </li>
                                 <li class="flex gap-4">
-                                    <span class="mt-1 h-2.5 w-2.5 rounded-full bg-fikra-mint shadow-glow-mint flex-shrink-0"></span>
+                                    <span class="mt-1 h-2.5 w-2.5 rounded-full bg-brand-red shadow-glow-red flex-shrink-0"></span>
                                     <span><span class="font-extrabold text-[color:var(--fg)]">Craft - دقة التنفيذ:</span> يكمن السر في التفاصيل: نعتني بضبط العناصر وأدق التفاصيل.</span>
                                 </li>
                                 <li class="flex gap-4">
@@ -224,7 +242,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="w-full sm:w-[45%] rounded-3xl bg-gradient-to-l from-fikra-red/10 via-fikra-mint/5 to-transparent ring-1 ring-[color:var(--border)] p-6 self-stretch flex flex-col justify-between">
+                        <div class="w-full sm:w-[45%] rounded-3xl bg-gradient-to-l from-brand-red/10 via-brand-red/5 to-transparent ring-1 ring-[color:var(--border)] p-6 self-stretch flex flex-col justify-between">
                             <div>
                                 <div class="text-xs font-bold text-[color:var(--muted)] uppercase tracking-wider mb-2">تواصل معنا</div>
                                 <div class="text-sm text-[color:var(--fg)] leading-relaxed opacity-90">
@@ -248,7 +266,7 @@
                 <article class="noise lg:col-span-4 rounded-[2rem] backdrop-blur-md shadow-glass p-8 flex flex-col justify-center text-center" data-reveal>
                     <h3 class="text-2xl font-black">جاهز نبدأ؟</h3>
                     <p class="mt-2 text-sm text-[color:var(--muted)]">جرب "مستكشف الذوق" الخاص بنا.</p>
-                    <a href="#brief" class="mt-6 inline-flex w-full items-center justify-center rounded-2xl px-4 py-4 text-base font-bold bg-gradient-to-l from-fikra-mint to-fikra-red text-white shadow-glow-mint transition-transform hover:scale-[1.02]">
+                    <a href="#brief" class="mt-6 inline-flex w-full items-center justify-center rounded-2xl px-4 py-4 text-base font-bold bg-gradient-to-l from-mint to-brand-red text-white shadow-glow-red transition-transform hover:scale-[1.02]">
                         جربه الآن
                     </a>
                 </article>
@@ -267,8 +285,43 @@
                 </div>
             </div>
 
+            <!-- Loading Skeleton -->
+            <div x-show="isLoading" x-transition class="space-y-8 mb-8">
+                <div class="skeleton-category-row">
+                    <div class="skeleton-header">
+                        <div class="skeleton-title"></div>
+                    </div>
+                    <div class="skeleton-slider">
+                        <div class="skeleton-card"></div>
+                        <div class="skeleton-card"></div>
+                        <div class="skeleton-card"></div>
+                    </div>
+                </div>
+                <div class="skeleton-category-row">
+                    <div class="skeleton-header">
+                        <div class="skeleton-title"></div>
+                    </div>
+                    <div class="skeleton-slider">
+                        <div class="skeleton-card"></div>
+                        <div class="skeleton-card"></div>
+                        <div class="skeleton-card"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Message -->
+            <div x-show="loadingError && !isLoading" x-transition class="error-message noise mb-8">
+                <svg class="w-8 h-8 text-brand-red flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                </svg>
+                <div>
+                    <h3 class="text-lg font-bold text-brand-red mb-1">فشل تحميل البيانات من Airtable</h3>
+                    <p class="text-sm text-[color:var(--muted)]">تم التحويل إلى البيانات المحلية تلقائياً</p>
+                </div>
+            </div>
+
             <!-- Category-Based Horizontal Sliders -->
-            <div x-show="activeCategory === 'all'">
+            <div x-show="activeCategory === 'all' && !isLoading" x-transition class="max-w-7xl mx-auto px-4 sm:px-6">
                 <template x-for="cat in categoriesWithProducts" :key="cat.id">
                     <div class="category-row" data-reveal>
                         <!-- Category Header -->
@@ -413,7 +466,7 @@
             </div>
 
             <!-- Single Category Grid View (When "View All" is clicked) -->
-            <div x-show="activeCategory !== 'all'" x-transition>
+            <div x-show="activeCategory !== 'all' && !isLoading" x-transition>
                 <!-- Back Button -->
                 <div class="mb-6">
                     <button class="inline-flex items-center gap-2 px-4 py-2 bg-[color:var(--card)] border border-[color:var(--border)] rounded-2xl text-[color:var(--muted)] hover:text-[color:var(--fg)] hover:border-[color:var(--fg)] transition" @click="activeCategory = 'all'">
@@ -425,7 +478,7 @@
                 </div>
 
                 <!-- Products Grid -->
-                <div class="products-grid" data-reveal>
+                <div class="products-grid max-w-7xl mx-auto px-4 sm:px-6" data-reveal>
                     <template x-for="product in filteredProducts" :key="product.id">
                         <article class="product-card">
                             <!-- Product Image -->
@@ -596,7 +649,7 @@
                                             @click="addToCart(selectedProduct); closeProductModal()">
                                             إضافة للسلة
                                         </button>
-                                        <button class="product-modal-btn product-modal-btn-whatsapp"
+                                        <button class="product-modal-btn product-modal-btn-whatsapp neon-pulse"
                                             @click="orderProduct(selectedProduct)">
                                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                                                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -613,7 +666,7 @@
 
             <!-- Floating Cart Button -->
             <div class="cart-floating" x-show="cart.length > 0" x-transition.scale x-cloak>
-                <button class="cart-floating-btn" @click="checkout()">
+                <button class="cart-floating-btn neon-pulse" @click="checkout()">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
                     </svg>
@@ -636,7 +689,7 @@
             <div class="mb-12 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4" data-reveal>
                 <div>
                     <h2 class="text-3xl sm:text-5xl font-black tracking-tight">
-                        <span class="text-fikra-mint">خدماتنا</span>
+                        <span class="text-brand-red">خدماتنا</span>
                     </h2>
                     <p class="mt-2 text-[color:var(--muted)]">حلول إبداعية متكاملة تلبي جميع احتياجاتك التسويقية والإعلانية</p>
                 </div>
@@ -678,7 +731,7 @@
                         </div>
 
                         <!-- CTA Button -->
-                        <a href="#brief" class="mt-6 w-full inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-bold bg-gradient-to-l from-fikra-mint to-fikra-red text-white shadow-glow-mint transition-transform hover:scale-[1.05]">
+                        <a href="#brief" class="mt-6 w-full inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-bold bg-gradient-to-l from-mint to-brand-red text-white shadow-glow-red transition-transform hover:scale-[1.05]">
                             <span>ابدأ مشروعك</span>
                             <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
@@ -855,7 +908,7 @@
 
         <section id="transformations" class="py-10 sm:py-20" x-data="transformationsData()">
             <div class="mb-10 px-4 sm:px-6 mx-auto max-w-7xl" data-reveal>
-                <h2 class="text-3xl sm:text-5xl font-black tracking-tight">لمسة <span class="text-fikra-mint">الصافي</span></h2>
+                <h2 class="text-3xl sm:text-5xl font-black tracking-tight">لمسة <span class="text-brand-red">الصافي</span></h2>
                 <p class="mt-2 text-[color:var(--muted)]">لا نتحدث عن الجودة فقط، بل نجعلك تراها.</p>
             </div>
 
@@ -878,7 +931,7 @@
                             </template>
                         </div>
 
-                        <a href="#brief" class="inline-flex items-center gap-2 text-fikra-mint font-bold hover:gap-4 transition-all">
+                        <a href="#brief" class="inline-flex items-center gap-2 text-brand-red font-bold hover:gap-4 transition-all">
                             ابدأ رحلة التغيير لعلامتك
                             <svg class="w-5 h-5 rtl:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                         </a>
@@ -892,7 +945,7 @@
                          data-reveal>
                         
                         <div class="absolute inset-0 w-full h-full">
-                            <div class="w-full h-full bg-gradient-to-br from-fikra-mint via-emerald-900 to-slate-900 flex items-center justify-center">
+                            <div class="w-full h-full bg-gradient-to-br from-brand-red via-brand-red-dark to-slate-900 flex items-center justify-center">
                                 <div class="text-center">
                                     <h4 class="text-4xl font-black text-white drop-shadow-lg tracking-wider">AFTER</h4>
                                     <p class="text-white/80 font-bold mt-2">تصميم عصري وجذاب</p>
@@ -915,7 +968,7 @@
                         <div class="absolute top-4 left-4 bg-black/60 backdrop-blur-md text-gray-300 text-xs font-bold px-3 py-1 rounded-lg pointer-events-none z-10">قبل 🏚️</div>
 
                         <div class="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize shadow-[0_0_20px_rgba(0,0,0,0.5)] z-20" :style="`left: ${pos}%`">
-                            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-fikra-mint">
+                            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-brand-red">
                                 <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8L22 12L18 16"/><path d="M6 8L2 12L6 16"/></svg>
                             </div>
                         </div>
@@ -965,7 +1018,7 @@
                             <div class="absolute -left-6 -top-6 text-9xl opacity-10 rotate-12 group-hover:rotate-45 transition-transform duration-700 select-none">🎨</div>
                             <div class="absolute inset-0 p-6 flex flex-col justify-end bg-gradient-to-t from-black/80 via-transparent to-transparent">
                                 <div class="w-14 h-14 mb-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 flex items-center justify-center text-3xl shadow-lg group-hover:bg-white/20 transition-colors">✨</div>
-                                <h3 class="text-2xl font-black text-white mb-1 group-hover:text-fikra-mint transition-colors">هوية بصرية</h3>
+                                <h3 class="text-2xl font-black text-white mb-1 group-hover:text-brand-red transition-colors">هوية بصرية</h3>
                                 <p class="text-sm text-gray-300 font-medium leading-relaxed">شعارات، هوية شركات، مطبوعات.</p>
                             </div>
                         </button>
@@ -985,16 +1038,16 @@
 
                 <div x-show="step===2" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 translate-y-8" x-transition:enter-end="opacity-100 translate-y-0">
                     <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
-                        <span class="w-2 h-8 rounded-full bg-fikra-mint"></span>
+                        <span class="w-2 h-8 rounded-full bg-brand-red"></span>
                         أي نمط يميل إليه ذوقك أكثر؟
                     </h3>
                     <div class="grid gap-4 sm:grid-cols-3">
                         <button @click="setStyle('modern')" class="group p-6 rounded-3xl bg-[color:var(--fg)]/5 border border-[color:var(--border)] hover:bg-[color:var(--fg)]/10 hover:border-[color:var(--fg)]/30 text-right transition-all">
                             <div class="flex justify-between items-start mb-4">
                                 <span class="text-4xl filter grayscale group-hover:grayscale-0 transition-all">☁️</span>
-                                <div class="w-6 h-6 rounded-full border-2 border-[color:var(--border)] group-hover:border-fikra-mint group-hover:bg-fikra-mint transition-colors"></div>
+                                <div class="w-6 h-6 rounded-full border-2 border-[color:var(--border)] group-hover:border-brand-red group-hover:bg-brand-red transition-colors"></div>
                             </div>
-                            <div class="font-bold text-lg text-[color:var(--fg)] group-hover:text-fikra-mint transition-colors">مودرن / بسيط</div>
+                            <div class="font-bold text-lg text-[color:var(--fg)] group-hover:text-brand-red transition-colors">مودرن / بسيط</div>
                             <div class="text-sm text-[color:var(--muted)] mt-2">خطوط نظيفة، مساحات بيضاء.</div>
                         </button>
 
@@ -1048,7 +1101,7 @@
                             <input x-model="contact.name" type="text" placeholder="الاسم الكريم" class="w-full p-4 rounded-xl bg-[color:var(--bg)] border border-[color:var(--border)] outline-none focus:border-fikra-red focus:bg-[color:var(--card)] transition text-[color:var(--fg)] placeholder-[color:var(--muted)]">
                             <input x-model="contact.phone" type="tel" placeholder="رقم الجوال" class="w-full p-4 rounded-xl bg-[color:var(--bg)] border border-[color:var(--border)] outline-none focus:border-fikra-red focus:bg-[color:var(--card)] transition text-[color:var(--fg)] placeholder-[color:var(--muted)]">
                         </div>
-                        <button @click="sendRequest()" class="w-full py-4 rounded-xl bg-gradient-to-l from-fikra-red to-fikra-mint text-white font-bold text-lg shadow-glow-red hover:scale-[1.01] transition-transform flex items-center justify-center gap-2">
+                        <button @click="sendRequest()" class="w-full py-4 rounded-xl bg-gradient-to-l from-mint to-brand-red text-white font-bold text-lg shadow-glow-red hover:scale-[1.01] transition-transform flex items-center justify-center gap-2">
                             <span>•</span> أرسل طلب استشارة مجانية
                         </button>
                     </div>
@@ -1071,7 +1124,7 @@
                             <h3 class="font-bold text-lg">Before / After</h3>
                              <div class="relative h-64 mt-4 rounded-2xl overflow-hidden ring-1 ring-white/10" x-data="beforeAfter()" @pointerdown="start($event)" @pointermove.window="move($event)" @pointerup.window="end()" @pointercancel.window="end()">
                                 <div class="absolute inset-0 bg-gray-700 flex items-center justify-center">Old Brand</div>
-                                <div class="absolute inset-0 bg-fikra-mint flex items-center justify-center text-black font-bold" :style="`clip-path: inset(0 0 0 ${pos}%)`">New Brand</div>
+                                <div class="absolute inset-0 bg-brand-red flex items-center justify-center text-black font-bold" :style="`clip-path: inset(0 0 0 ${pos}%)`">New Brand</div>
                                 <div class="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize" :style="`left: ${pos}%`">
                                     <div class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center text-black text-xs font-bold">•</div>
                                 </div>
@@ -1082,7 +1135,7 @@
 
                  <template x-for="p in projects" :key="p.id">
                     <div class="masonry-item">
-                        <article class="noise border border-[color:var(--border)] bg-[color:var(--card)] overflow-hidden hover:shadow-glow-mint transition-shadow duration-300">
+                        <article class="noise border border-[color:var(--border)] bg-[color:var(--card)] overflow-hidden hover:shadow-glow-red transition-shadow duration-300">
                              <div class="h-48 w-full" :style="`background: ${p.bg}`"></div>
                              <div class="p-6">
                                  <h3 class="font-bold text-lg" x-text="p.title"></h3>
@@ -1124,7 +1177,7 @@
         <!-- Testimonials Section -->
         <section id="testimonials" class="py-10 sm:py-20 testimonials-section" x-data="testimonialsCarousel()" x-init="init()">
             <div class="mb-10" data-reveal>
-                <h2 class="text-3xl sm:text-5xl font-black tracking-tight">ماذا يقول <span class="text-fikra-mint">عملاؤنا</span></h2>
+                <h2 class="text-3xl sm:text-5xl font-black tracking-tight">ماذا يقول <span class="text-brand-red">عملاؤنا</span></h2>
                 <p class="mt-2 text-[color:var(--muted)]">آراء حقيقية من عملاء سعداء.</p>
             </div>
 
@@ -1140,7 +1193,7 @@
                             <p class="text-sm text-[color:var(--muted)]" x-text="current.role"></p>
                             <div class="flex items-center gap-2 mt-1">
                                 <span class="text-xs text-[color:var(--muted)]" x-text="current.location"></span>
-                                <span class="text-xs px-2 py-0.5 bg-fikra-mint/20 text-fikra-mint rounded-full" x-text="current.project"></span>
+                                <span class="text-xs px-2 py-0.5 bg-brand-red/20 text-brand-red rounded-full" x-text="current.project"></span>
                             </div>
                         </div>
                         <div class="testimonial-stars">
@@ -1264,7 +1317,7 @@
                                 </template>
                             </div>
                         </div>
-                        <button class="w-full py-4 rounded-xl bg-gradient-to-l from-fikra-red to-fikra-mint text-white font-bold text-lg shadow-glow-red hover:scale-[1.01] transition-transform" @click="orderViaWhatsApp()">
+                        <button class="w-full py-4 rounded-xl bg-gradient-to-l from-mint to-brand-red text-white font-bold text-lg shadow-glow-red hover:scale-[1.01] transition-transform" @click="orderViaWhatsApp()">
                             طلب عرض سعر عبر واتساب
                         </button>
                     </div>
@@ -1275,7 +1328,7 @@
         <!-- FAQ Section -->
         <section id="faq" class="py-10 sm:py-20" x-data="faqAccordion()">
             <div class="mb-10" data-reveal>
-                <h2 class="text-3xl sm:text-5xl font-black tracking-tight">الأسئلة <span class="text-fikra-mint">الشائعة</span></h2>
+                <h2 class="text-3xl sm:text-5xl font-black tracking-tight">الأسئلة <span class="text-brand-red">الشائعة</span></h2>
                 <p class="mt-2 text-[color:var(--muted)]">كل ما تريد معرفته عن خدماتنا.</p>
             </div>
 

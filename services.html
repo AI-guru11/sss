@@ -7,7 +7,7 @@
     <meta name="color-scheme" content="dark light" />
     <title>خدماتنا — Safi Group</title>
     <meta name="description" content="حلول إبداعية متكاملة من التصميم إلى التسويق والطباعة — خدمات مجموعة الصافي الشاملة" />
-    <meta name="theme-color" content="#0A0A0A" />
+    <meta name="theme-color" content="#080809" />
 
     <link rel="icon" type="image/webp" href="assets/icons/icon-192.webp" />
     <link rel="apple-touch-icon" href="assets/icons/icon-192.webp" />
@@ -16,7 +16,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS with pinned version -->
+    <script src="https://cdn.tailwindcss.com?v=3.4.1" crossorigin="anonymous"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -24,13 +25,16 @@
                 extend: {
                     fontFamily: { taj: ['Tajawal', 'sans-serif'] },
                     colors: {
-                        'fikra-red': '#E53935',
-                        'fikra-mint': '#00E5A0',
+                        'brand-red': '#E53935',
+                        'brand-red-light': '#EF5350',
+                        'brand-red-dark': '#C62828',
+                        'mint': '#81D8D0',
+                        'mint-dark': '#00C88C',
                     },
                     boxShadow: {
                         'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.30)',
                         'glow-red': '0 0 20px rgba(229, 57, 53, 0.20)',
-                        'glow-mint': '0 0 20px rgba(0, 229, 160, 0.20)',
+                        'glow-mint': '0 0 20px rgba(129, 216, 208, 0.20)',
                     }
                 }
             }
@@ -43,10 +47,15 @@
     <script src="data/config.js"></script>
     <script src="data/services.js"></script>
 
+    <!-- أدوات الحماية والأمان -->
+    <script src="js/security.js"></script>
+
     <!-- منطق التطبيق -->
     <script src="js/app.js"></script>
-    <script defer src="https://unpkg.com/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <!-- Alpine.js with pinned versions -->
+    <script defer src="https://unpkg.com/@alpinejs/focus@3.13.3/dist/cdn.min.js" crossorigin="anonymous"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.13.3/dist/cdn.min.js" crossorigin="anonymous"></script>
 </head>
 
 <body class="font-taj bg-[color:var(--bg)] text-[color:var(--fg)] selection:bg-fikra-red/30 selection:text-white transition-colors duration-500"
@@ -54,7 +63,7 @@
 
     <!-- Background -->
     <div aria-hidden="true" class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-        <div class="absolute inset-0 transition-colors duration-500" style="background: radial-gradient(1200px 600px at 80% 10%, var(--blob-cyan), transparent 60%), radial-gradient(1000px 500px at 20% 20%, var(--blob-red), transparent 55%), linear-gradient(to bottom, var(--bg), var(--bg2));"></div>
+        <div class="absolute inset-0 transition-colors duration-500" style="background: radial-gradient(1200px 600px at 80% 10%, var(--glow-mint), transparent 60%), radial-gradient(1000px 500px at 20% 20%, var(--glow-red), transparent 55%), linear-gradient(to bottom, var(--bg), var(--bg2));"></div>
         <div class="absolute inset-0 opacity-10 dark:opacity-20" style="background-image: linear-gradient(to right, var(--grid) 1px, transparent 1px), linear-gradient(to bottom, var(--grid) 1px, transparent 1px); background-size: 48px 48px; mask-image: radial-gradient(closest-side, rgba(0,0,0,.9), transparent 78%);"></div>
     </div>
 
@@ -122,7 +131,7 @@
                 <span class="text-[color:var(--fg)] font-bold">الخدمات</span>
             </nav>
             <h1 class="text-4xl sm:text-6xl font-black tracking-tight mb-4">
-                <span class="text-fikra-mint">خدماتنا</span>
+                <span class="text-brand-red">خدماتنا</span>
             </h1>
             <p class="text-lg sm:text-xl text-[color:var(--muted)] max-w-2xl mx-auto">
                 حلول إبداعية شاملة تلبي جميع احتياجاتك التسويقية والإعلانية
@@ -173,7 +182,7 @@
                 <p class="text-lg text-[color:var(--muted)] mb-8 max-w-2xl mx-auto">
                     ابدأ رحلتك معنا اليوم واكتشف كيف يمكننا تحويل أفكارك إلى واقع مبهر
                 </p>
-                <a href="index.html#brief" class="inline-flex items-center gap-3 rounded-2xl px-8 py-4 text-lg font-bold bg-gradient-to-l from-fikra-mint to-fikra-red text-white shadow-glow-mint transition-transform hover:scale-105">
+                <a href="index.html#brief" class="inline-flex items-center gap-3 rounded-2xl px-8 py-4 text-lg font-bold bg-gradient-to-l from-mint to-brand-red text-white shadow-glow-red transition-transform hover:scale-105">
                     <span>ابدأ مشروعك الآن</span>
                     <svg class="w-6 h-6 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
@@ -218,7 +227,7 @@
     <!-- Footer -->
     <footer class="py-10 border-t border-[color:var(--border)]">
         <div class="text-center space-y-4">
-            <a href="index.html" class="inline-flex items-center gap-2 text-fikra-mint hover:text-fikra-red transition font-bold">
+            <a href="index.html" class="inline-flex items-center gap-2 text-brand-red hover:text-brand-red-light transition font-bold">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                 </svg>
