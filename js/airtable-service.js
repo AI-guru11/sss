@@ -3,6 +3,24 @@
 // خدمة الاتصال بقاعدة بيانات Airtable
 // ==============================================
 
+// ⚠️ SECURITY WARNING - API KEY PROTECTION
+// ========================================
+// NEVER expose Airtable API keys or Personal Access Tokens (PAT) in client-side code.
+// This service is provided for DEVELOPMENT and DEMO purposes only.
+// 
+// For PRODUCTION, you MUST:
+// 1. Move Airtable API calls to a secure backend server (Node.js, Python, PHP, etc.)
+// 2. Use environment variables to store API keys on the server
+// 3. Create a backend API endpoint that your frontend calls (e.g., /api/products)
+// 4. The backend endpoint fetches data from Airtable and returns it to the frontend
+// 5. NEVER commit js/airtable-config.js to version control (it's in .gitignore)
+//
+// تحذير أمني - حماية مفاتيح API
+// لا تعرض أبداً مفاتيح API الخاصة بـ Airtable في كود العميل (client-side).
+// هذه الخدمة مخصصة للتطوير والتجربة فقط.
+// في الإنتاج، يجب نقل استدعاءات API إلى خادم خلفي آمن.
+// ========================================
+
 // ⚠️ SECURITY: Credentials loaded from js/airtable-config.js (not committed to git)
 // See js/airtable-config.example.js for setup instructions
 
