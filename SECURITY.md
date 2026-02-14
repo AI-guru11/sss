@@ -44,7 +44,6 @@ const safeMessage = SecurityUtils.sanitizeForURL(messageText);
 
 All external CDN dependencies use:
 - **Pinned versions** (no `@latest` or `@3.x.x`)
-- **Subresource Integrity (SRI) hashes** for integrity verification
 - **crossorigin="anonymous"** attribute for CORS
 
 **Dependencies secured:**
@@ -52,10 +51,14 @@ All external CDN dependencies use:
 - Alpine.js: `v3.13.3`
 - Alpine.js Focus Plugin: `v3.13.3`
 
+**Note:** SRI (Subresource Integrity) hashes are not included as the actual hashes from unpkg.com and cdn.tailwindcss.com can vary. For maximum security in production, consider:
+1. Self-hosting these libraries with known SRI hashes
+2. Using a package manager and bundler to control exact versions
+3. Implementing CSP headers (see section 3) which provide similar protection
+
 **Example:**
 ```html
-<script defer src="https://unpkg.com/alpinejs@3.13.3/dist/cdn.min.js" 
-        integrity="sha384-8xS8EyG8hIS23wHhKwvBkv/TLY5AxAFVL8kNJIvxFcGbCN2kgPDSMJjFLmqBWBvQ" 
+<script src="https://unpkg.com/alpinejs@3.13.3/dist/cdn.min.js" 
         crossorigin="anonymous"></script>
 ```
 

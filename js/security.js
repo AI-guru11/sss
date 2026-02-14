@@ -229,10 +229,10 @@ class RateLimiter {
 }
 
 // Create global rate limiter instances
-// WhatsApp rate limiter: 3 attempts per minute
+// WhatsApp actions: 3 requests per 1 minute
 const whatsappRateLimiter = new RateLimiter(3, 60000);
 
-// Brief submission rate limiter: 2 attempts per 2 minutes
+// Brief submission: 2 requests per 2 minutes
 const briefRateLimiter = new RateLimiter(2, 120000);
 
 // ==============================================
