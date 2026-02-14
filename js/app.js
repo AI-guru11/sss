@@ -19,8 +19,7 @@ function fikraApp() {
     headerShrink: 0,
 
     init() {
-      let saved = null;
-      try { saved = localStorage.getItem('fikra_theme'); } catch (e) { /* storage unavailable */ }
+      const saved = window.SecurityUtils?.SafeStorage.getItem('fikra_theme', null);
       if (saved === 'idea') this.setTheme('idea');
       else this.setTheme('dark');
 
@@ -51,7 +50,7 @@ function fikraApp() {
         html.classList.remove('idea');
         html.classList.add('dark');
       }
-      try { localStorage.setItem('fikra_theme', mode); } catch (e) { /* storage unavailable */ }
+      window.SecurityUtils?.SafeStorage.setItem('fikra_theme', mode);
     },
 
     toggleTheme() {
@@ -85,8 +84,47 @@ function briefWizard() {
 
     sendRequest() {
       if (!this.contact.name || !this.contact.phone) return;
-      const msg = `✨ *استفسار جديد (Style Finder)* ✨\n────────────────\n🎨 *التفضيلات:* ${this.preferences.category} / ${this.preferences.style}\n👤 *العميل:* ${this.contact.name}\n📱 *جوال:* ${this.contact.phone}`;
-      window.open(`https://wa.me/${SITE_CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`, '_blank');
+      
+      // Validate inputs
+      const secUtils = window.SecurityUtils;
+      if (!secUtils) {
+        console.error('❌ Security utilities not loaded');
+        return;
+      }
+      
+      // Validate name
+      if (!secUtils.validateName(this.contact.name)) {
+        alert('⚠️ الرجاء إدخال اسم صحيح');
+        return;
+      }
+      
+      // Validate phone
+      if (!secUtils.validatePhoneNumber(this.contact.phone)) {
+        alert('⚠️ الرجاء إدخال رقم جوال صحيح');
+        return;
+      }
+      
+      // Check rate limit
+      if (!secUtils.briefRateLimiter.isAllowed('brief_wizard')) {
+        const cooldown = secUtils.briefRateLimiter.getRemainingCooldown('brief_wizard');
+        alert(`⚠️ لقد تجاوزت الحد المسموح. الرجاء الانتظار ${cooldown} ثانية`);
+        return;
+      }
+      
+      // Sanitize all inputs
+      const safeName = secUtils.sanitizeName(this.contact.name);
+      const safePhone = secUtils.sanitizePhone(this.contact.phone);
+      const safeCategory = secUtils.sanitizeName(this.preferences.category);
+      const safeStyle = secUtils.sanitizeName(this.preferences.style);
+      
+      const msg = `✨ *استفسار جديد (Style Finder)* ✨\n────────────────\n🎨 *التفضيلات:* ${safeCategory} / ${safeStyle}\n👤 *العميل:* ${safeName}\n📱 *جوال:* ${safePhone}`;
+      
+      // Use secure WhatsApp function
+      const success = secUtils.openWhatsAppSafely(SITE_CONFIG.whatsapp, msg);
+      
+      if (!success) {
+        alert('❌ حدث خطأ في إرسال الطلب. الرجاء المحاولة مرة أخرى');
+      }
     },
 
     reset() { this.step = 1; this.preferences = { category: '', style: '' }; this.matches = []; this.contact = { name: '', phone: '' }; }
@@ -94,7 +132,7 @@ function briefWizard() {
 }
 
 // ==============================================
-// 3. PRODUCTS SHOP (ENHANCED VERSION WITH SLIDER)
+// 3. PRODUCTS SHOP (ENHANCED VERSION WITH SLIDER + AIRTABLE)
 // ==============================================
 function productsShop() {
   return {
@@ -104,13 +142,29 @@ function productsShop() {
     modalOpen: false,
     isAnimating: false,
 
-    // استيراد البيانات من ملف products.js
-    get categories() {
+    // Airtable Integration
+    isLoading: true,
+    loadingError: false,
+    airtableProducts: [],
+    airtableCategories: [],
+    useAirtable: false,
+
+    // استيراد البيانات من ملف products.js (fallback)
+    get localCategories() {
       return window.PRODUCTS_DATA?.categories || [];
     },
 
-    get products() {
+    get localProducts() {
       return window.PRODUCTS_DATA?.products || [];
+    },
+
+    // Dynamic data source (Airtable or local fallback)
+    get categories() {
+      return this.useAirtable ? this.airtableCategories : this.localCategories;
+    },
+
+    get products() {
+      return this.useAirtable ? this.airtableProducts : this.localProducts;
     },
 
     get imagesPath() {
@@ -234,20 +288,113 @@ function productsShop() {
     // إتمام الطلب عبر واتساب
     checkout() {
       if (this.cart.length === 0) return;
-      const itemsList = this.cart.map((i, index) => `${index + 1}. ${i.name} - (${i.price} ر.س)`).join('\n');
-      const msg = `🛒 *طلب منتجات - مجموعة الصافي*\n────────────────\n${itemsList}\n────────────────\n💰 *الإجمالي: ${this.cartTotal} ر.س*\n\n📝 يرجى إرسال تفاصيل التصميم المطلوب`;
-      window.open(`https://wa.me/${SITE_CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`, '_blank');
+      
+      const secUtils = window.SecurityUtils;
+      if (!secUtils) {
+        console.error('❌ Security utilities not loaded');
+        return;
+      }
+      
+      // Check rate limit
+      if (!secUtils.whatsappRateLimiter.isAllowed('checkout')) {
+        const cooldown = secUtils.whatsappRateLimiter.getRemainingCooldown('checkout');
+        alert(`⚠️ لقد تجاوزت الحد المسموح. الرجاء الانتظار ${cooldown} ثانية`);
+        return;
+      }
+      
+      // Sanitize product names and build list
+      const itemsList = this.cart.map((i, index) => {
+        const safeName = secUtils.sanitizeName(i.name);
+        const safePrice = parseInt(i.price) || 0; // Ensure price is a number
+        return `${index + 1}. ${safeName} - (${safePrice} ر.س)`;
+      }).join('\n');
+      
+      const safeTotal = this.cart.reduce((sum, item) => sum + (parseInt(item.price) || 0), 0);
+      const msg = `🛒 *طلب منتجات - مجموعة الصافي*\n────────────────\n${itemsList}\n────────────────\n💰 *الإجمالي: ${safeTotal} ر.س*\n\n📝 يرجى إرسال تفاصيل التصميم المطلوب`;
+      
+      const success = secUtils.openWhatsAppSafely(SITE_CONFIG.whatsapp, msg);
+      
+      if (!success) {
+        alert('❌ حدث خطأ في إرسال الطلب. الرجاء المحاولة مرة أخرى');
+      }
     },
 
     // طلب منتج واحد عبر واتساب
     orderProduct(product) {
-      const msg = `🛍️ *طلب منتج*\n────────────────\n📦 *المنتج:* ${product.name}\n💰 *السعر:* ${product.price} ر.س\n📝 *الوصف:* ${product.description}\n────────────────\n\nأرغب في طلب هذا المنتج`;
-      window.open(`https://wa.me/${SITE_CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`, '_blank');
+      const secUtils = window.SecurityUtils;
+      if (!secUtils) {
+        console.error('❌ Security utilities not loaded');
+        return;
+      }
+      
+      // Check rate limit
+      if (!secUtils.whatsappRateLimiter.isAllowed('order_product')) {
+        const cooldown = secUtils.whatsappRateLimiter.getRemainingCooldown('order_product');
+        alert(`⚠️ لقد تجاوزت الحد المسموح. الرجاء الانتظار ${cooldown} ثانية`);
+        return;
+      }
+      
+      // Sanitize all product data
+      const safeName = secUtils.sanitizeName(product.name);
+      const safePrice = parseInt(product.price) || 0;
+      const safeDesc = secUtils.sanitizeForURL(product.description);
+      
+      const msg = `🛍️ *طلب منتج*\n────────────────\n📦 *المنتج:* ${safeName}\n💰 *السعر:* ${safePrice} ر.س\n📝 *الوصف:* ${safeDesc}\n────────────────\n\nأرغب في طلب هذا المنتج`;
+      
+      const success = secUtils.openWhatsAppSafely(SITE_CONFIG.whatsapp, msg);
+      
+      if (!success) {
+        alert('❌ حدث خطأ في إرسال الطلب. الرجاء المحاولة مرة أخرى');
+      }
     },
 
-    // تهيئة lazy loading للصور
-    init() {
+    // تهيئة lazy loading للصور + تحميل من Airtable
+    async init() {
+      await this.loadProducts();
       this.initLazyLoading();
+    },
+
+    // تحميل المنتجات من Airtable أو الاعتماد على البيانات المحلية
+    async loadProducts() {
+      this.isLoading = true;
+      this.loadingError = false;
+
+      try {
+        // محاولة جلب البيانات من Airtable
+        if (window.AirtableService) {
+          const airtableData = await window.AirtableService.fetchProducts();
+
+          if (airtableData && airtableData.length > 0) {
+            // نجح: استخدام بيانات Airtable
+            this.airtableProducts = airtableData;
+            this.airtableCategories = window.AirtableService.extractCategories(airtableData);
+            this.useAirtable = true;
+            console.log('✅ Using Airtable data:', airtableData.length, 'products');
+          } else {
+            // Airtable أرجع فارغاً: الرجوع للبيانات المحلية
+            this.useLocalFallback();
+          }
+        } else {
+          // خدمة Airtable غير متوفرة
+          console.warn('⚠️ AirtableService not found. Using local data.');
+          this.useLocalFallback();
+        }
+      } catch (error) {
+        console.error('❌ Airtable loading error:', error);
+        this.loadingError = true;
+        this.useLocalFallback();
+      } finally {
+        this.isLoading = false;
+
+        // إعادة تهيئة lazy loading بعد تحميل البيانات
+        setTimeout(() => this.initLazyLoading(), 100);
+      }
+    },
+
+    // الرجوع للبيانات المحلية
+    useLocalFallback() {
+      this.useAirtable = false;
+      console.log('📦 Using local fallback data from data/products.js');
     },
 
     // Lazy Loading للصور
@@ -570,13 +717,34 @@ function priceCalculator() {
     },
 
     orderViaWhatsApp() {
-      const product = this.products[this.selectedProduct]?.name;
-      const sizeText = this.sizes[this.size]?.name;
-      const finishText = this.finishings[this.finishing]?.name;
+      const secUtils = window.SecurityUtils;
+      if (!secUtils) {
+        console.error('❌ Security utilities not loaded');
+        return;
+      }
+      
+      // Check rate limit
+      if (!secUtils.whatsappRateLimiter.isAllowed('price_calculator')) {
+        const cooldown = secUtils.whatsappRateLimiter.getRemainingCooldown('price_calculator');
+        alert(`⚠️ لقد تجاوزت الحد المسموح. الرجاء الانتظار ${cooldown} ثانية`);
+        return;
+      }
+      
+      // Sanitize all data
+      const product = secUtils.sanitizeName(this.products[this.selectedProduct]?.name || '');
+      const sizeText = secUtils.sanitizeName(this.sizes[this.size]?.name || '');
+      const finishText = secUtils.sanitizeName(this.finishings[this.finishing]?.name || '');
+      const safeQuantity = parseInt(this.quantity) || 0;
+      const safeTotal = parseInt(this.finalPrice) || 0;
+      const safeDiscount = parseInt(this.discount) || 0;
 
-      const msg = `💰 *طلب عرض سعر*\n────────────────\n📦 *المنتج:* ${product}\n📏 *المقاس:* ${sizeText}\n🔢 *الكمية:* ${this.quantity}\n✨ *التشطيب:* ${finishText}\n🎨 *تصميم:* ${this.design ? 'نعم' : 'لا'}\n⚡ *عاجل:* ${this.urgent ? 'نعم' : 'لا'}\n────────────────\n💵 *السعر التقديري:* ${this.finalPrice} ر.س\n${this.discount > 0 ? `🎁 *خصم الكمية:* ${this.discount}%` : ''}\n\nأرجو تأكيد الطلب`;
+      const msg = `💰 *طلب عرض سعر*\n────────────────\n📦 *المنتج:* ${product}\n📏 *المقاس:* ${sizeText}\n🔢 *الكمية:* ${safeQuantity}\n✨ *التشطيب:* ${finishText}\n🎨 *تصميم:* ${this.design ? 'نعم' : 'لا'}\n⚡ *عاجل:* ${this.urgent ? 'نعم' : 'لا'}\n────────────────\n💵 *السعر التقديري:* ${safeTotal} ر.س\n${safeDiscount > 0 ? `🎁 *خصم الكمية:* ${safeDiscount}%` : ''}\n\nأرجو تأكيد الطلب`;
 
-      window.open(`https://wa.me/${SITE_CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`, '_blank');
+      const success = secUtils.openWhatsAppSafely(SITE_CONFIG.whatsapp, msg);
+      
+      if (!success) {
+        alert('❌ حدث خطأ في إرسال الطلب. الرجاء المحاولة مرة أخرى');
+      }
     }
   };
 }
@@ -600,8 +768,7 @@ function whatsappWidget() {
     init() {
       // إظهار البوب أب بعد 10 ثواني للزوار الجدد
       setTimeout(() => {
-        let wasClosed = false;
-        try { wasClosed = localStorage.getItem('wa_widget_closed'); } catch (e) { /* storage unavailable */ }
+        const wasClosed = window.SecurityUtils?.SafeStorage.getItem('wa_widget_closed', null);
         if (!this.hasInteracted && !wasClosed) {
           this.isOpen = true;
         }
@@ -616,14 +783,35 @@ function whatsappWidget() {
     close() {
       this.isOpen = false;
       this.hasInteracted = true;
-      try { localStorage.setItem('wa_widget_closed', 'true'); } catch (e) { /* storage unavailable */ }
+      window.SecurityUtils?.SafeStorage.setItem('wa_widget_closed', 'true');
     },
 
     sendMessage(text = null) {
-      const msg = text || this.message || 'مرحباً، أريد الاستفسار عن خدماتكم';
-      window.open(`https://wa.me/${SITE_CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`, '_blank');
-      this.message = '';
-      this.close();
+      const secUtils = window.SecurityUtils;
+      if (!secUtils) {
+        console.error('❌ Security utilities not loaded');
+        return;
+      }
+      
+      // Check rate limit
+      if (!secUtils.whatsappRateLimiter.isAllowed('widget_message')) {
+        const cooldown = secUtils.whatsappRateLimiter.getRemainingCooldown('widget_message');
+        alert(`⚠️ لقد تجاوزت الحد المسموح. الرجاء الانتظار ${cooldown} ثانية`);
+        return;
+      }
+      
+      // Sanitize message
+      const rawMsg = text || this.message || 'مرحباً، أريد الاستفسار عن خدماتكم';
+      const safeMsg = secUtils.sanitizeForURL(rawMsg);
+      
+      const success = secUtils.openWhatsAppSafely(SITE_CONFIG.whatsapp, safeMsg);
+      
+      if (success) {
+        this.message = '';
+        this.close();
+      } else {
+        alert('❌ حدث خطأ في إرسال الرسالة. الرجاء المحاولة مرة أخرى');
+      }
     },
 
     selectQuickMessage(msg) {
