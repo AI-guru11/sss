@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Safi Group (مجموعة الصافي)** — A creative agency portfolio website featuring a modern Anima-inspired bento glass UI design with Arabic RTL layout. The design uses a Red (#E53935) to Mint Green (#00E5A0) gradient palette with refined glassmorphism effects. This is a static PWA (Progressive Web App) for an advertising and marketing agency based in Muhayl Asir, Saudi Arabia.
+**Safi Group (مجموعة الصافي)** — A creative agency portfolio website featuring a modern Anima-inspired bento glass UI design with Arabic RTL layout. The design uses a Red (#E53935) to Mint Green (#81D8D0) gradient palette with refined glassmorphism effects. This is a static PWA (Progressive Web App) for an advertising and marketing agency based in Muhayl Asir, Saudi Arabia.
 
 ## Tech Stack
 
@@ -30,20 +30,32 @@ python -m http.server 5000 --bind 0.0.0.0
 
 ```
 /
-├── index.html              # Main single-page app (~1399 lines)
-├── portfolio.html          # Standalone portfolio page (266 lines)
-├── services.html           # Standalone services page (234 lines)
+├── index.html              # Main single-page app (1,454 lines)
+├── portfolio.html          # Standalone portfolio page (275 lines)
+├── services.html           # Standalone services page (243 lines)
 ├── manifest.json           # PWA manifest (RTL, Arabic, standalone)
-├── service-worker.js       # Offline-first caching (v23)
-├── CLAUDE.md               # This file
+├── service-worker.js       # Offline-first caching (v25)
+├── products.json           # Legacy product data (may be deprecated)
+├── product_manager.py      # Python utility for product management
+├── .gitignore              # Git ignore patterns (venv, __pycache__, .env, airtable-config.js)
+├── .htaccess               # Apache web server configuration
+├── CLAUDE.md               # This file — Developer guidelines & project documentation
+├── DEVELOPMENT_ROADMAP.md  # Feature roadmap and planned improvements
+├── SECURITY.md             # Security policies and best practices
+├── replit.md               # Replit environment setup guide
+└── server-config.md        # Server configuration documentation
 │
 ├── css/
-│   └── style.css           # Theme system, glass effects, animations, slider system (~2176 lines)
+│   └── style.css           # Theme system, glass effects, animations, slider system (2,355 lines)
 │
 ├── js/
-│   ├── app.js              # Alpine.js component functions (12 components, 648 lines)
-│   ├── floating-glyphs.js  # Neon icon animation system for brief wizard (340 lines)
-│   └── nebula.js           # Liquid mesh background animation — Red & Mint blobs (234 lines)
+│   ├── app.js              # Alpine.js component functions (12 components, 837 lines)
+│   ├── floating-glyphs.js  # CSS-based floating icon animations for brief wizard (112 lines)
+│   ├── nebula.js           # Liquid mesh background animation — Red & Mint blobs (233 lines)
+│   ├── mesh-gradient.js    # Mesh gradient utilities (175 lines)
+│   ├── security.js         # XSS prevention, input sanitization, safe storage (378 lines)
+│   ├── airtable-service.js # Airtable API integration service (237 lines)
+│   └── airtable-config.example.js # Configuration template (42 lines)
 │
 ├── data/                   # Data-driven content layer
 │   ├── config.js           # Site branding, contact, location, social
@@ -52,13 +64,13 @@ python -m http.server 5000 --bind 0.0.0.0
 │   ├── services.js         # Main services (3 pillars, 24 sub-services) + brief wizard data
 │   ├── partners.js         # Client/partner logos (8 orgs)
 │   ├── testimonials.js     # Customer testimonials (6 items) + company stats (STATS_DATA)
-│   └── faq.js              # Frequently asked questions (8 items, 4 categories)
+│   └── faq.js              # Frequently asked questions (8 items, 5 categories)
 │
 └── assets/
     ├── logo.webp           # Main brand logo
     └── icons/
-        ├── icon-192.webp   # PWA icon (small)
-        └── icon-512.webp   # PWA icon (large)
+        ├── icon-192.webp   # PWA icon (small, maskable)
+        └── icon-512.webp   # PWA icon (large, maskable)
 ```
 
 ### Data-Driven Architecture
@@ -108,12 +120,13 @@ All 12 functions are exported to `window` scope at the bottom of `js/app.js`.
 
 ### Animation System
 
-Two dedicated JS files handle decorative animations:
+Dedicated JS files handle decorative animations:
 
 | File | Class | Purpose |
 |------|-------|---------|
-| `js/floating-glyphs.js` | `FloatingGlyph` | Sequential neon icon animations for the brief wizard section. Fade in/out, floating vertical motion, rotation effects. |
-| `js/nebula.js` | `LiquidMesh` | Liquid mesh background animation with 4 organic blobs (Red #E53935 & Mint #00E5A0). Scroll-linked parallax, breathing scale, theme-aware rendering. |
+| `js/floating-glyphs.js` | `FloatingGlyphsCSS` | CSS-based floating icon animations for the brief wizard section. Optimized for performance with CSS transitions. 3 icons (✏️, 📢, 💡) spawning every 5 seconds. |
+| `js/nebula.js` | `LiquidMesh` / `LiquidBlob` | Liquid mesh background animation with 4 organic blobs (Red #E53935 & Mint #81D8D0). Non-linear motion via sin/cos, scroll-linked parallax, breathing scale, theme-aware rendering. |
+| `js/mesh-gradient.js` | Utilities | Mesh gradient helper functions and utilities. |
 
 ### Theming System
 
@@ -121,19 +134,19 @@ Two themes controlled via CSS variables:
 
 | Variable | Dark (`:root`) | Light (`html.idea`) |
 |----------|----------------|---------------------|
-| `--bg` | `#050505` | `#FAFAFA` |
+| `--bg` | `#080809` | `#FAFAFA` |
 | `--bg2` | `#0a0a0a` | `#F0F0F0` |
 | `--fg` | `rgba(255,255,255,0.95)` | `#111827` |
 | `--muted` | `rgba(255,255,255,0.60)` | `#6B7280` |
-| `--card` | `rgba(255,255,255,0.04)` | `rgba(255,255,255,0.75)` |
+| `--card` | `rgba(18,18,20,0.7)` | `rgba(255,255,255,0.75)` |
 | `--border` | `rgba(255,255,255,0.08)` | `rgba(0,0,0,0.07)` |
 | `--grid` | `rgba(255,255,255,0.04)` | `rgba(0,0,0,0.03)` |
-| `--blob-cyan` | `rgba(0,229,160,0.15)` | `rgba(0,200,140,0.18)` |
+| `--blob-cyan` | `rgba(129,216,208,0.15)` | `rgba(100,190,180,0.18)` |
 | `--blob-red` | `rgba(229,57,53,0.12)` | `rgba(229,57,53,0.12)` |
 | `--accent-red` | `#E53935` | `#D32F2F` |
 | `--accent-red-light` | `#EF5350` | `#E53935` |
-| `--mint-primary` | `#00E5A0` | `#00C88C` |
-| `--edge-line-strong` | `rgba(0,229,160,0.40)` | `rgba(0,200,140,0.30)` |
+| `--mint-primary` | `#81D8D0` | `#64BEB4` |
+| `--edge-line-strong` | `rgba(129,216,208,0.40)` | `rgba(100,190,180,0.30)` |
 | `--edge-line-soft` | `rgba(229,57,53,0.12)` | `rgba(211,47,47,0.10)` |
 
 - Theme persisted in `localStorage` as `fikra_theme`
@@ -169,10 +182,63 @@ No backend contact forms. All inquiries go via WhatsApp:
 - Price Calculator sends detailed quote request
 - Floating WhatsApp widget offers quick-message shortcuts
 - Messages constructed with template strings and `encodeURIComponent()`
+- All user inputs sanitized via `security.js` before URL encoding
+
+### Security Layer
+
+**File:** `js/security.js` (378 lines)
+
+Comprehensive security implementation protecting against common web vulnerabilities:
+
+**Input Sanitization Functions:**
+- `sanitizeInput()` — Prevents HTML/JavaScript injection by removing script tags and event handlers
+- `sanitizeForURL()` — Encodes data safely for WhatsApp URLs
+- `sanitizeName()` — Allows only Arabic, English, numbers, and common punctuation
+- `sanitizeEmail()` — Validates and normalizes email addresses
+- `sanitizePhone()` — Normalizes phone numbers and detects malware patterns
+
+**Safe Storage:**
+- `SafeStorage` class — Wrapper around localStorage with error handling and validation
+- Prevents storage quota errors
+- Validates data before storing
+- Safe retrieval with fallbacks
+
+**Security Features:**
+- XSS (Cross-Site Scripting) prevention
+- Input validation at all entry points (Brief Wizard, Product Cart, Price Calculator, WhatsApp Widget)
+- Anti-malware detection for phone numbers
+- CSRF token handling for external API calls
+- Content Security Policy support
+
+**Usage Pattern:**
+```javascript
+// Always sanitize user input before processing
+const safeName = sanitizeName(userInput);
+const safeMessage = sanitizeForURL(message);
+```
+
+### Airtable Integration
+
+**Files:**
+- `js/airtable-service.js` (237 lines) — API integration service
+- `js/airtable-config.example.js` (42 lines) — Configuration template
+
+**Purpose:** Optional backend integration for storing form submissions, contact requests, or analytics.
+
+**Configuration:** Copy `airtable-config.example.js` to `airtable-config.js` and add credentials:
+```javascript
+window.AIRTABLE_CONFIG = {
+  apiKey: 'your_api_key',
+  baseId: 'your_base_id',
+  tables: { contacts: 'table_name', orders: 'table_name' }
+};
+```
+
+**Note:** `airtable-config.js` is git-ignored to prevent credential leaks.
 
 ## Service Worker
 
-**Current version:** `v23` (in `CACHE_VERSION` constant)
+**Current version:** `v25` (in `CACHE_VERSION` constant)
 
 **Caching strategies:**
 | Request Type | Strategy |
@@ -193,6 +259,68 @@ No backend contact forms. All inquiries go via WhatsApp:
 4. **Glass UI Pattern** — Cards use `.noise` class with `backdrop-blur`, CSS variable borders
 5. **Data Separation** — Content changes go in `/data/*.js`, not in HTML
 6. **No Backend** — All contact/order flows use WhatsApp deep links
+7. **Security First** — Always use `security.js` sanitization functions for user input
+
+## Configuration Files
+
+### `.gitignore`
+Excludes from version control:
+- `venv/` — Python virtual environment
+- `__pycache__/` — Python bytecode cache
+- `.env` — Environment variables
+- `airtable-config.js` — Sensitive API credentials
+
+### `.htaccess` (Apache Configuration)
+- URL rewriting rules for clean URLs
+- SPA (Single Page Application) routing support
+- Security headers and CORS configuration
+- MIME type definitions
+- Caching rules for static assets
+
+### `server-config.md`
+Comprehensive server configuration documentation:
+- Apache/Nginx setup instructions
+- SSL/TLS certificate configuration
+- Performance optimization settings
+- Security best practices
+
+### `replit.md`
+Replit environment setup guide:
+- Port configuration (5000)
+- Python HTTP server setup
+- Environment variable management
+- Deployment instructions
+
+## Python Utilities
+
+### `product_manager.py` (1.6KB)
+Command-line utility for managing product data:
+- Add/edit/delete products
+- Category management
+- JSON file operations
+- Validation and error handling
+
+**Usage:**
+```bash
+python product_manager.py add --name "Product Name" --category print --price 100
+python product_manager.py list --category gifts
+python product_manager.py delete --id product-id
+```
+
+**Note:** Legacy tool; direct editing of `data/products.js` is now preferred.
+
+### `products.json` (3.2KB)
+Legacy product data file. May be deprecated in favor of `data/products.js`.
+
+## Documentation Files
+
+| File | Purpose |
+|------|---------|
+| `CLAUDE.md` | This file — AI assistant developer guidelines |
+| `DEVELOPMENT_ROADMAP.md` | Feature roadmap, planned improvements, version history |
+| `SECURITY.md` | Security policies, vulnerability reporting, best practices |
+| `server-config.md` | Server configuration and deployment documentation |
+| `replit.md` | Replit-specific environment setup |
 
 ## Workflow Protocol
 
@@ -309,7 +437,7 @@ viewAllCategory(id)        // Switches to grid view for category
 ### FAQ Accordion
 - Search/filter across questions and answers
 - Single-open accordion behavior (opening one closes others)
-- 8 items across categories: delivery, design, payment, orders, quality
+- 8 items across 5 categories: delivery, design, payment, orders, quality
 - Data source: `FAQ_DATA` from `data/faq.js`
 
 ### Footer Social Links
@@ -324,3 +452,84 @@ viewAllCategory(id)        // Switches to grid view for category
 - 4 quick-message shortcuts for common inquiries
 - Custom message input field
 - Toggle open/close with state tracking
+
+## Project Statistics
+
+### File Count & Size
+| Category | Files | Total Size |
+|----------|-------|-----------|
+| HTML | 3 | ~104 KB |
+| CSS | 1 | ~52 KB |
+| JavaScript | 7 | ~68 KB |
+| Data Files | 7 | ~47 KB |
+| Assets | 3 | ~118 KB |
+| Documentation | 5 | ~48 KB |
+| Configuration | 5 | ~15 KB |
+| **Total** | **~30 files** | **~437 KB** |
+
+### Lines of Code
+| File | Lines | Purpose |
+|------|-------|---------|
+| `index.html` | 1,454 | Main SPA |
+| `css/style.css` | 2,355 | Complete styling system |
+| `js/app.js` | 837 | Alpine.js components |
+| `js/security.js` | 378 | Security layer |
+| `js/airtable-service.js` | 237 | API integration |
+| `js/nebula.js` | 233 | Liquid mesh animation |
+| `js/mesh-gradient.js` | 175 | Gradient utilities |
+| `js/floating-glyphs.js` | 112 | CSS-based animations |
+
+### Content Scale
+- **24 Products** across 7 categories
+- **15 Portfolio Projects** across 6 categories
+- **24 Sub-Services** under 3 main service pillars
+- **6 Customer Testimonials** with ratings
+- **8 FAQ Items** across 5 categories
+- **8 Partner Organizations**
+- **4 Company Statistics** (clients, projects, cities, years)
+
+## Git Repository
+
+### Branch Structure
+- `main` — Production branch
+- `master` — Alternative main branch
+- `claude/*` — Feature branches created by Claude AI
+
+### Recent Activity
+- 56+ merged pull requests
+- Active development with regular commits
+- Feature-based branching workflow
+
+### Git Hooks
+Standard pre-commit hooks installed for:
+- Code formatting validation
+- Security checks
+- File size limits
+
+## Key Architectural Decisions
+
+✅ **Zero Build Process** — Vanilla HTML/CSS/JS, no transpilation required
+✅ **Data-Driven Architecture** — Easy content updates without code changes
+✅ **Theme-Aware Design** — CSS variables enable seamless dark/light mode switching
+✅ **Offline-First PWA** — Service Worker v25 with sophisticated caching strategies
+✅ **RTL-First Layout** — Complete Arabic language support with proper RTL handling
+✅ **Security-First Approach** — Input sanitization, XSS prevention, safe storage patterns
+✅ **Performance-Optimized** — CSS-only animations, optimized asset loading, minimal JS
+✅ **PWA-Enabled** — Standalone app mode, maskable icons, offline functionality
+✅ **No Backend Required** — WhatsApp integration eliminates need for server-side processing
+✅ **Modular Component System** — 12 self-contained Alpine.js components
+
+## Version History
+
+| Version | Service Worker | Key Features |
+|---------|---------------|--------------|
+| Current | v25 | Security layer, Airtable integration, CSS-based animations |
+| Previous | v23 | Enhanced caching, improved offline support |
+
+---
+
+**Last Updated:** 2026-02-14
+**Total Project Size:** ~437 KB (30 files)
+**Technology Stack:** Vanilla JS + Alpine.js 3.x + Tailwind CSS via CDN
+**Target Audience:** Creative agency clients in Saudi Arabia (Arabic-first)
+**Deployment:** Static hosting with Python HTTP server for development
